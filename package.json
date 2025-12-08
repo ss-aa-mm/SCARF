@@ -1,0 +1,19 @@
+{
+  "name": "scarf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx @tailwindcss/cli -i src/main/resources/static/css/input.css -o src/main/resources/static/css/output.css --minify",
+    "watch": "npx @tailwindcss/cli watch -i src/main/resources/static/css/input.css -o src/main/resources/static/css/output.css"
+  },
+  "keywords": [],
+  "author": "Samuele Giussani",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.17",
+    "flowbite": "^4.0.1",
+    "tailwindcss": "^4.1.17"
+  }
+}

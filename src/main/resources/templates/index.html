@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/images/favicon.ico}" rel="icon" type="image/x-icon"/>
+    <link th:href="@{/images/favicon.png}" rel="icon" type="image/png" sizes="32x32"/>
+    <link th:href="@{/css/output.css}" rel="stylesheet"/>
+    <title>SCARF</title>
+</head>
+<body>
+<div class="text-center mt-10">
+    <h1 class="text-4xl font-bold text-blue-600">Tailwind Works!</h1>
+    <p class="mt-4 text-gray-700">If this text is styled, Tailwind is working.</p>
+    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        Button Test
+    </button>
+</div>
+<button th:text="${id ?: 'No ID provided'}" id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="inline-flex items-center justify-center text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none" type="button">
+    Dropdown button
+    <svg class="w-4 h-4 ms-1.5 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/></svg>
+</button>
+<div id="dropdown" class="z-10 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44">
+    <ul class="p-2 text-sm text-body font-medium" aria-labelledby="dropdownDefaultButton">
+        <li>
+            <a href="/Dashboard" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Dashboard</a>
+        </li>
+        <li>
+            <a href="#" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Settings</a>
+        </li>
+        <li>
+            <a href="#" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Earnings</a>
+        </li>
+        <li>
+            <a href="#" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Sign out</a>
+        </li>
+    </ul>
+</div>
+  <script th:src="@{/js/flowbite.min.js}"></script>
+</body>
+</html>
