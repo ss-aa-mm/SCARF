@@ -1,2 +1,14 @@
 @import "tailwindcss";
-@import "flowbite/src/themes/default";
+@import "flowbite/src/themes/default.css";
+
+.btn-blue {
+    @apply cursor-pointer bg-blue-600 text-white rounded hover:bg-blue-700 transition
+}
+
+.btn-green {
+    @apply cursor-pointer bg-green-600 text-white rounded hover:bg-green-700 transition
+}
+
+.btn-disabled {
+    @apply cursor-not-allowed bg-gray-600 text-zinc-200 rounded
+}
