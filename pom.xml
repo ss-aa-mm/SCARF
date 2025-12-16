@@ -117,6 +117,52 @@
             <artifactId>standard</artifactId>
             <version>1.5.0.v20221116-1811</version>
         </dependency>
+
+        <!-- Acceleo -->
+        <dependency>
+            <groupId>org.eclipse.acceleo</groupId>
+            <artifactId>org.eclipse.acceleo.engine</artifactId>
+            <version>3.5.1.201409021433</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.acceleo</groupId>
+            <artifactId>org.eclipse.acceleo.model</artifactId>
+            <version>3.5.1.201409021433</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.acceleo</groupId>
+            <artifactId>org.eclipse.acceleo.common</artifactId>
+            <version>3.5.1.201409021433</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.acceleo</groupId>
+            <artifactId>lpg.runtime.java</artifactId>
+            <version>2.0.17.v201004271640</version>
+        </dependency>
+
+        <!-- OCL -->
+        <dependency>
+            <groupId>org.eclipse.ocl</groupId>
+            <artifactId>org.eclipse.ocl.ecore</artifactId>
+            <version>3.3.100.v20140610-0641</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.ocl</groupId>
+            <artifactId>org.eclipse.ocl</artifactId>
+            <version>3.4.2.v20140725-2242</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.ocl</groupId>
+            <artifactId>org.eclipse.ocl.common</artifactId>
+            <version>1.2.0.v20140610-0641</version>
+        </dependency>
+
+        <!-- Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.1.0-jre</version>
+        </dependency>
     </dependencies>
 
     <build>

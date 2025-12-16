@@ -1,0 +1,60 @@
+package se.lnu.scarf;
+
+import org.eclipse.acceleo.engine.service.AbstractAcceleoGenerator;
+import org.eclipse.acceleo.model.mtl.Module;
+import org.eclipse.acceleo.model.mtl.MtlPackage;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
+
+public class Main extends AbstractAcceleoGenerator {
+    public static final String MODULE_FILE_NAME = "/org/lnu/cloudSimCreator/main";
+    public static final String[] TEMPLATE_NAMES = { "projectGenerator" };
+
+    @Override
+    public String getModuleName() {
+        return MODULE_FILE_NAME;
+    }
+
+    @Override
+    public String[] getTemplateNames() {
+        return TEMPLATE_NAMES;
+    }
+
+    public Main(EObject model, File targetFolder, List<?> arguments)  throws IOException {
+        initialize(model, targetFolder, arguments);
+    }
+
+    @Override
+    public void initialize(EObject model, File targetFolder, List<?> arguments) throws IOException{
+        try {
+            super.initialize(model, targetFolder, arguments);
+        } catch (Exception e) {
+            InputStream is = getClass().getClassLoader().getResourceAsStream("static/main.emtl");
+            File tempFile = File.createTempFile("main-", ".emtl");
+            tempFile.deleteOnExit();
+            assert is != null;
+            Files.copy(is, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            URI moduleURI = URI.createFileURI(tempFile.getAbsolutePath());
+            MtlPackage.eINSTANCE.eClass();
+            Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("emtl", new XMIResourceFactoryImpl());
+            ResourceSet rs = new ResourceSetImpl();
+            Resource emtlResource = rs.getResource(moduleURI, true);
+
+            this.module = (Module) emtlResource.getContents().get(0);
+            this.targetFolder = targetFolder;
+            this.model = model;
+            this.generationArguments = arguments;
+        }
+    }
+}
