@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -58,10 +59,14 @@ public class InterpretationService {
         Path srcDir = Files.createTempDirectory("scarf-gen-src");
         File targetFolder = srcDir.toFile();
         targetFolder.deleteOnExit();
-        Main acceleoGenerator = new Main(umlModel, targetFolder,
+        String packageName =  cleanModelName(umlModel.getName());
+        File packageFolder = new File(targetFolder, packageName);
+        if(!packageFolder.mkdir() && !packageFolder.exists()) throw new IOException("Could not create folder "
+                + packageFolder.getAbsolutePath());
+
+        Main acceleoGenerator = new Main(umlModel, packageFolder,
                 new ArrayList<Object>(
                         List.of(
-                                "SampleFileName",
                                 3,
                                 "Exponential",
                                 5.0,
@@ -74,5 +79,10 @@ public class InterpretationService {
                 .map(Interaction.class::cast)
                 .map(Interaction::getName)
                 .collect(Collectors.joining(", "));
+    }
+
+    public static String cleanModelName(String modelName) {
+        if (modelName == null || modelName.isEmpty()) return modelName;
+        return modelName.toLowerCase().replaceAll("[^a-zA-Z0-9_]", "");
     }
 }
