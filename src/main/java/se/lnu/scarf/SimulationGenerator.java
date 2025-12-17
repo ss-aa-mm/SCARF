@@ -17,7 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
-public class Main extends AbstractAcceleoGenerator {
+public class SimulationGenerator extends AbstractAcceleoGenerator {
     public static final String MODULE_FILE_NAME = "/org/lnu/cloudSimCreator/main";
     public static final String[] TEMPLATE_NAMES = { "projectGenerator" };
 
@@ -31,7 +31,7 @@ public class Main extends AbstractAcceleoGenerator {
         return TEMPLATE_NAMES;
     }
 
-    public Main(EObject model, File targetFolder, List<?> arguments)  throws IOException {
+    public SimulationGenerator(EObject model, File targetFolder, List<?> arguments)  throws IOException {
         initialize(model, targetFolder, arguments);
     }
 

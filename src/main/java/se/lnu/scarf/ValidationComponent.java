@@ -1,6 +1,5 @@
 package se.lnu.scarf;
 
-import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -8,25 +7,27 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.uml2.uml.*;
+import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.Profile;
+import org.eclipse.uml2.uml.ProfileApplication;
+import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
-import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
-@Service
-public class InterpretationService {
+@Component
+public class ValidationComponent {
 
-    public String interpret(MultipartFile file) throws Exception {
-        System.out.println("Starting interpretation");
+    private static final Logger logger = LoggerFactory.getLogger(ValidationComponent.class);
+
+    public Model resolveAndValidate(MultipartFile file) throws IOException {
+        logger.info("Starting profile resolution and model validation...");
         ResourceSet resourceSet = new ResourceSetImpl();
         UMLResourcesUtil.init(resourceSet);
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("uml", new XMIResourceFactoryImpl());
@@ -45,7 +46,7 @@ public class InterpretationService {
         assert fileName != null;
         Resource resource = resourceSet.createResource(URI.createURI(fileName));
         resource.load(file.getInputStream(), null);
-        if (resource.getContents().isEmpty()) throw new IllegalArgumentException("Empty file");
+        if (resource.getContents().isEmpty()) return null;
         Model umlModel = (Model) EcoreUtil.getObjectByType(resource.getContents(), UMLPackage.Literals.MODEL);
         for (ProfileApplication pa : new ArrayList<>(umlModel.getProfileApplications())) {
             umlModel.getProfileApplications().remove(pa);
@@ -53,36 +54,8 @@ public class InterpretationService {
         resourceSet.getURIConverter().getURIMap().put(profileSampleURI, URI.createURI(NsURI));
         umlModel.applyProfile(profileRoot);
         EcoreUtil.resolveAll(resourceSet);
-        System.out.println("The model has " +
-                umlModel.allOwnedElements().stream().mapToInt(e -> e.getAppliedStereotypes().size()).sum() +
-                " stereotype(s) applied.");
-        Path srcDir = Files.createTempDirectory("scarf-gen-src");
-        File targetFolder = srcDir.toFile();
-        targetFolder.deleteOnExit();
-        String packageName =  cleanModelName(umlModel.getName());
-        File packageFolder = new File(targetFolder, packageName);
-        if(!packageFolder.mkdir() && !packageFolder.exists()) throw new IOException("Could not create folder "
-                + packageFolder.getAbsolutePath());
-
-        Main acceleoGenerator = new Main(umlModel, packageFolder,
-                new ArrayList<Object>(
-                        List.of(
-                                3,
-                                "Exponential",
-                                5.0,
-                                5.0
-                        )
-                ));
-        acceleoGenerator.doGenerate(new BasicMonitor());
-        return umlModel.getOwnedElements().stream()
-                .filter(Interaction.class::isInstance)
-                .map(Interaction.class::cast)
-                .map(Interaction::getName)
-                .collect(Collectors.joining(", "));
-    }
-
-    public static String cleanModelName(String modelName) {
-        if (modelName == null || modelName.isEmpty()) return modelName;
-        return modelName.toLowerCase().replaceAll("[^a-zA-Z0-9_]", "");
+        logger.info("The model has {} stereotype(s) applied.",
+                umlModel.allOwnedElements().stream().mapToInt(e -> e.getAppliedStereotypes().size()).sum());
+        return umlModel;
     }
 }

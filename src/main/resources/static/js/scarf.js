@@ -5,8 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const distSelect = document.getElementById("distSelect");
     const param1Label = document.getElementById('param1Label');
     const param2Label = document.getElementById('param2Label');
+    const param1Field = document.getElementById('param1Field');
     const param2Field = document.getElementById('param2Field');
     const runBtn = document.getElementById('runBtn');
+    const repetitions = document.getElementById('repetitions');
     const out = document.getElementById('consoleOutput');
 
     browseFileBtn.addEventListener('click', () => {
@@ -15,9 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     runBtn.addEventListener('click', async () => {
         if (!fileInput.files.length) return alert("Select a model first!");
+        const isSecondParamRequired = !param2Field.classList.contains("invisible");
+        if (!repetitions.value ||
+            !distSelect.value ||
+            !param1Field.value ||
+            (!param2Field.value && isSecondParamRequired))
+            return alert("Please set all the required simulation parameters first!")
 
         const formData = new FormData();
         formData.append("file", fileInput.files[0]);
+        formData.append("repetitions", repetitions.value);
+        formData.append("distribution", distSelect.value);
+        formData.append("param1", param1Field.value);
+        formData.append("param2", isSecondParamRequired ? param2Field.value : 0);
 
         runBtn.disabled = true;
         runBtn.classList.remove("btn-green");
