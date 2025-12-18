@@ -7,16 +7,18 @@ import org.springframework.stereotype.Component;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
 public class CompilationComponent {
 
-    private static final List<String> ARTIFACT_IDS = List.of("jackson-databind", "jackson-core", "jackson-annotations", "cloudsimplus", "logback-classic");
     private static final Logger logger = LoggerFactory.getLogger(CompilationComponent.class);
 
     public int compile(Path baseFolder) throws Exception {
@@ -25,6 +27,8 @@ public class CompilationComponent {
         Path targetFolder = baseFolder.resolve("target/classes");
         String isolatedClasspath = buildTempClasspath(baseFolder);
         Files.createDirectories(targetFolder);
+        copyResource("gcis.dtd", targetFolder);
+        copyResource("gcis.xml", targetFolder);
 
         List<String> sources;
         try (Stream<Path> paths = Files.walk(sourceFolder)) {
@@ -70,4 +74,27 @@ public class CompilationComponent {
                     .collect(Collectors.joining(File.pathSeparator));
         }
     }
+
+    private static void copyResource(String name, Path targetFolder) throws IOException {
+        Files.copy(
+                Objects.requireNonNull(
+                        CompilationComponent.class.getClassLoader().getResourceAsStream("static/" + name),
+                        "Resource " + name + " can't be copied!"
+                ),
+                targetFolder.resolve(name),
+                StandardCopyOption.REPLACE_EXISTING
+        );
+    }
+
+    private static final List<String> ARTIFACT_IDS = List.of(
+            "jackson-databind",
+            "jackson-core",
+            "jackson-annotations",
+            "cloudsimplus",
+            "logback-classic",
+            "logback-core",
+            "slf4j-api",
+            "commons-lang3",
+            "commons-math3"
+    );
 }

@@ -1,5 +1,6 @@
 package se.lnu.scarf;
 
+import lombok.Getter;
 import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.uml2.uml.Model;
 import org.slf4j.Logger;
@@ -13,10 +14,12 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 @Component
 public class InterpretationComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(InterpretationComponent.class);
+    private String mainClassQualifiedName;
 
     public Path interpret(Model umlModel, Integer rep, String distribution, Double p1, Double p2) throws IOException {
         logger.info("Interpreting the UML model...");
@@ -24,6 +27,9 @@ public class InterpretationComponent {
         File targetFolder = baseDir.toFile();
         targetFolder.deleteOnExit();
         String packageName =  cleanModelName(umlModel.getName());
+        mainClassQualifiedName = packageName + "." +
+                Character.toUpperCase(packageName.charAt(0)) +
+                packageName.substring(1);
         File sourceFolder = new File(targetFolder, "src/main/java");
         File packageFolder = new File(sourceFolder,  packageName);
         if(!packageFolder.mkdirs() && !packageFolder.exists()) throw new IOException("Could not create folder "
@@ -41,4 +47,5 @@ public class InterpretationComponent {
         if (modelName == null || modelName.isEmpty()) return modelName;
         return modelName.toLowerCase().replaceAll("[^a-zA-Z0-9_]", "");
     }
+
 }

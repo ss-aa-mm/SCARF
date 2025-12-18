@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gcis SYSTEM "gcis.dtd">
+<gcis>
+    <timestamp>2025-02-18T10:20:00Z</timestamp>
+    <unit>gCO2eq/kWh</unit>
+    <source>https://app.electricitymaps.com/</source>
+    <regions>
+        <region name="us-east-1">
+            <location>N. Virginia, USA</location>
+            <carbon_intensity>473</carbon_intensity>
+        </region>
+        <region name="us-west-2">
+            <location>Oregon, USA</location>
+            <carbon_intensity>434</carbon_intensity>
+        </region>
+        <region name="eu-west-1">
+            <location>Ireland</location>
+            <carbon_intensity>158</carbon_intensity>
+        </region>
+        <region name="ap-northeast-1">
+            <location>Tokyo, Japan</location>
+            <carbon_intensity>567</carbon_intensity>
+        </region>
+        <region name="us-east-2">
+            <location>Ohio, USA</location>
+            <carbon_intensity>473</carbon_intensity>
+        </region>
+        <region name="eu-central-1">
+            <location>Frankfurt, Germany</location>
+            <carbon_intensity>537</carbon_intensity>
+        </region>
+        <region name="ap-southeast-2">
+            <location>Sydney, Australia</location>
+            <carbon_intensity>470</carbon_intensity>
+        </region>
+        <region name="us-west-1">
+            <location>N. California, USA</location>
+            <carbon_intensity>206</carbon_intensity>
+        </region>
+        <region name="sa-east-1">
+            <location>São Paulo, Brazil</location>
+            <carbon_intensity>58</carbon_intensity>
+        </region>
+        <region name="ca-central-1">
+            <location>Canada</location>
+            <carbon_intensity>29</carbon_intensity>
+        </region>
+    </regions>
+</gcis>

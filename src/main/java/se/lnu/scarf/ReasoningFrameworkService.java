@@ -13,13 +13,16 @@ public class ReasoningFrameworkService {
     private final ValidationComponent validationComponent;
     private final InterpretationComponent interpretationComponent;
     private final CompilationComponent compilationComponent;
+    private final ExecutionComponent executionComponent;
 
     public ReasoningFrameworkService(ValidationComponent validationComponent,
                                      InterpretationComponent interpretationComponent,
-                                     CompilationComponent compilationComponent) {
+                                     CompilationComponent compilationComponent,
+                                     ExecutionComponent executionComponent) {
         this.validationComponent = validationComponent;
         this.interpretationComponent = interpretationComponent;
         this.compilationComponent = compilationComponent;
+        this.executionComponent = executionComponent;
     }
 
     public FrameworkResult run(MultipartFile file, Integer rep, String distribution, Double p1, Double p2) {
@@ -32,7 +35,10 @@ public class ReasoningFrameworkService {
 
             int result = compilationComponent.compile(compilationBaseDir);
             if (result != 0) return FrameworkResult.failure("The generated code compilation failed");
+
+            executionComponent.execute(compilationBaseDir, interpretationComponent.getMainClassQualifiedName());
             return FrameworkResult.success("ok");
+
         } catch (Exception e) {
             return FrameworkResult.failure(e.getMessage());
         }

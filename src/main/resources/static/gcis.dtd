@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT gcis (timestamp, unit, source, regions)>
+<!ELEMENT timestamp (#PCDATA)>
+<!ELEMENT unit (#PCDATA)>
+<!ELEMENT source (#PCDATA)>
+<!ELEMENT regions (region+)>
+<!ELEMENT region (location, carbon_intensity)>
+<!ATTLIST region name CDATA #REQUIRED>
+<!ELEMENT location (#PCDATA)>
+<!ELEMENT carbon_intensity (#PCDATA)>
+
