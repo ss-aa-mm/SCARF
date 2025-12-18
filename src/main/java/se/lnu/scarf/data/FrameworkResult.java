@@ -1,4 +1,4 @@
-package se.lnu.scarf;
+package se.lnu.scarf.data;
 
 public record FrameworkResult(boolean success, String message) {
     public static FrameworkResult success(String message) { return new FrameworkResult(true, message); }

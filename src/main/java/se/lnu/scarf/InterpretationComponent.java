@@ -1,7 +1,6 @@
 package se.lnu.scarf;
 
 import org.eclipse.emf.common.util.BasicMonitor;
-import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,21 +12,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class InterpretationComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(InterpretationComponent.class);
 
-    public String interpret(Model umlModel, Integer rep, String distribution, Double p1, Double p2) throws IOException {
+    public Path interpret(Model umlModel, Integer rep, String distribution, Double p1, Double p2) throws IOException {
         logger.info("Interpreting the UML model...");
-        Path srcDir = Files.createTempDirectory("scarf-gen-src");
-        File targetFolder = srcDir.toFile();
+        Path baseDir = Files.createTempDirectory("scarf-gen-src");
+        File targetFolder = baseDir.toFile();
         targetFolder.deleteOnExit();
         String packageName =  cleanModelName(umlModel.getName());
-        File packageFolder = new File(targetFolder, packageName);
-        if(!packageFolder.mkdir() && !packageFolder.exists()) throw new IOException("Could not create folder "
+        File sourceFolder = new File(targetFolder, "src/main/java");
+        File packageFolder = new File(sourceFolder,  packageName);
+        if(!packageFolder.mkdirs() && !packageFolder.exists()) throw new IOException("Could not create folder "
                 + packageFolder.getAbsolutePath());
 
         SimulationGenerator acceleoGenerator = new SimulationGenerator(umlModel, packageFolder,
@@ -35,14 +34,10 @@ public class InterpretationComponent {
         );
         acceleoGenerator.doGenerate(new BasicMonitor());
         logger.info("Code generation complete.");
-        return umlModel.getOwnedElements().stream()
-                .filter(Interaction.class::isInstance)
-                .map(Interaction.class::cast)
-                .map(Interaction::getName)
-                .collect(Collectors.joining(", "));
+        return baseDir;
     }
 
-    public static String cleanModelName(String modelName) {
+    private static String cleanModelName(String modelName) {
         if (modelName == null || modelName.isEmpty()) return modelName;
         return modelName.toLowerCase().replaceAll("[^a-zA-Z0-9_]", "");
     }
