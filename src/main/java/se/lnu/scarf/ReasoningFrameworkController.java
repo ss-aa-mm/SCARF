@@ -37,6 +37,7 @@ public class ReasoningFrameworkController {
 
         try {
             byte[] fileBytes = umlFile.getBytes();
+            streamer.reset();
 
             reasoningFrameworkService.runAsync(
                     fileBytes,
