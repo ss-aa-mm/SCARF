@@ -15,8 +15,8 @@ import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class ValidationComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(ValidationComponent.class);
 
-    public Model resolveAndValidate(MultipartFile file) throws IOException {
+    public Model resolveAndValidate(byte[] file, String fileName) throws IOException {
         logger.info("Starting profile resolution and model validation...");
         ResourceSet resourceSet = new ResourceSetImpl();
         UMLResourcesUtil.init(resourceSet);
@@ -42,10 +42,11 @@ public class ValidationComponent {
         profileRoot.setURI("http://lnu.se/sciuml");
         String NsURI = profileRoot.getDefinition().getNsURI();
         EPackage.Registry.INSTANCE.put(NsURI, profileRoot.getDefinition());
-        String fileName = file.getOriginalFilename();
         assert fileName != null;
         Resource resource = resourceSet.createResource(URI.createURI(fileName));
-        resource.load(file.getInputStream(), null);
+        try (InputStream in = new ByteArrayInputStream(file) ) {
+            resource.load(in, null);
+        }
         if (resource.getContents().isEmpty()) return null;
         Model umlModel = (Model) EcoreUtil.getObjectByType(resource.getContents(), UMLPackage.Literals.MODEL);
         for (ProfileApplication pa : new ArrayList<>(umlModel.getProfileApplications())) {

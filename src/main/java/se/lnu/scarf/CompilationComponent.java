@@ -22,7 +22,7 @@ public class CompilationComponent {
     private static final Logger logger = LoggerFactory.getLogger(CompilationComponent.class);
 
     public int compile(Path baseFolder) throws Exception {
-        logger.info("Compiling the generated code...");
+        logger.info("Launching the compiler and preparing the required dependencies...");
         Path sourceFolder = baseFolder.resolve("src/main/java");
         Path targetFolder = baseFolder.resolve("target/classes");
         String isolatedClasspath = buildTempClasspath(baseFolder);

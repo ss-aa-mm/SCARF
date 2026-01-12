@@ -8,60 +8,100 @@
     <script th:src="@{/js/scarf.js}"></script>
     <title>SCARF</title>
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col">
-
-<header class="bg-white shadow p-4 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-        <img th:src="@{/images/favicon.png}" alt="SCARF Logo" class="w-12 h-12 rounded">
-        <h1 class="text-2xl font-bold text-gray-800">SCARF</h1>
+<body>
+<header class="bg-white border-b border-gray-100 p-4 flex items-center justify-between sticky top-0 z-50">
+  <div class="flex items-center gap-3">
+    <div class="p-1.5 bg-blue-50 rounded-lg">
+      <img th:src="@{/images/favicon.png}" alt="SCARF Logo" class="w-10 h-10 rounded-md">
     </div>
+    <div>
+      <h1 class="text-xl font-extrabold tracking-tight text-gray-900">SCARF</h1>
+      <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest">SaaS Carbon-Aware Reasoning Framework</p>
+    </div>
+  </div>
 </header>
 
-<main class="flex-1 p-6 flex flex-col gap-6">
+<main class="max-w-6xl mx-auto p-8 flex flex-col gap-8">
 
-    <!-- File Selection -->
-    <div class="flex gap-2 items-center">
-        <label for="fileNameDisplay"></label><input id="fileNameDisplay" type="text" placeholder="Select UML Architecture..."
-                                             class="flex-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" readonly>
-        <button id="browseFileBtn"
-                class="px-4 py-2 btn-blue">Browse UML</button>
-        <input type="file" accept=".uml, .uml2" id="fileInput" class="hidden" hidden aria-hidden="true">
-    </div>
-
-    <!-- Distribution Panel -->
-    <div class="p-4 border rounded shadow bg-white">
-        <h2 class="font-semibold text-gray-700 mb-4">Simulation Parameters</h2>
-        <div class="grid grid-cols-7 gap-4 items-center">
-            <label for="distSelect" class="col-span-1 text-gray-600 text-center">Inter-arrival Distribution:</label>
-            <select id="distSelect" class="col-span-2 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Exponential</option>
-                <option>Uniform</option>
-                <option>Constant</option>
-                <option>Erlang</option>
-                <option>Log-normal</option>
-            </select>
-
-            <label id="param1Label" for="param1Field" class="col-span-1 text-gray-600 text-center">Rate:</label>
-            <input id="param1Field" type="number" step="0.01" min="0" class="col-span-1 p-2 border rounded">
-
-            <label id="param2Label" for="param2Field" class="col-span-1 text-gray-600 invisible">Param2:</label>
-            <input id="param2Field" type="number" step="0.01" min="0" class="col-span-1 p-2 border rounded invisible">
+  <section class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+    <label class="block mb-3 text-sm font-semibold text-gray-700">Architecture Description</label>
+    <div class="flex gap-3 items-center">
+      <div class="relative flex-1">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
         </div>
+        <label for="fileNameDisplay" class="hidden"></label><input id="fileNameDisplay" type="text" placeholder="Select UML Architecture (.uml, .uml2)..."
+                                                    class="w-full pl-10 p-2.5 bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500" readonly>
+      </div>
+      <button id="browseFileBtn" class="px-5 py-2.5 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 rounded-lg transition-colors shadow-sm cursor-pointer">
+        Browse Model
+      </button>
+      <input type="file" accept=".uml, .uml2" id="fileInput" class="hidden">
+    </div>
+  </section>
+
+  <section class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+    <div class="flex items-center gap-3 mb-8 border-b border-gray-50 pb-4">
+      <div class="w-1.5 h-6 bg-green-500 rounded-full"></div>
+      <h2 class="font-bold text-gray-800 text-lg">Simulation Parameters</h2>
     </div>
 
-    <!-- Repetitions + Run Button -->
-    <div class="flex gap-4 items-center">
-        <label class="text-gray-700" for="repetitions">Number of simulation repetitions:</label>
-        <input id="repetitions" type="number" value="20" min="2" max="100" class="w-20 p-2 border rounded">
-        <button id="runBtn"
-                class="ml-auto px-6 py-2 btn-green">
-            Create and Run Simulation
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <div class="flex flex-col gap-2">
+        <label for="distSelect" class="text-sm font-semibold text-gray-600">Inter-arrival Distribution</label>
+        <select id="distSelect" class="h-11 bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full px-4 transition-all">
+          <option>Exponential</option>
+          <option>Uniform</option>
+          <option>Constant</option>
+          <option>Erlang</option>
+          <option>Log-normal</option>
+        </select>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label id="param1Label" for="param1Field" class="text-sm font-semibold text-gray-600">Rate</label>
+        <div class="relative">
+          <input id="param1Field" type="number" step="0.01" min="0" placeholder="0.00"
+                 class="h-11 bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full px-4">
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label id="param2Label" for="param2Field" class="text-sm font-semibold text-gray-600 invisible">Placeholder</label>
+        <input id="param2Field" type="number" step="0.01" min="0" placeholder="0.00"
+               class="h-11 bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full px-4 invisible">
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-gray-900 p-8 rounded-2xl shadow-xl text-white">
+    <div class="flex flex-col gap-6">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <label class="text-sm font-semibold text-gray-400" for="repetitions">Simulation Repetitions:</label>
+          <input id="repetitions" type="number" value="20" min="2" max="100"
+                 class="w-20 bg-gray-800 border-none text-white font-bold rounded-lg focus:ring-2 focus:ring-blue-500 p-2">
+        </div>
+        <button id="runBtn" class="px-8 py-3 bg-green-500 hover:bg-green-400 text-gray-900 font-bold rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-green-500/20 cursor-pointer">
+          Execute Simulation
         </button>
-    </div>
+      </div>
 
-    <!-- Console Output -->
-    <label for="consoleOutput"></label><textarea id="consoleOutput" readonly
-                                                 class="flex-1 p-2 border border-gray-300 rounded bg-black text-green-400 font-mono resize-none h-64"></textarea>
+      <div class="space-y-3">
+        <div class="flex justify-between items-end">
+          <span id="progress-label" class="text-xs font-bold uppercase tracking-tighter text-blue-400">System Ready</span>
+          <span id="progress-percent" class="text-2xl font-black text-white">0%</span>
+        </div>
+        <div class="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
+          <div id="progress-bar"
+               class="bg-blue-500 h-full rounded-full transition-all duration-700 ease-out shadow-[0_0_15px_rgba(59,130,246,0.5)]"
+               style="width: 0">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 </main>
 

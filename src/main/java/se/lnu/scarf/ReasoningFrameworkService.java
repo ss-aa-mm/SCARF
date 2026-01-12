@@ -1,9 +1,10 @@
 package se.lnu.scarf;
 
 import org.eclipse.uml2.uml.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import se.lnu.scarf.data.FrameworkResult;
 
 import java.nio.file.Path;
 
@@ -14,33 +15,45 @@ public class ReasoningFrameworkService {
     private final InterpretationComponent interpretationComponent;
     private final CompilationComponent compilationComponent;
     private final ExecutionComponent executionComponent;
+    private final ProgressionStreamer streamer;
+    private static final Logger logger = LoggerFactory.getLogger(ReasoningFrameworkService.class);
 
     public ReasoningFrameworkService(ValidationComponent validationComponent,
                                      InterpretationComponent interpretationComponent,
                                      CompilationComponent compilationComponent,
-                                     ExecutionComponent executionComponent) {
+                                     ExecutionComponent executionComponent,
+                                     ProgressionStreamer streamer) {
         this.validationComponent = validationComponent;
         this.interpretationComponent = interpretationComponent;
         this.compilationComponent = compilationComponent;
         this.executionComponent = executionComponent;
+        this.streamer = streamer;
     }
 
-    public FrameworkResult run(MultipartFile file, Integer rep, String distribution, Double p1, Double p2) {
+    @Async("frameworkExecutor")
+    public void runAsync(byte[] file, String originalFilename, Integer rep, String distribution, Double p1, Double p2) {
         try {
-            Model umlModel = validationComponent.resolveAndValidate(file);
-            if (umlModel == null) return FrameworkResult.failure("The provided UML model could not be resolved or validated");
+            streamer.push("STAGE_VALIDATION", 5, "Validating UML Architecture...");
+            Model umlModel = validationComponent.resolveAndValidate(file, originalFilename);
+            if (umlModel == null) throw new RuntimeException("The provided UML model could not be resolved or validated");
 
+            streamer.push("STAGE_INTERPRETATION", 25, "Running Interpretation...");
             Path compilationBaseDir = interpretationComponent.interpret(umlModel, rep, distribution, p1, p2);
-            if (compilationBaseDir == null) return FrameworkResult.failure("The provided UML model could not be interpreted");
+            if (compilationBaseDir == null) throw new RuntimeException("The provided UML model could not be interpreted");
 
+            streamer.push("STAGE_COMPILATION", 50, "Compiling the generated simulation...");
             int result = compilationComponent.compile(compilationBaseDir);
-            if (result != 0) return FrameworkResult.failure("The generated code compilation failed");
+            if (result != 0) throw new RuntimeException("The generated code compilation failed");
 
+            streamer.push("STAGE_EXECUTION", 75, "Executing the generated simulation for " + rep + " repetitions...");
             executionComponent.execute(compilationBaseDir, interpretationComponent.getMainClassQualifiedName());
-            return FrameworkResult.success("ok");
+
+            streamer.push("SUCCESS", 100, "Reasoning Framework successfully executed!");
 
         } catch (Exception e) {
-            return FrameworkResult.failure(e.getMessage());
+            logger.error(e.getMessage());
+            streamer.push("ERROR", 0, e.getMessage());
         }
+
     }
 }

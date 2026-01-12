@@ -38,9 +38,10 @@ public class ExecutionComponent {
             Class<?> mainClass = Class.forName(mainClassQualifiedName, true, classLoader);
             Method mainMethod = mainClass.getMethod("main", String[].class);
             mainMethod.setAccessible(true);
-            String[] arguments = {};
+            String[] arguments = { baseFolder.toString() };
             logger.info("Executing main method...");
             mainMethod.invoke(null, (Object) arguments);
+            logger.info("Simulation successfully executed!");
         } finally {
             Thread.currentThread().setContextClassLoader(null);
             System.gc();

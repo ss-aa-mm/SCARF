@@ -9,7 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const param2Field = document.getElementById('param2Field');
     const runBtn = document.getElementById('runBtn');
     const repetitions = document.getElementById('repetitions');
-    const out = document.getElementById('consoleOutput');
+    const bar = document.getElementById('progress-bar');
+    const percent = document.getElementById('progress-percent');
+    const label = document.getElementById('progress-label');
 
     browseFileBtn.addEventListener('click', () => {
         fileInput.click();
@@ -32,22 +34,55 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append("param2", isSecondParamRequired ? param2Field.value : 0);
 
         runBtn.disabled = true;
-        runBtn.classList.remove("btn-green");
         runBtn.classList.add("btn-disabled")
+
         try {
             const response = await fetch("/interpretation", {
                 method: 'POST',
                 body: formData
             });
-            if (!response.ok) appendOut(out, "Something unexpected happened!");
-            const text = await response.text();
-            appendOut(out, text);
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(errorText);
+            }
         } catch (err) {
-            appendOut(out, "Failed: " + err.message);
-        } finally {
+            barError(err.message);
             runBtn.disabled = false;
-            runBtn.classList.add("btn-green");
-            runBtn.classList.remove("btn-disabled")
+            runBtn.classList.remove("btn-disabled");
+            return;
+        }
+
+        const eventSource = new EventSource('/progression');
+
+        eventSource.onmessage = (event) => {
+            const data = event.data;
+
+            if(data.startsWith("STAGE_") || data.startsWith("SUCCESS")) {
+                const [_, percentText, labelText] = data.split(":");
+
+                bar.style.width = `${percentText}%`;
+                label.innerText = labelText;
+                percent.innerText = `${percentText}%`;
+                if(data.startsWith("STAGE_"))
+                    bar.classList.add("running-glow");
+                else {
+                    eventSource.close();
+                    bar.classList.remove("running-glow");
+                    label.classList.remove("text-blue-400");
+                    label.classList.add("text-green-400");
+                    bar.classList.remove("bg-blue-500");
+                    bar.classList.add("bg-green-500");
+                    runBtn.disabled = false;
+                    runBtn.classList.remove("btn-disabled");
+                }
+            } else {
+                const [, , labelText] = data.split(":");
+                barError(labelText);
+                eventSource.close();
+                bar.classList.remove("running-glow");
+                runBtn.disabled = false;
+                runBtn.classList.remove("btn-disabled");
+            }
         }
     });
 
@@ -86,9 +121,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
         }
     });
+
+    function barError(message) {
+        label.innerText = message;
+        label.classList.remove("text-blue-400");
+        label.classList.add("text-red-400");
+        bar.classList.remove("bg-blue-500");
+        bar.classList.add("bg-red-500");
+    }
 });
 
-function appendOut(outField, output) {
-    const text = outField.textContent;
-    outField.textContent = text + '\n' + output;
-}
+
