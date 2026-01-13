@@ -1,7 +1,6 @@
 package se.lnu.scarf;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -41,7 +40,7 @@ public class ValidationComponent {
         profileRoot.define();
         profileRoot.setURI("http://lnu.se/sciuml");
         String NsURI = profileRoot.getDefinition().getNsURI();
-        EPackage.Registry.INSTANCE.put(NsURI, profileRoot.getDefinition());
+        resourceSet.getPackageRegistry().put(NsURI, profileRoot.getDefinition());
         assert fileName != null;
         Resource resource = resourceSet.createResource(URI.createURI(fileName));
         try (InputStream in = new ByteArrayInputStream(file) ) {

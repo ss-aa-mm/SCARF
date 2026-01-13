@@ -40,6 +40,7 @@ public class InterpretationComponent {
         );
         acceleoGenerator.doGenerate(new BasicMonitor());
         logger.info("Code generation complete.");
+        acceleoGenerator.clear();
         return baseDir;
     }
 

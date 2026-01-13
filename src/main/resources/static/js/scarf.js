@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const ERROR_PREFIX = "ERROR:0";
     const fileInput = document.getElementById("fileInput");
     const browseFileBtn = document.getElementById("browseFileBtn");
     const fileNameDisplay = document.getElementById("fileNameDisplay");
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bar = document.getElementById('progress-bar');
     const percent = document.getElementById('progress-percent');
     const label = document.getElementById('progress-label');
+    const buttons = [runBtn, browseFileBtn];
 
     browseFileBtn.addEventListener('click', () => {
         fileInput.click();
@@ -33,57 +35,27 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append("param1", param1Field.value);
         formData.append("param2", isSecondParamRequired ? param2Field.value : 0);
 
-        runBtn.disabled = true;
-        runBtn.classList.add("btn-disabled")
-
-        try {
-            const response = await fetch("/interpretation", {
-                method: 'POST',
-                body: formData
-            });
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(errorText);
-            }
-        } catch (err) {
-            barError(err.message);
-            runBtn.disabled = false;
-            runBtn.classList.remove("btn-disabled");
+        setEnabled(buttons, false);
+        const response = await fetch("/interpretation", {
+            method: 'POST',
+            body: formData
+        });
+        if (!response.ok) {
+            const errorText = await response.text();
+            updateSimState(ERROR_PREFIX + errorText);
+            setEnabled(buttons, true);
             return;
         }
 
         const eventSource = new EventSource('/progression');
 
         eventSource.onmessage = (event) => {
-            const data = event.data;
-
-            if(data.startsWith("STAGE_") || data.startsWith("SUCCESS")) {
-                const [_, percentText, labelText] = data.split(":");
-
-                bar.style.width = `${percentText}%`;
-                label.innerText = labelText;
-                percent.innerText = `${percentText}%`;
-                if(data.startsWith("STAGE_"))
-                    bar.classList.add("running-glow");
-                else {
-                    eventSource.close();
-                    bar.classList.remove("running-glow");
-                    label.classList.remove("text-blue-400");
-                    label.classList.add("text-green-400");
-                    bar.classList.remove("bg-blue-500");
-                    bar.classList.add("bg-green-500");
-                    runBtn.disabled = false;
-                    runBtn.classList.remove("btn-disabled");
-                }
-            } else {
-                const [, , labelText] = data.split(":");
-                barError(labelText);
-                eventSource.close();
-                bar.classList.remove("running-glow");
-                runBtn.disabled = false;
-                runBtn.classList.remove("btn-disabled");
-            }
+            updateSimState(event.data, eventSource);
         }
+        eventSource.onerror = (error) => {
+            updateSimState(ERROR_PREFIX + error?.data ?? "Something unexpected happened!");
+        }
+
     });
 
     fileInput.addEventListener('change', (evt) => {
@@ -122,12 +94,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function barError(message) {
-        label.innerText = message;
-        label.classList.remove("text-blue-400");
-        label.classList.add("text-red-400");
-        bar.classList.remove("bg-blue-500");
-        bar.classList.add("bg-red-500");
+    function updateSimState(eventData, evtSource = null) {
+        const [header, percentText, ...rest] = eventData.split(":");
+        const labelText = rest.join(":");
+        const stages = [
+            [h => h.startsWith("STAGE_"),
+                (p, l) => {
+                    barColor("blue");
+                    bar.style.width = `${p}%`;
+                    label.innerText = l;
+                    percent.innerText = `${p}%`;
+                }],
+            [h => h.startsWith("SUCCESS"),
+                (p, l) => {
+                    barColor("green");
+                    bar.style.width = `${p}%`;
+                    label.innerText = l;
+                    percent.innerText = `${p}%`;
+                    setEnabled(buttons, true);
+                    evtSource.close();
+                }],
+            [h => h.startsWith("ERROR"),
+                (p, l) => {
+                    barColor("red");
+                    label.innerText = l;
+                    setEnabled(buttons, true);
+                    if (evtSource != null) evtSource.close();
+                }],
+        ];
+        const action = stages.find(([predicate]) => predicate(header));
+        action?.[1](percentText, labelText);
+    }
+
+    function setEnabled(buttons, enabled) {
+        buttons.forEach((btn) => {
+            btn.disabled = !enabled;
+            [...btn.classList].forEach((cls) => {
+                if (!enabled && cls.startsWith("btn-") && !cls.endsWith("-disabled")) {
+                    btn.classList.replace(cls, `${cls}-disabled`);
+                } else if (enabled && cls.endsWith("-disabled")) {
+                    btn.classList.replace(cls, cls.replace(/-disabled$/, ''));
+                }
+            });
+        });
+    }
+
+    function barColor(color) {
+        [bar, label].forEach(el => {
+            [...el.classList].forEach(cls => {
+                const match = cls.match(/^(text|bg)-[^-]+-(.+)$/);
+                if (match) {
+                    el.classList.replace(cls, `${match[1]}-${color}-${match[2]}`);
+                }
+            });
+        });
     }
 });
 

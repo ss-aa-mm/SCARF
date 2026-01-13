@@ -35,6 +35,13 @@ public class SimulationGenerator extends AbstractAcceleoGenerator {
         initialize(model, targetFolder, arguments);
     }
 
+    public void clear() {
+        this.module = null;
+        this.targetFolder = null;
+        this.model = null;
+        this.generationArguments = null;
+    }
+
     @Override
     public void initialize(EObject model, File targetFolder, List<?> arguments) throws IOException{
         try {
@@ -47,8 +54,8 @@ public class SimulationGenerator extends AbstractAcceleoGenerator {
             Files.copy(is, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             URI moduleURI = URI.createFileURI(tempFile.getAbsolutePath());
             MtlPackage.eINSTANCE.eClass();
-            Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("emtl", new XMIResourceFactoryImpl());
             ResourceSet rs = new ResourceSetImpl();
+            rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emtl", new XMIResourceFactoryImpl());
             Resource emtlResource = rs.getResource(moduleURI, true);
 
             this.module = (Module) emtlResource.getContents().get(0);

@@ -26,7 +26,7 @@ public class AsyncConfig implements WebMvcConfigurer {
         executor.setThreadNamePrefix("SCARF-frameworkExecutor-");
         executor.setWaitForTasksToCompleteOnShutdown(true);
         executor.setAwaitTerminationSeconds(15);
-        executor.setAllowCoreThreadTimeOut(false);
+        executor.setAllowCoreThreadTimeOut(true);
         executor.initialize();
         executor.getThreadPoolExecutor().prestartCoreThread();
         return executor;

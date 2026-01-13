@@ -2,13 +2,23 @@
 @import "flowbite/src/themes/default.css";
 
 .btn-blue {
-    @apply cursor-pointer bg-blue-600 text-white rounded hover:bg-blue-700 transition
+    @apply text-sm font-medium text-white bg-blue-700 hover:bg-blue-800
+    rounded-lg transition-colors shadow-sm cursor-pointer
 }
 
 .btn-green {
-    @apply cursor-pointer bg-green-600 text-white rounded hover:bg-green-700 transition
+    @apply bg-green-500 hover:bg-green-400
+    text-gray-900 font-bold rounded-xl transition-all transform
+    hover:scale-105 shadow-lg shadow-green-500/20 cursor-pointer
 }
 
-.btn-disabled {
-    @apply cursor-not-allowed bg-gray-600 text-zinc-200 rounded
+.btn-blue-disabled {
+    @apply cursor-not-allowed text-sm font-medium text-white bg-gray-700 hover:bg-gray-800
+    rounded-lg transition-colors shadow-sm
+}
+
+.btn-green-disabled {
+    @apply bg-gray-500 hover:bg-gray-400
+    text-gray-900 font-bold rounded-xl transition-all transform
+    hover:scale-105 shadow-lg shadow-gray-500/20 cursor-not-allowed
 }
