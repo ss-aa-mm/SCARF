@@ -31,7 +31,7 @@ public class InterpretationComponent {
                 Character.toUpperCase(packageName.charAt(0)) +
                 packageName.substring(1);
         File sourceFolder = new File(targetFolder, "src/main/java");
-        File packageFolder = new File(sourceFolder,  packageName);
+        File packageFolder = new File(sourceFolder, packageName);
         if(!packageFolder.mkdirs() && !packageFolder.exists()) throw new IOException("Could not create folder "
                 + packageFolder.getAbsolutePath());
 

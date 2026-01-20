@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const ERROR_PREFIX = "ERROR:0";
+    const ERROR_PREFIX = "ERROR:0:";
     const fileInput = document.getElementById("fileInput");
     const browseFileBtn = document.getElementById("browseFileBtn");
     const fileNameDisplay = document.getElementById("fileNameDisplay");
