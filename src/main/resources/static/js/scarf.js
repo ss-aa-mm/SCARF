@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateSimState(event.data, eventSource);
         }
         eventSource.onerror = (error) => {
-            updateSimState(ERROR_PREFIX + error?.data ?? "Something unexpected happened!");
+            updateSimState(ERROR_PREFIX + (error?.data ?? "Something unexpected happened!"));
         }
 
     });
