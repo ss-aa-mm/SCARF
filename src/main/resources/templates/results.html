@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/images/favicon.ico}" rel="icon" type="image/x-icon"/>
+  <link th:href="@{/images/favicon.png}" rel="icon" type="image/png" sizes="32x32"/>
+  <link th:href="@{/css/output.css}" rel="stylesheet"/>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <title>SCARF - Simulation Results</title>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<header class="bg-white border-b border-gray-100 p-4 flex items-center justify-between sticky top-0 z-50">
+  <div class="flex items-center gap-3">
+    <div class="p-1.5 bg-blue-50 rounded-lg">
+      <img th:src="@{/images/favicon.png}" alt="SCARF Logo" class="w-10 h-10 rounded-md">
+    </div>
+    <div>
+      <h1 class="text-xl font-extrabold tracking-tight text-gray-900">SCARF</h1>
+      <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest">SaaS Carbon-Aware Reasoning Framework</p>
+    </div>
+  </div>
+  <div class="flex items-center gap-4">
+        <span class="text-xs font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+            Simulation ID: <span class="font-bold text-gray-800" th:text="${simId}">ID_PLACEHOLDER</span>
+        </span>
+    <a th:href="@{/}" class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors">← Back to Setup</a>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto p-8 flex flex-col gap-8">
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+      <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Total Interactions</p>
+      <h3 class="text-3xl font-black text-gray-900" id="totalInteractionsCount">--</h3>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+      <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Active Model</p>
+      <h3 class="text-2xl font-black text-blue-600" id="activeModelLabel">TEADS SCI</h3>
+    </div>
+    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+      <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Repetitions Analyzed</p>
+      <h3 class="text-3xl font-black text-gray-900" id="repsCount">--</h3>
+    </div>
+  </div>
+
+  <section class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+    <div class="flex flex-col md:flex-row items-center justify-between mb-8 pb-6 border-b border-gray-50">
+      <div class="flex items-center gap-3">
+        <div class="w-1.5 h-6 bg-blue-500 rounded-full"></div>
+        <div>
+          <h2 class="font-bold text-gray-800 text-lg">Carbon Analysis per Interaction</h2>
+          <p class="text-xs text-gray-500">Comparing SCI distribution across User Tiers</p>
+        </div>
+      </div>
+
+      <div class="inline-flex rounded-lg shadow-sm bg-gray-100 p-1 mt-4 md:mt-0" role="group">
+        <button onclick="changeModel('teads_sci')" id="btn-teads" class="px-5 py-2 text-xs font-bold uppercase tracking-tight rounded-md transition-all bg-white text-blue-600 shadow-sm">
+          Teads Model
+        </button>
+        <button onclick="changeModel('power_model_sci')" id="btn-power" class="px-5 py-2 text-xs font-bold uppercase tracking-tight rounded-md transition-all text-gray-500 hover:text-gray-700">
+          Power Model
+        </button>
+      </div>
+    </div>
+
+    <div id="plot-area" class="w-full h-[550px]"></div>
+  </section>
+
+  <section class="bg-gray-50 border border-gray-100 p-6 rounded-xl text-center">
+    <p class="text-sm text-gray-500 italic">
+      Visualizing variances across repetitions allows for verifying SCARF Fairness and Status metrics.
+    </p>
+  </section>
+
+</main>
+</body>
+</html>

@@ -15,4 +15,10 @@ public class ScarfController {
         if(id != null) model.addAttribute("id", id);
         return "index";
     }
+
+    @GetMapping("/results/{resultId}")
+    public String results(@PathVariable(value = "resultId", required = false) String resultId, Model model) {
+        if(resultId != null) model.addAttribute("resultId", resultId);
+        return "results";
+    }
 }
