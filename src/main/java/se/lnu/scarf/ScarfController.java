@@ -4,21 +4,37 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 public class ScarfController {
-    @GetMapping({"/", "/{id}"})
-    public String index(
-            @PathVariable(value = "id", required = false) String id,
-            Model model
-    ) {
-        if(id != null) model.addAttribute("id", id);
+    @GetMapping("/")
+    public String index() {
         return "index";
     }
 
     @GetMapping("/results/{resultId}")
-    public String results(@PathVariable(value = "resultId", required = false) String resultId, Model model) {
-        if(resultId != null) model.addAttribute("resultId", resultId);
-        return "results";
+    public String results(@PathVariable(value = "resultId") String resultId, Model model, RedirectAttributes redirectAttributes) {
+        Path resultPath = Paths.get("results/" + resultId + ".json");
+        if(!Files.exists(resultPath)) {
+            redirectAttributes.addFlashAttribute("errorHeader", "Resource not found");
+            redirectAttributes.addFlashAttribute("errorMessage", "The selected simulation result does not exist!");
+            return "redirect:/error";
+        }
+        try {
+            String jsonData = Files.readString(resultPath);
+            model.addAttribute("resultId", resultId);
+            model.addAttribute("jsonData", jsonData);
+            return "results";
+        } catch (IOException e) {
+            redirectAttributes.addFlashAttribute("errorHeader", "Could not read result file");
+            redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong when reading the simulation result!");
+            return "redirect:/error";
+        }
     }
 }

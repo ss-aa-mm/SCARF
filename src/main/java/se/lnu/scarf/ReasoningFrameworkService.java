@@ -15,6 +15,7 @@ public class ReasoningFrameworkService {
     private final InterpretationComponent interpretationComponent;
     private final CompilationComponent compilationComponent;
     private final ExecutionComponent executionComponent;
+    private final ResultsCreationComponent resultsCreationComponent;
     private final ProgressionStreamer streamer;
     private static final Logger logger = LoggerFactory.getLogger(ReasoningFrameworkService.class);
 
@@ -22,11 +23,13 @@ public class ReasoningFrameworkService {
                                      InterpretationComponent interpretationComponent,
                                      CompilationComponent compilationComponent,
                                      ExecutionComponent executionComponent,
+                                     ResultsCreationComponent resultsCreationComponent,
                                      ProgressionStreamer streamer) {
         this.validationComponent = validationComponent;
         this.interpretationComponent = interpretationComponent;
         this.compilationComponent = compilationComponent;
         this.executionComponent = executionComponent;
+        this.resultsCreationComponent = resultsCreationComponent;
         this.streamer = streamer;
     }
 
@@ -47,6 +50,9 @@ public class ReasoningFrameworkService {
 
             streamer.push("STAGE_EXECUTION", 75, "Executing the generated simulation for " + rep + " repetitions...");
             executionComponent.execute(compilationBaseDir, interpretationComponent.getMainClassQualifiedName());
+
+            streamer.push("STAGE_SAVING_RESULTS", 95, "Saving the simulation results...");
+            resultsCreationComponent.saveResults(compilationBaseDir, interpretationComponent.getPackageName());
 
             streamer.push("SUCCESS", 100, "Reasoning Framework successfully executed!");
 

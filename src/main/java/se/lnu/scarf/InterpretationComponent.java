@@ -20,13 +20,14 @@ public class InterpretationComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(InterpretationComponent.class);
     private String mainClassQualifiedName;
+    private String packageName;
 
     public Path interpret(Model umlModel, Integer rep, String distribution, Double p1, Double p2) throws IOException {
         logger.info("Interpreting the UML model...");
         Path baseDir = Files.createTempDirectory("scarf-gen-src");
         File targetFolder = baseDir.toFile();
         targetFolder.deleteOnExit();
-        String packageName =  cleanModelName(umlModel.getName());
+        packageName =  cleanModelName(umlModel.getName());
         mainClassQualifiedName = packageName + "." +
                 Character.toUpperCase(packageName.charAt(0)) +
                 packageName.substring(1);

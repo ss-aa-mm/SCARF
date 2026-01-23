@@ -43,7 +43,7 @@ public class ExecutionComponent {
             mainMethod.invoke(null, (Object) arguments);
             logger.info("Simulation successfully executed!");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error executing main method", e);
             throw e;
         } finally {
             Thread.currentThread().setContextClassLoader(null);
