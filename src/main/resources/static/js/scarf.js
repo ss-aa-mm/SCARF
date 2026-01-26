@@ -107,12 +107,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 }],
             [h => h.startsWith("SUCCESS"),
                 (p, l) => {
+                    const [displayLabel, simId] = l.split("|");
                     barColor("green");
                     bar.style.width = `${p}%`;
-                    label.innerText = l;
+                    label.innerText = displayLabel;
                     percent.innerText = `${p}%`;
-                    setEnabled(buttons, true);
                     evtSource.close();
+                    if (simId) {
+                        setTimeout(() => {
+                            window.location.href = `/results/${simId}`;
+                        }, 1000);
+                    } else {
+                        setEnabled(buttons, true);
+                    }
                 }],
             [h => h.startsWith("ERROR"),
                 (p, l) => {

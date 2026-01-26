@@ -1,5 +1,7 @@
 package se.lnu.scarf;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,12 @@ public class ScarfController {
         }
         try {
             String jsonData = Files.readString(resultPath);
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode rootNode = mapper.readTree(jsonData);
+            JsonNode metadata = rootNode.path("metadata");
+            model.addAttribute("modelName", metadata.path("modelName").asText());
+            model.addAttribute("replications", metadata.path("replications").asText());
+            model.addAttribute("arrivalDistributionDetails", metadata.path("arrivalDistributionDetails").asText());
             model.addAttribute("resultId", resultId);
             model.addAttribute("jsonData", jsonData);
             return "results";

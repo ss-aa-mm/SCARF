@@ -17,6 +17,7 @@ public class ReasoningFrameworkService {
     private final ExecutionComponent executionComponent;
     private final ResultsCreationComponent resultsCreationComponent;
     private final ProgressionStreamer streamer;
+    private static final String DELIMITER = "|";
     private static final Logger logger = LoggerFactory.getLogger(ReasoningFrameworkService.class);
 
     public ReasoningFrameworkService(ValidationComponent validationComponent,
@@ -52,9 +53,9 @@ public class ReasoningFrameworkService {
             executionComponent.execute(compilationBaseDir, interpretationComponent.getMainClassQualifiedName());
 
             streamer.push("STAGE_SAVING_RESULTS", 95, "Saving the simulation results...");
-            resultsCreationComponent.saveResults(compilationBaseDir, interpretationComponent.getPackageName());
+            String simId = resultsCreationComponent.saveResults(compilationBaseDir, interpretationComponent.getPackageName());
 
-            streamer.push("SUCCESS", 100, "Reasoning Framework successfully executed!");
+            streamer.push("SUCCESS", 100, "Reasoning Framework successfully executed!" + DELIMITER + simId);
 
         } catch (Exception e) {
             logger.error(e.getMessage());

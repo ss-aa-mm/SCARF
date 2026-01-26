@@ -31,17 +31,17 @@
 <main class="max-w-6xl mx-auto p-8 flex flex-col gap-8">
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-      <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Total Interactions</p>
-      <h3 class="text-3xl font-black text-gray-900" id="totalInteractionsCount">--</h3>
+    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm min-w-0">
+      <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Model Name</p>
+      <h3 class="text-xl md:text-2xl font-black text-gray-900 break-all whitespace-normal [overflow-wrap:anywhere]" id="totalInteractionsCount" th:text="${modelName}">--</h3>
     </div>
-    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-      <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Active Model</p>
-      <h3 class="text-2xl font-black text-blue-600" id="activeModelLabel">TEADS SCI</h3>
+    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm min-w-0">
+      <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Inter-arrival distribution details</p>
+      <h3 class="text-xl md:text-2xl font-black text-gray-900 break-all whitespace-normal [overflow-wrap:anywhere]" id="activeModelLabel" th:text="${arrivalDistributionDetails}">--</h3>
     </div>
-    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm min-w-0">
       <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Repetitions Analyzed</p>
-      <h3 class="text-3xl font-black text-gray-900" id="repsCount">--</h3>
+      <h3 class="text-xl md:text-2xl font-black text-gray-900 break-all whitespace-normal [overflow-wrap:anywhere]" id="repsCount" th:text="${replications}">--</h3>
     </div>
   </div>
 

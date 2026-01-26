@@ -14,7 +14,7 @@ import java.nio.file.StandardCopyOption;
 public class ResultsCreationComponent{
     private static final Logger logger = LoggerFactory.getLogger(ResultsCreationComponent.class);
 
-    public void saveResults(Path resultsDirectory, String packageName) throws IOException {
+    public String saveResults(Path resultsDirectory, String packageName) throws IOException {
         logger.info("Saving simulation results...");
         Path persistentDirectory = Paths.get("results").toAbsolutePath();
         if (!Files.exists(persistentDirectory)) Files.createDirectories(persistentDirectory);
@@ -26,5 +26,6 @@ public class ResultsCreationComponent{
                 StandardCopyOption.REPLACE_EXISTING
         );
         logger.info("{} successfully created!", simulationId + ".json");
+        return simulationId;
     }
 }
