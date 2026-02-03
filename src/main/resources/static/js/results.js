@@ -128,3 +128,15 @@ window.changeModel = function(type, graph) {
 
     graph === 'i' ? renderInteractionsPlot(type) : renderDevicesPlot(type);
 };
+
+window.downloadPlot = function(plotType) {
+    const plotElement = document.getElementById(plotType === 'interactions' ? 'plot-i-area' : 'plot-d-area');
+    const options = {
+        format: 'png',
+        width: 525,
+        height: 350,
+        scale: 4,
+        filename: plotType === 'interactions' ? 'carbonPerInteraction' : 'carbonPerDevice'
+    };
+    Plotly.downloadImage(plotElement, options);
+}
