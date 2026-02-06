@@ -27,6 +27,12 @@ public class Config implements WebMvcConfigurer {
         executor.setAllowCoreThreadTimeOut(true);
         executor.setKeepAliveSeconds(1);
         executor.setWaitForTasksToCompleteOnShutdown(false);
+        executor.setThreadFactory(r -> {
+            Thread t = new Thread(r);
+            t.setDaemon(true);
+            t.setName("SCARF-frameworkExecutor-" + t.getId());
+            return t;
+        });
         executor.initialize();
         executor.getThreadPoolExecutor().prestartCoreThread();
         return executor;
