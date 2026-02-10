@@ -44,6 +44,7 @@ public class ReasoningFrameworkService {
             streamer.push("STAGE_INTERPRETATION", 25, "Running Interpretation...");
             Path compilationBaseDir = interpretationComponent.interpret(umlModel, rep, distribution, p1, p2);
             if (compilationBaseDir == null) throw new RuntimeException("The provided UML model could not be interpreted");
+            validationComponent.clearResourceSet();
 
             streamer.push("STAGE_COMPILATION", 50, "Compiling the generated simulation...");
             int result = compilationComponent.compile(compilationBaseDir);

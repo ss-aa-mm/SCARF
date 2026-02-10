@@ -15,11 +15,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SimulationGenerator extends AbstractAcceleoGenerator {
     public static final String MODULE_FILE_NAME = "/org/lnu/cloudSimCreator/main";
     public static final String[] TEMPLATE_NAMES = { "projectGenerator" };
+    private final ResourceSet rs = new ResourceSetImpl();
 
     @Override
     public String getModuleName() {
@@ -40,6 +42,12 @@ public class SimulationGenerator extends AbstractAcceleoGenerator {
         this.targetFolder = null;
         this.model = null;
         this.generationArguments = null;
+        for (Resource res : new ArrayList<>(this.rs.getResources())) {
+            res.unload();
+        }
+        rs.getResources().clear();
+        rs.eAdapters().clear();
+        rs.setResourceFactoryRegistry(null);
     }
 
     @Override
@@ -54,7 +62,6 @@ public class SimulationGenerator extends AbstractAcceleoGenerator {
             Files.copy(is, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             URI moduleURI = URI.createFileURI(tempFile.getAbsolutePath());
             MtlPackage.eINSTANCE.eClass();
-            ResourceSet rs = new ResourceSetImpl();
             rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emtl", new XMIResourceFactoryImpl());
             Resource emtlResource = rs.getResource(moduleURI, true);
 

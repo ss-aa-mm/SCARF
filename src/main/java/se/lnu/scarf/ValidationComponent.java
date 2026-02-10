@@ -24,10 +24,19 @@ import java.util.ArrayList;
 public class ValidationComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(ValidationComponent.class);
+    private final ResourceSet resourceSet = new ResourceSetImpl();
+
+    public void clearResourceSet() {
+        for (Resource res : new ArrayList<>(this.resourceSet.getResources())) {
+            res.unload();
+        }
+        resourceSet.getResources().clear();
+        resourceSet.eAdapters().clear();
+        resourceSet.setResourceFactoryRegistry(null);
+    }
 
     public Model resolveAndValidate(byte[] file, String fileName) throws IOException {
         logger.info("Starting profile resolution and model validation...");
-        ResourceSet resourceSet = new ResourceSetImpl();
         UMLResourcesUtil.init(resourceSet);
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("uml", new XMIResourceFactoryImpl());
         URI profileSampleURI = URI.createURI("sci-uml.profile.uml");

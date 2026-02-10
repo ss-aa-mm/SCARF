@@ -1,5 +1,17 @@
 let currentModel_i = 'teads_sci';
 let currentModel_d = 'teads_sci';
+const colors = [
+    '#1f77b4',  // muted blue
+    '#ff7f0e',  // safety orange
+    '#2ca02c',  // cooked asparagus green
+    '#d62728',  // brick red
+    '#9467bd',  // muted purple
+    '#8c564b',  // chestnut brown
+    '#e377c2',  // raspberry yogurt pink
+    '#7f7f7f',  // middle gray
+    '#bcbd22',  // curry yellow-green
+    '#17becf'   // blue-teal
+];
 
 document.addEventListener('DOMContentLoaded', () => {
     if (!window.SCARF_DATA) {
@@ -14,40 +26,74 @@ function renderInteractionsPlot(modelType) {
     const interactions = window.SCARF_DATA.interactions;
     const keys = Object.keys(interactions);
     const tiers = [...new Set(keys.map(k => k.split('|')[1]))];
+    const interactionNames = [...new Set(keys.map(k => k.split('|')[0]))];
 
-    const traces = tiers.map(tier => {
-        const trace = {
-            x: [],
-            y: [],
-            name: tier.toUpperCase(),
-            type: 'box',
-            boxpoints: 'all',
-            jitter: 0.3,
-            pointpos: -1.8,
-            marker: { size: 3, opacity: 0.6 }
-        };
+    const traces = [];
 
-        keys.forEach(key => {
-            const [name, t] = key.split('|');
-            if (t === tier) {
-                interactions[key][modelType].forEach(val => {
-                    trace.x.push(name);
-                    trace.y.push(val);
+    tiers.forEach((tier, idx) => {
+        const color = colors[idx % tiers.length]
+        const xLabels = [];
+        const yMeans = [];
+        const yErrors = [];
+        const callCounts = [];
+
+        interactionNames.forEach(name => {
+            const key = `${name}|${tier}`;
+            const repetitions = interactions[key];
+
+            if (repetitions && repetitions.length > 0) {
+                const repTotals = repetitions.map(rep => {
+                    const values = rep[modelType];
+                    return values.reduce((sum, val) => sum + val, 0);
                 });
+
+                const totalCallsAcrossReps = repetitions.reduce((acc, rep) =>
+                    acc + rep['service_time'].length, 0
+                );
+                const avgCalls = totalCallsAcrossReps / repetitions.length;
+
+                const n = repTotals.length;
+                const mean = repTotals.reduce((a, b) => a + b, 0) / n;
+                const stdDev = Math.sqrt(repTotals.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b, 0) / n);
+
+                xLabels.push(name);
+                yMeans.push(mean);
+                yErrors.push(stdDev);
+                callCounts.push(avgCalls.toFixed(0));
             }
         });
-        return trace;
+        traces.push({
+            x: xLabels,
+            y: yMeans,
+            name: tier.toUpperCase(),
+            type: 'bar',
+            offsetgroup: tier,
+            legendgroup: tier,
+            text: callCounts,
+            textposition: 'outside',
+            textfont: { size : 10, color: color },
+            cliponaxis: false,
+            marker: { opacity: 0.7 , color: color },
+            error_y: {
+                type: 'data',
+                array: yErrors,
+                visible: true,
+                thickness: 1.5,
+                width: 3
+            }
+        });
     });
 
     const layout = {
         template: 'plotly_white',
-        boxmode: 'group',
+        barmode: 'group',
         font: { family: 'Inter, sans-serif' },
         margin: { t: 20, b: 60, l: 60, r: 20 },
         legend: { orientation: 'h', y: -0.2, x: 0.5, xanchor: 'center' },
         xaxis: { tickfont: { size: 11, color: '#4b5563' } },
         yaxis: {
-            title: 'SCI (gCO2eq / instruction)',
+            title: ' Total Accumulated SCI (gCO2eq)',
+            ticksuffix: ' g',
             gridcolor: '#f3f4f6',
             zeroline: false
         }
@@ -59,31 +105,41 @@ function renderInteractionsPlot(modelType) {
 
 function renderDevicesPlot(modelType) {
     const devices = window.SCARF_DATA.devices;
+    const deviceNames = Object.keys(devices);
     const traces = [];
+    const yValues = modelType === 'teads_sci' ? 'average_teads_sci' : 'average_power_model_sci';
 
-    const colors = ['#3b82f6', '#10b981', '#ef4444', '#f59e0b', '#8b5cf6', '#06b6d4'];
+    deviceNames.forEach((deviceName, deviceIndex) => {
+        const seriesList = devices[deviceName];
+        if(!seriesList || seriesList.length === 0) return;
+        const hostColor = colors[colors.length - 1 - (deviceIndex % colors.length)];
 
-    Object.entries(devices).forEach(([hostName, seriesList], hostIndex) => {
-        const hostColor = colors[hostIndex % colors.length];
-        const yValues = modelType === 'teads_sci' ? 'average_teads_sci' : 'average_power_model_sci';
+        const tss = seriesList[0]['timestamps'];
+        const numReps = seriesList.length;
+        const avgValues = tss.map((_, timeIdx) => {
+            const sum = seriesList.reduce((acc, rep) => acc + (rep[yValues][timeIdx] || 0), 0);
+            return sum / numReps;
+        });
 
-        seriesList.forEach((series, repIndex) => {
+        let runningTot = 0;
+        const cumulativeAvgValues = avgValues.map(val => {
+            runningTot += val;
+            return runningTot;
+        });
 
-            traces.push({
-                x: series.timestamps,
-                y: series[yValues],
-                mode: 'lines',
-                name: `${hostName} (Rep ${repIndex + 1})`,
-                legendgroup: hostName,
-                showlegend: repIndex === 0,
-                line: {
-                    width: 1.5,
-                    color: hostColor,
-                    shape: 'linear'
-                },
-                opacity: seriesList.length > 1 ? 0.4 : 1,
-                hovertemplate: `<b>${hostName}</b><br>Time: %{x}s<br>SCI: %{y:.4f}<extra></extra>`
-            });
+        traces.push({
+            x: tss,
+            y: cumulativeAvgValues,
+            mode: 'lines',
+            type: 'scatter',
+            stackgroup: 'one',
+            name: deviceName,
+            line: {
+                width: 2,
+                color: hostColor,
+                shape: 'linear'
+            },
+            hovertemplate: `<b>${deviceName}</b><br>Time: %{x}s<br>Total SCI: %{y:.4f}<extra></extra>`
         });
     });
 
@@ -97,12 +153,12 @@ function renderDevicesPlot(modelType) {
         xaxis: {
             title: 'Simulation Time (s)',
             gridcolor: '#f3f4f6',
-            linecolor: '#e5e7eb',
-            tickfont: { size: 11, color: '#4b5563' }
+            ticksuffix: ' s'
         },
         yaxis: {
-            title: modelType === 'teads' ? 'SCI (Teads gCO2eq/s)' : 'SCI (PowerModel gCO2eq/s)',
+            title: modelType === 'teads' ? 'SCI (Teads gCO2eq)' : 'SCI (PowerModel gCO2eq)',
             gridcolor: '#f3f4f6',
+            ticksuffix: ' g',
             zeroline: false
         }
     };
