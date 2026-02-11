@@ -1,5 +1,5 @@
-let currentModel_i = 'teads_sci';
-let currentModel_d = 'teads_sci';
+let currentModel_i = ['teads', 'to'];
+let currentModel_d = ['teads', 'to'];
 const colors = [
     '#1f77b4',  // muted blue
     '#ff7f0e',  // safety orange
@@ -18,15 +18,142 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("No simulation data found.");
         return;
     }
-    renderInteractionsPlot('teads_sci');
-    renderDevicesPlot('teads_sci');
+    renderInteractionsPlot('to', 'teads');
+    renderDevicesPlot('to', 'teads');
 });
 
-function renderInteractionsPlot(modelType) {
+function renderEcoPerformanceROI(modelType) {
+    const interactionsMap = window.SCARF_DATA.interactions;
+    const keys = Object.keys(interactionsMap);
+    const tiers = [...new Set(keys.map(k => k.split('|')[1]))];
+    const interactionNames = [...new Set(keys.map(k => k.split('|')[0]))];
+
+    const traces = [];
+    const connectors = {};
+
+    tiers.forEach((tier, index) => {
+        const xLatency = [];
+        const yCarbonReq = [];
+        const sizes = [];
+        const labels = [];
+
+        interactionNames.forEach(name => {
+            const key = `${name}|${tier}`;
+            const repetitions = interactionsMap[key];
+
+            if (repetitions && repetitions.length > 0) {
+                let totalCarbon = 0;
+                let totalTime = 0;
+                let totalCalls = 0;
+
+                repetitions.forEach(rep => {
+                    const modelKey = modelType === 'teads' ? 'teads_sci' : 'power_model_sci';
+                    totalCarbon += rep[modelKey].reduce((a, b) => a + b, 0);
+
+                    totalTime += rep['service_time'].reduce((a, b) => a + b, 0);
+                    totalCalls += rep['service_time'].length;
+                });
+
+                const avgLatency = totalTime / totalCalls;
+                const avgCarbonPerReq = totalCarbon / totalCalls;
+                const avgTrafficPerRep = totalCalls / repetitions.length;
+
+                xLatency.push(avgLatency);
+                yCarbonReq.push(avgCarbonPerReq);
+                sizes.push(Math.cbrt(avgTrafficPerRep));
+                labels.push(name);
+                if (!connectors[name]) connectors[name] = { x: [], y: [] };
+                connectors[name].x.push(avgLatency);
+                connectors[name].y.push(avgCarbonPerReq);
+            }
+        });
+
+        traces.push({
+            x: xLatency,
+            y: yCarbonReq,
+            name: tier.toUpperCase(),
+            text: labels,
+            mode: 'markers',
+            marker: {
+                size: sizes,
+                color: colors[index % colors.length],
+                opacity: 0.6,
+                line: { width: 1, color: 'rgb(255, 255, 255)' }
+            },
+            hovertemplate:
+                `<b>%{text} (${tier})</b><br>` +
+                `Average Response Time: %{x:.4f}<br>` +
+                `Carbon/Interaction: %{y:.6f}<br>` +
+                `Average Simulation Traffic: %{marker.size:.2f}<extra></extra>`
+        });
+    });
+
+    Object.entries(connectors).forEach(([_, traceInfo]) => {
+        traces.push({
+            x: traceInfo.x,
+            y: traceInfo.y,
+            mode: 'lines',
+            line: { color: '#000000', width: 1, dash: 'dot'},
+            showlegend: false,
+            hoverinfo: 'skip'
+        });
+    });
+
+    const layout = {
+        title: 'Interaction ROI: Latency vs. Carbon Cost',
+        template: 'plotly_white',
+        xaxis: {
+            title: 'Average Response Time (s)',
+            gridcolor: '#f3f4f6',
+            ticksuffix: ' s'
+        },
+        yaxis: {
+            title: 'Carbon Intensity (gCO2eq / Interaction)',
+            gridcolor: '#f3f4f6',
+            ticksuffix: ' g'
+        },
+        hovermode: 'closest',
+        showlegend: true,
+        legend: { orientation: 'h', y: -0.2, x: 0.5, xanchor: 'center' },
+        annotations: [
+            {
+                x: 0, y: 0, xref: 'paper', yref: 'paper',
+                text: 'Low emissions, high performance',
+                showarrow: false, font: { color: '#059669', size: 10 },
+                xanchor: 'left', yanchor: 'bottom'
+            },
+            {
+                x: 1, y: 0, xref: 'paper', yref: 'paper',
+                text: 'Low emissions, low performance',
+                showarrow: false, font: { color: '#ffa500', size: 10 },
+                xanchor: 'right', yanchor: 'bottom'
+            },
+            {
+                x: 0, y: 1, xref: 'paper', yref: 'paper',
+                text: 'High emissions, high performance',
+                showarrow: false, font: { color: '#ffa500', size: 10 },
+                xanchor: 'left', yanchor: 'bottom'
+            },
+            {
+                x: 1, y: 1, xref: 'paper', yref: 'paper',
+                text: 'High emissions, low performance',
+                showarrow: false, font: { color: '#9b111e', size: 10 },
+                xanchor: 'right', yanchor: 'bottom'
+            }
+        ]
+    };
+    const config = { responsive: true, displayModeBar: false };
+
+    Plotly.newPlot('plot-i-area', traces, layout, config);
+}
+
+function renderInteractionsPlot(metric, modelType) {
+    if (metric === 'to') { renderEcoPerformanceROI(modelType); return; }
     const interactions = window.SCARF_DATA.interactions;
     const keys = Object.keys(interactions);
     const tiers = [...new Set(keys.map(k => k.split('|')[1]))];
     const interactionNames = [...new Set(keys.map(k => k.split('|')[0]))];
+    const yValues = modelType === 'teads' ? 'teads_sci' : 'power_model_sci';
 
     const traces = [];
 
@@ -43,7 +170,7 @@ function renderInteractionsPlot(modelType) {
 
             if (repetitions && repetitions.length > 0) {
                 const repTotals = repetitions.map(rep => {
-                    const values = rep[modelType];
+                    const values = rep[yValues];
                     return values.reduce((sum, val) => sum + val, 0);
                 });
 
@@ -103,11 +230,103 @@ function renderInteractionsPlot(modelType) {
     Plotly.newPlot('plot-i-area', traces, layout, config);
 }
 
-function renderDevicesPlot(modelType) {
+function renderDeviceTradeoff(modelType) {
     const devices = window.SCARF_DATA.devices;
     const deviceNames = Object.keys(devices);
     const traces = [];
-    const yValues = modelType === 'teads_sci' ? 'average_teads_sci' : 'average_power_model_sci';
+
+    const yKey = modelType === 'teads' ? 'average_teads_sci' : 'average_power_model_sci';
+    const xKey = 'average_utilization';
+
+    deviceNames.forEach((deviceName, deviceIndex) => {
+        const seriesList = devices[deviceName];
+        if (!seriesList || seriesList.length === 0) return;
+
+        const hostColor = colors[colors.length - 1 - (deviceIndex % colors.length)];
+
+        // 1. Combine all samples across all repetitions into a Map for averaging
+        // Map: Utilization -> { sumCarbon: x, count: y }
+        const utilizationMap = new Map();
+
+        seriesList.forEach(rep => {
+            const utils = rep[xKey];
+            const scis = rep[yKey];
+
+            utils.forEach((u, i) => {
+                // Rounding utilization slightly (e.g., to 4 decimals) can help group
+                // near-identical samples caused by floating point noise
+                const roundedU = Math.round(u * 10000) / 10000;
+                const c = scis[i];
+
+                if (!utilizationMap.has(roundedU)) {
+                    utilizationMap.set(roundedU, { sum: 0, count: 0 });
+                }
+                const entry = utilizationMap.get(roundedU);
+                entry.sum += c;
+                entry.count += 1;
+            });
+        });
+
+        // 2. Extract and Sort the keys (Utilization)
+        const sortedUtils = Array.from(utilizationMap.keys()).sort((a, b) => a - b);
+
+        // 3. Create the final arrays for plotting
+        const finalX = [];
+        const finalY = [];
+
+        sortedUtils.forEach(u => {
+            const entry = utilizationMap.get(u);
+            finalX.push(u * 100); // Scale to % for X-axis
+            finalY.push(entry.sum / entry.count); // Average Carbon for this Util
+        });
+
+        traces.push({
+            x: finalX,
+            y: finalY,
+            name: deviceName,
+            mode: 'lines+markers',
+            type: 'scatter',
+            line: {
+                color: hostColor,
+                width: 2,
+                shape: 'spline'
+            },
+            marker: { size: 4 },
+            hovertemplate: `<b>${deviceName}</b><br>Util: %{x:.2f}<br>Avg SCI: %{y:.6f}/interval<extra></extra>`
+        });
+    });
+
+    const layout = {
+        template: 'plotly_white',
+        font: { family: 'Inter, sans-serif' },
+        xaxis: {
+            title: 'CPU Utilization (%)',
+            gridcolor: '#f3f4f6',
+            zeroline: false,
+            ticksuffix: '%'
+        },
+        yaxis: {
+            title: modelType === 'teads' ? 'SCI (gCO2eq/s)' : 'SCI (PowerModel gCO2eq/s)',
+            gridcolor: '#f3f4f6',
+            zeroline: false,
+            ticksuffix: ' g'
+        },
+        legend: { orientation: 'h', y: -0.2, x: 0.5, xanchor: 'center' },
+        hovermode: 'x unified',
+        margin: { t: 40, b: 60, l: 80, r: 20 },
+        showlegend: true
+    };
+
+    const config = { responsive: true, displayModeBar: false };
+    Plotly.newPlot('plot-d-area', traces, layout, config);
+}
+
+function renderDevicesPlot(metric, modelType) {
+    if (metric === 'to') { renderDeviceTradeoff(modelType); return; }
+    const devices = window.SCARF_DATA.devices;
+    const deviceNames = Object.keys(devices);
+    const traces = [];
+    const yValues = modelType === 'teads' ? 'average_teads_sci' : 'average_power_model_sci';
 
     deviceNames.forEach((deviceName, deviceIndex) => {
         const seriesList = devices[deviceName];
@@ -139,7 +358,7 @@ function renderDevicesPlot(modelType) {
                 color: hostColor,
                 shape: 'linear'
             },
-            hovertemplate: `<b>${deviceName}</b><br>Time: %{x}s<br>Total SCI: %{y:.4f}<extra></extra>`
+            hovertemplate: `<b>${deviceName}</b><br>Total SCI: %{y:.4f}<extra></extra>`
         });
     });
 
@@ -167,22 +386,31 @@ function renderDevicesPlot(modelType) {
     Plotly.newPlot('plot-d-area', traces, layout, config);
 }
 
-window.changeModel = function(type, graph) {
-    graph === 'i' ? currentModel_i = type : currentModel_d = type;
-    const isTeads = type === 'teads_sci';
-
-    const tBtn = document.getElementById(graph === 'i' ? 'btn-i-teads' : 'btn-d-teads');
-    const pBtn = document.getElementById(graph === 'i' ? 'btn-i-power' : 'btn-d-power');
-
-    if (isTeads) {
-        tBtn.className = "px-5 py-2 text-xs font-bold uppercase tracking-tight rounded-md bg-white text-blue-600 shadow-sm";
-        pBtn.className = "px-5 py-2 text-xs font-bold uppercase tracking-tight rounded-md text-gray-500 hover:text-gray-700";
-    } else {
-        pBtn.className = "px-5 py-2 text-xs font-bold uppercase tracking-tight rounded-md bg-white text-blue-600 shadow-sm";
-        tBtn.className = "px-5 py-2 text-xs font-bold uppercase tracking-tight rounded-md text-gray-500 hover:text-gray-700";
+window.changeModel = function(target, graph) {
+    const models = ['teads', 'power'];
+    const metrics = ['to', 'impact'];
+    const graphInfo = graph === 'i' ? currentModel_i : currentModel_d;
+    let targetModel = '', targetMetric = '', transitionColor = '', other = '';
+    if (models.includes(target)) {
+        targetModel = target;
+        targetMetric = graphInfo[1];
+        transitionColor = 'blue';
+        other = models[0] === target ? models[1] : models[0];
+    } else if (metrics.includes(target)) {
+        targetModel = graphInfo[0];
+        targetMetric = target;
+        transitionColor = 'green';
+        other = metrics[0] === target ? metrics[1] : metrics[0];
     }
 
-    graph === 'i' ? renderInteractionsPlot(type) : renderDevicesPlot(type);
+    const buttonToTurnOff = document.getElementById('btn-' + graph + '-' + other);
+    const buttonToTurnOn = document.getElementById('btn-' + graph + '-' + target);
+
+    buttonToTurnOn.className = "px-5 py-2 text-xs font-bold uppercase tracking-tight rounded-md bg-white text-" + transitionColor + "-600 shadow-sm";
+    buttonToTurnOff.className = "px-5 py-2 text-xs font-bold uppercase tracking-tight rounded-md text-gray-500 hover:text-gray-700";
+
+    graph === 'i' ? renderInteractionsPlot(targetMetric, targetModel) : renderDevicesPlot(targetMetric, targetModel);
+    graph === 'i' ? currentModel_i = [targetModel, targetMetric] : currentModel_d = [targetModel, targetMetric];
 };
 
 window.downloadPlot = function(plotType) {
