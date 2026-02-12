@@ -105,38 +105,39 @@ function renderEcoPerformanceROI(modelType) {
         xaxis: {
             title: 'Average Response Time (s)',
             gridcolor: '#f3f4f6',
-            ticksuffix: ' s'
+            ticksuffix: ' ms'
         },
         yaxis: {
             title: 'Carbon Intensity (gCO2eq / Interaction)',
             gridcolor: '#f3f4f6',
             ticksuffix: ' g'
         },
+        margin: { t: 20, b: 60, l: 60, r: 20 },
         hovermode: 'closest',
         showlegend: true,
         legend: { orientation: 'h', y: -0.2, x: 0.5, xanchor: 'center' },
         annotations: [
             {
                 x: 0, y: 0, xref: 'paper', yref: 'paper',
-                text: 'Low emissions, high performance',
+                text: 'Lower emissions, higher performance',
                 showarrow: false, font: { color: '#059669', size: 10 },
                 xanchor: 'left', yanchor: 'bottom'
             },
             {
                 x: 1, y: 0, xref: 'paper', yref: 'paper',
-                text: 'Low emissions, low performance',
+                text: 'Lower emissions, lower performance',
                 showarrow: false, font: { color: '#ffa500', size: 10 },
                 xanchor: 'right', yanchor: 'bottom'
             },
             {
                 x: 0, y: 1, xref: 'paper', yref: 'paper',
-                text: 'High emissions, high performance',
+                text: 'Higher emissions, higher performance',
                 showarrow: false, font: { color: '#ffa500', size: 10 },
                 xanchor: 'left', yanchor: 'bottom'
             },
             {
                 x: 1, y: 1, xref: 'paper', yref: 'paper',
-                text: 'High emissions, low performance',
+                text: 'Higher emissions, lower performance',
                 showarrow: false, font: { color: '#9b111e', size: 10 },
                 xanchor: 'right', yanchor: 'bottom'
             }
@@ -347,7 +348,7 @@ function renderDevicesPlot(metric, modelType) {
         });
 
         traces.push({
-            x: tss,
+            x: tss.map(ms => ms / 1000), // Milliseconds are converted to seconds
             y: cumulativeAvgValues,
             mode: 'lines',
             type: 'scatter',
