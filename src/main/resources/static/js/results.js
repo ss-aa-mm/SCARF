@@ -119,25 +119,25 @@ function renderEcoPerformanceROI(modelType) {
         annotations: [
             {
                 x: 0, y: 0, xref: 'paper', yref: 'paper',
-                text: 'Lower emissions, higher performance',
+                text: 'Lower emissions, lower res. time',
                 showarrow: false, font: { color: '#059669', size: 10 },
                 xanchor: 'left', yanchor: 'bottom'
             },
             {
                 x: 1, y: 0, xref: 'paper', yref: 'paper',
-                text: 'Lower emissions, lower performance',
+                text: 'Lower emissions, higher res. time',
                 showarrow: false, font: { color: '#ffa500', size: 10 },
                 xanchor: 'right', yanchor: 'bottom'
             },
             {
                 x: 0, y: 1, xref: 'paper', yref: 'paper',
-                text: 'Higher emissions, higher performance',
+                text: 'Higher emissions, lower res. time',
                 showarrow: false, font: { color: '#ffa500', size: 10 },
                 xanchor: 'left', yanchor: 'bottom'
             },
             {
                 x: 1, y: 1, xref: 'paper', yref: 'paper',
-                text: 'Higher emissions, lower performance',
+                text: 'Higher emissions, higher res. time',
                 showarrow: false, font: { color: '#9b111e', size: 10 },
                 xanchor: 'right', yanchor: 'bottom'
             }
