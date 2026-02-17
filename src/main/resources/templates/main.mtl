@@ -1,0 +1,980 @@
+[comment encoding = UTF-8 /]
+[module main('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[template public projectGenerator(UMLModel : uml::Model, repetitions : Integer, dist : String, p1 : Real, p2 : Real)]
+[comment @main/]
+[let name : String = UMLModel.name.toLowerCase().safe()]
+[let packageName : String = name.toLowerCase()]
+[file(name + '.java', false, 'UTF-8')]
+package [packageName/];
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.function.BiConsumer;
+
+import org.cloudsimplus.core.CloudSimPlus;
+import org.cloudsimplus.datacenters.Datacenter;
+import org.cloudsimplus.listeners.EventInfo;
+import org.cloudsimplus.resources.PeSimple;
+import org.cloudsimplus.schedulers.cloudlet.CloudletSchedulerSpaceShared;
+import org.cloudsimplus.schedulers.cloudlet.CloudletSchedulerTimeShared;
+import org.cloudsimplus.util.Log;
+import org.cloudsimplus.utilizationmodels.UtilizationModelDynamic;
+import org.cloudsimplus.utilizationmodels.UtilizationModelFull;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class [name/] {
+
+	private static final Logger log = LoggerFactory.getLogger([name/].class);
+	private final ArrayDeque<User> users;
+	private final int USER_TYPES = [UMLModel.eContents(uml::Activity) -> size()/];
+	private final ActivityNode['[]'/] userActivityGraphs = new ActivityNode['['/]USER_TYPES[']'/];
+	final ArrayList<ScarfHost> hostList;
+	final ArrayList<User> currentRepUsers;
+	static String basePath;
+
+	public static void main(String['[]'/] args) {
+		basePath = (args.length > 0) ? args['[0]'/] : ".";
+		ScarfGlobalSummary out = new ScarfGlobalSummary(new Metadata("[UMLModel.name.metadataSafe()/]", [repetitions/], "[dist + '(' + p1 + ', ' + p2 + ')'/]"));
+		Log.setLevel(ch.qos.logback.classic.Level.WARN);
+		for(int i = 0; i < Utils.REPETITIONS; i++) {
+			[name/] r = new [name/](i + 1);
+			out.merge(new ScarfSimulationSummary(r.currentRepUsers, r.hostList));
+		}
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enable(SerializationFeature.INDENT_OUTPUT);
+		
+		try {
+			mapper.writeValue(new File(basePath, "[packageName/]_plot.json"), out);
+		} catch (IOException e) {
+			log.error(e.getMessage());
+		}
+
+		Log.setLevel(ch.qos.logback.classic.Level.INFO);
+	}
+
+	private [name/](int rep) {
+		CloudSimPlus simulation = new CloudSimPlus();
+		ScarfDatacenterBroker broker = new ScarfDatacenterBroker(simulation);
+
+		[let devices : Sequence(uml::Device) = UMLModel.eAllContents(uml::Device) -> select(dev | not dev.getAppliedStereotype('sciuml::EmittingDevice').oclIsUndefined())]
+		[let executionEnvironments : Sequence(uml::ExecutionEnvironment) = devices -> collectNested(eContents(uml::ExecutionEnvironment)) -> flatten() -> select(env | not env.getAppliedStereotype('sciuml::VirtualMachine').oclIsUndefined())]
+		[let regions : Set(String) = devices -> collect(d | d.getValue(d.getAppliedStereotype('sciuml::EmittingDevice'), 'region')).oclAsType(uml::EnumerationLiteral).name -> asSet()]
+		hostList = new ArrayList<>([devices -> size()/]);
+		ArrayList<ScarfCloudlet> cloudletList = new ArrayList<>();
+		ArrayList<ScarfVm> newVms;
+		ArrayList<ScarfHost> newHosts;
+		ScarfHost host;
+		ScarfVm vm;
+		Datacenter datacenter;
+
+		[for (region : String | regions)]
+		[let regionalDevices : Sequence(uml::Device) = devices -> select(d | d.getValue(d.getAppliedStereotype('sciuml::EmittingDevice'), 'region').oclAsType(uml::EnumerationLiteral).name = region)]
+		newHosts = new ArrayList<>([regionalDevices -> size()/]);
+		newVms = new ArrayList<>([regionalDevices -> collectNested(eContents(uml::ExecutionEnvironment)) -> flatten() -> select(env | not env.getAppliedStereotype('sciuml::VirtualMachine').oclIsUndefined()) -> size()/]);
+		[for (device : uml::Device | regionalDevices)]
+		[let ds : uml::Stereotype = device.getAppliedStereotype('sciuml::EmittingDevice')]
+		host = new ScarfHost("[device.name.safe()/]", [device.getValue(ds, 'ram')/], [device.getValue(ds, 'bandwidth')/], [device.getValue(ds, 'storage')/], [for (n : Integer | Sequence{1..(device.getValue(ds, 'CoresPerCPU').oclAsType(Integer) * device.getValue(ds, 'CPUs').oclAsType(Integer))}) before('List.of(') separator(', ') after('),')]new PeSimple([device.getValue(ds, 'MIPS').oclAsType(Integer) / 1000/])[/for] [device.getValue(ds, 'embodiedEmissions').oclAsType(Real)/], [device.getValue(ds, 'expectedLifespan').oclAsType(Real)/], [device.getValue(ds, 'thermalDesignPowerPerCPU').oclAsType(Real) * device.getValue(ds, 'CPUs').oclAsType(Integer)/]);
+		newHosts.add(host);
+		[for (ee : uml::ExecutionEnvironment | device.eContents(uml::ExecutionEnvironment) -> select(env | not env.getAppliedStereotype('sciuml::VirtualMachine').oclIsUndefined()))]
+		[let es : uml::Stereotype = ee.getAppliedStereotype('sciuml::VirtualMachine')]
+		[let component : String = device.eContents(uml::Artifact) -> select(a | ee.eContents(uml::Deployment) -> any(true).deployedArtifact -> includes(a)) -> collectNested(manifestation) -> flatten() -> any(true).utilizedElement.name]
+		[let tierNames : OclAny = ee.getValue(es, 'allowedTiers')]
+		vm = new ScarfVm("[ee.name.safe()/]", [ee.getValue(es, 'MIPS').oclAsType(Integer) / 1000/], [ee.getValue(es, 'reservedCores')/], "[component/]", host, List.of([for(tier : OclAny | tierNames) separator(', ')]"[tier.eGet('name')/]"[/for]));
+		vm.setRam([ee.getValue(es, 'ram')/]);
+		vm.setBw([ee.getValue(es, 'bandwidth')/]);
+		vm.setSize([ee.getValue(es, 'capacity')/]);
+		vm.setCloudletScheduler(new CloudletScheduler[if (ee.getValue(es, 'deploymentPattern').oclAsType(uml::EnumerationLiteral).name = 'Silo')]Space[else]Time[/if]Shared());
+		broker.registerVm("[component/]", vm);
+		newVms.add(vm);
+		[/let] [comment tierNames /]
+		[/let] [comment component /]
+		[/let] [comment es /]
+		[/for] [comment ee /]
+		[/let] [comment ds /]
+		[/for] [comment device /]
+		[/let] [comment regionalDevices /]
+		
+		datacenter = new ScarfDatacenter(simulation, newHosts, "[region/]");
+		datacenter.setName("[(name + '_' + region).safe()/]");
+		broker.submitVmList(newVms);
+		hostList.addAll(newHosts);
+		[/for] [comment region /]
+		[/let] [comment regions /]
+		[/let] [comment executionEnvironments /]
+		[/let] [comment devices /]
+
+		Map<String, TriConsumer<EventInfo, User, BiConsumer<EventInfo, User>>> interactions = new HashMap<>();
+		interactions.put("Nop", (evt, user, next) -> next.accept(evt, user));
+		interactions.put("Sink", (_, _, _) -> {});
+
+		[for (interaction: uml::Interaction | UMLModel.eContents(uml::Interaction)) separator('\n')]
+		interactions.put("[interaction.name.safe()/]", (_, user, next) -> {
+			[let cloudletsEntryPoints : Sequence(uml::OccurrenceSpecification) = interaction.eContents(uml::OccurrenceSpecification)
+				-> select(o | o.isStarting())]
+			ArrayList<ScarfCloudlet> newCloudlets = new ArrayList<>([cloudletsEntryPoints -> size()/]);
+			[let initialEntryPoint : uml::OccurrenceSpecification = cloudletsEntryPoints -> select(ep | ep.oclIsTypeOf(uml::ExecutionOccurrenceSpecification)) -> any(true)]
+			[initialEntryPoint.generateInteraction(initialEntryPoint.followingCloudletStart(), UMLModel.eAllContents(uml::ExecutionEnvironment))/]
+			[/let] [comment initialEntryPoint /]
+			[/let] [comment cloudletsEntryPoints /]
+			cloudletList.addAll(newCloudlets);
+		});
+		[/for] [comment interaction /]
+
+		int graphsIndex = -1;
+
+		[for(activity : uml::Activity | UMLModel.eContents(uml::Activity)) separator('\n')]
+		[for(node : uml::ActivityNode | activity.node)]
+		[let nodeName : String = activity.name.safe() + node.name.safe()]
+		ActivityNode [nodeName/] = new ActivityNode(interactions.get("[if(node.oclIsTypeOf(uml::CallBehaviorAction))][node.oclAsType(uml::CallBehaviorAction).behavior.name.safe()/][else][if(node.oclIsTypeOf(uml::ActivityFinalNode))]Sink[else]Nop[/if][/if]"));
+		[if(node.oclIsTypeOf(uml::InitialNode))]
+		userActivityGraphs['['/]++graphsIndex[']'/] = [nodeName/];
+		[/if]
+		[/let] [comment nodeName /]
+		[/for] [comment node /]
+		[for(arrow : uml::ControlFlow | activity.edge -> selectByType(uml::ControlFlow))]
+		[activity.name.safe() + arrow.source.name.safe()/].addChild([activity.name.safe() + arrow.target.name.safe()/][if(not arrow.getAppliedStereotype('sciuml::OptionalFlow').oclIsUndefined())], [arrow.getValue(arrow.getAppliedStereotype('sciuml::OptionalFlow'), 'weight')/][/if]);
+		[/for] [comment arrow /]
+		[/for] [comment activity /]
+
+		double tt = 0.0;
+		users = new ArrayDeque<>();
+		currentRepUsers = new ArrayList<>();
+		User.resetIdCount();
+		while(tt < Utils.EXEC_TIME) {
+			User u = new User(tt);
+			if(tt == 0.0) {
+				currentRepUsers.add(u);
+				this.randomUserType().process(u);
+			} else {
+				users.add(u);
+			}
+			double iat = [iatFormula(dist, p1, p2)/]
+			tt += iat;
+		}
+
+		simulation.addOnClockTickListener(this::checkArrivals);
+		simulation.terminateAt(Utils.EXEC_TIME);
+		simulation.start();
+
+		System.out.println("Finished Simulation Repetition #" + rep);
+		System.out.println("Executed Cloudlets: " + cloudletList.size());
+		System.out.println("Total Cloudlets Teads SCI: " + cloudletList.stream().mapToDouble(ScarfCloudlet::getTeadsSci).sum());
+		System.out.println("Total Cloudlets PowerModel SCI: " + cloudletList.stream().mapToDouble(ScarfCloudlet::getPowerModelSci).sum());
+		
+		try {
+			Files.write(Path.of(basePath, "[packageName/]_" + rep + ".txt"), currentRepUsers.stream().map(Object::toString).toList(), StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			log.error(e.getMessage());
+		}
+	}
+
+	public void checkArrivals(EventInfo evt) {
+		if(!users.isEmpty() && users.peek().getStartTime() <= evt.getTime()) {
+			User user = users.pop();
+			currentRepUsers.add(user);
+			this.randomUserType().process(user, evt);
+		}
+	}
+
+	private ActivityNode randomUserType() {
+		return this.userActivityGraphs['['/]Utils.rng.nextInt(USER_TYPES)[']'/];
+	}
+}
+[/file]
+[file('Utils.java', false, 'UTF-8')]
+package [packageName/];
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
+
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamReader;
+
+import org.cloudsimplus.allocationpolicies.VmAllocationPolicyAbstract;
+import org.cloudsimplus.brokers.DatacenterBrokerSimple;
+import org.cloudsimplus.cloudlets.Cloudlet;
+import org.cloudsimplus.cloudlets.CloudletSimple;
+import org.cloudsimplus.core.CloudSimPlus;
+import org.cloudsimplus.core.events.SimEvent;
+import org.cloudsimplus.datacenters.DatacenterSimple;
+import org.cloudsimplus.hosts.Host;
+import org.cloudsimplus.hosts.HostSimple;
+import org.cloudsimplus.listeners.EventInfo;
+import org.cloudsimplus.power.models.PowerModelHostSimple;
+import org.cloudsimplus.resources.Pe;
+import org.cloudsimplus.utilizationmodels.UtilizationModel;
+import org.cloudsimplus.vms.Vm;
+import org.cloudsimplus.vms.VmSimple;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/* DATA */
+
+record CarbonResult(double teadsEstimate, double powerModelEstimate) {
+	public CarbonResult add(CarbonResult other) {
+		return new CarbonResult(this.teadsEstimate + other.teadsEstimate, this.powerModelEstimate + other.powerModelEstimate);
+	}
+}
+
+record CarbonSnapshot(double timestamp, double utilization, CarbonResult carbonValues) {}
+
+record InteractionKey(String interaction, String tier) {
+	@Override
+	public String toString() {
+		return interaction() + "|" + tier();
+	}
+}
+
+class InteractionSeries {
+	@JsonProperty("teads_sci")
+	public final List<Double> teadsSciValues = new ArrayList<>();
+	@JsonProperty("power_model_sci")
+	public final List<Double> powerModelSciValues = new ArrayList<>();
+	@JsonProperty("service_time")
+	public final List<Double> serviceTimeValues = new ArrayList<>();
+	
+	public void addValue(CarbonResult carbon, double time) {
+		this.teadsSciValues.add(carbon.teadsEstimate());
+		this.powerModelSciValues.add(carbon.powerModelEstimate());
+		this.serviceTimeValues.add(time);
+	}
+}
+
+class HostSeries {
+	@JsonProperty("timestamps")
+	private final List<Double> timestamps = new ArrayList<>();
+	@JsonProperty("average_utilization")
+	private final List<Double> avgUtilization = new ArrayList<>();
+	@JsonProperty("average_teads_sci")
+	private final List<Double> avgTeadsSci = new ArrayList<>();
+	@JsonProperty("average_power_model_sci")
+	private final List<Double> avgPowerModelSci = new ArrayList<>();
+	
+	public void addTrace(List<CarbonSnapshot> trace) {
+		for(CarbonSnapshot snapshot : trace) {
+			this.timestamps.add(snapshot.timestamp());
+			this.avgUtilization.add(snapshot.utilization());
+			this.avgTeadsSci.add(snapshot.carbonValues().teadsEstimate());
+			this.avgPowerModelSci.add(snapshot.carbonValues().powerModelEstimate());
+		}
+	}
+}
+
+class Metadata {
+	@JsonProperty("modelName")
+	String expName;
+	@JsonProperty("replications")
+	int replications;
+	@JsonProperty("duration")
+	double duration;
+	@JsonProperty("seed")
+	long seed;
+	@JsonProperty("arrivalDistributionDetails")
+	String distrib;
+
+	public Metadata(String modelName, int replications, String distrib) {
+		this.expName = modelName;
+		this.replications = replications;
+		this.distrib = distrib;
+		this.seed = Utils.SEED;
+		this.duration = Utils.EXEC_TIME;
+	}
+}
+
+@FunctionalInterface
+interface TriConsumer<T, U, V> {
+	void accept(T t, U u, V v);
+}
+
+/* SIMULATION CLASSES */
+
+class ScarfDatacenter extends DatacenterSimple {
+	private final String region;
+	private final int gridCarbonIntensity;
+	private double lastTimeStamp = 0.0;
+	private static final double INTERVAL = 1000.0;  // 1 s
+	private static final int DEFAULT_GRID_CARBON_INTENSITY = 300;
+
+	public ScarfDatacenter(CloudSimPlus simulation, List<ScarfHost> hostList, String region) {
+		super(simulation, hostList, new ScarfAllocationPolicy(hostList));
+		this.region = region;
+		this.gridCarbonIntensity = Utils.gcis.get(region) != null ? Utils.gcis.get(region) : DEFAULT_GRID_CARBON_INTENSITY;
+	}
+	
+	@Override
+	public void processEvent(SimEvent ev) {
+		if(ev.getTag() == Utils.CARBON_SYNC_TAG) {
+			runCarbonComputation();
+		}
+		super.processEvent(ev);
+	}
+
+	@Override
+	protected void startInternal() {
+		super.startInternal();
+		this.schedule(this, INTERVAL, Utils.CARBON_SYNC_TAG);
+	}
+
+	private void runCarbonComputation() {
+		double clock = getSimulation().clock();
+		double duration = clock - lastTimeStamp;
+		
+		for (Host host : getHostList()) {
+			ScarfHost sHost = (ScarfHost) host;
+			sHost.processIntervalCarbon(clock, duration);
+		}
+		lastTimeStamp = clock;
+		if (clock < Utils.EXEC_TIME) this.schedule(this, INTERVAL, Utils.CARBON_SYNC_TAG);
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public int getGci() {
+		return gridCarbonIntensity;
+	}
+}
+
+class ScarfHost extends HostSimple {
+	private final String name;
+	private static final double NETWORK_ENERGY = 0.0; // Usually small, simplified to 0 at the moment
+	private final double embodiedEmissions;
+	private final double expectedLifespan;
+	private final double thermalDesignPower;
+	private CarbonResult totalCarbon = new CarbonResult(0.0, 0.0);
+	private final List<CarbonSnapshot> carbonTimeSeries = new ArrayList<>();
+	private double lastUtilClock = 0.0;
+	private double accumulatedUtil = 0.0;
+	private double currentUtil = 0.0;
+	
+	
+	public ScarfHost(String name, long ram, long bw, long storage, List<Pe> peList, double embodiedEmissions, double expectedLifespan, double thermalDesignPower) {
+		super(ram, bw, storage, peList);
+		this.name = name;
+		this.embodiedEmissions = embodiedEmissions;
+		this.expectedLifespan = expectedLifespan;
+		this.thermalDesignPower = thermalDesignPower;
+		this.setPowerModel(new PowerModelHostSimple(thermalDesignPower, 0.2 * thermalDesignPower));
+		this.enableUtilizationStats();
+	}
+
+	public void updateUtilization(double clk) {
+		double timeDelta = clk - lastUtilClock;
+		this.accumulatedUtil += currentUtil * timeDelta;
+		this.currentUtil = this.getCpuPercentUtilization();
+		this.lastUtilClock = clk;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public double getEmbodiedEmissions() {
+		return embodiedEmissions;
+	}
+	
+	public double getExpectedLifespan() {
+		return expectedLifespan;
+	}
+	
+	public double getThermalDesignPower() {
+		return thermalDesignPower;
+	}
+
+	public double getNetworkEnergy() {
+		return NETWORK_ENERGY;
+	}
+	
+	public double getTeadsSci() {
+		return totalCarbon.teadsEstimate();
+	}
+	
+	public double getPowerModelSci() {
+		return totalCarbon.powerModelEstimate();
+	}
+
+	public List<CarbonSnapshot> getCarbonTimeSeries() {
+		return Collections.unmodifiableList(carbonTimeSeries);
+	}
+
+	public CarbonResult computeSci(double interval, double meanUtilization) {
+		double intervalSeconds = interval / 1000;
+		double utilization = meanUtilization == -1.0 ? this.getCpuPercentUtilization() : meanUtilization;
+		double usedPowerTeads = this.thermalDesignPower * calculateTeads(utilization);
+		double usedPowerPowerModel = getPowerModel().getPower(utilization);
+		double deviceEnergyTeads = (intervalSeconds * usedPowerTeads) / 3600000.0;
+		double deviceEnergyPowerModel = (intervalSeconds * usedPowerPowerModel) / 3600000.0;
+		double energyTeads = deviceEnergyTeads + NETWORK_ENERGY;
+		double energyPowerModel = deviceEnergyPowerModel + NETWORK_ENERGY;
+		double gci = ((ScarfDatacenter) this.getDatacenter()).getGci();
+		double carbonOperationalTeads = energyTeads * gci;
+		double carbonOperationalPowerModel = energyPowerModel * gci;
+		double carbonEmbodied = this.embodiedEmissions * (intervalSeconds / this.expectedLifespan);
+		return new CarbonResult(carbonOperationalTeads + carbonEmbodied, carbonOperationalPowerModel + carbonEmbodied);
+	}
+
+	public void processIntervalCarbon(double clock, double interval) {
+		if (interval <= 0.0) return;
+		
+		updateUtilization(clock);
+		double meanUtilization = accumulatedUtil / interval;
+		CarbonResult intervalCarbon = computeSci(interval, meanUtilization);
+		this.carbonTimeSeries.add(new CarbonSnapshot(clock, meanUtilization, intervalCarbon));
+		this.totalCarbon = this.totalCarbon.add(intervalCarbon);
+		this.accumulatedUtil = 0.0;
+	}
+	
+	protected static double calculateTeads(double utilization) {
+		final double['[]'/] UTIL_POINTS = {0, 0.10, 0.50, 1};
+		final double['[]'/] TEADS_CURVE = {0.12, 0.32, 0.75, 1.02};
+		for (int i = 0; i < UTIL_POINTS.length - 1; i++) {
+            ['if (utilization >= UTIL_POINTS[i] && utilization <= UTIL_POINTS[i + 1]) {'/]
+                ['return TEADS_CURVE[i] + (utilization - UTIL_POINTS[i]) *'/]
+                        ['(TEADS_CURVE[i + 1] - TEADS_CURVE[i]) /'/]
+                        ['(UTIL_POINTS[i + 1] - UTIL_POINTS[i]);'/]
+            }
+        }
+        ['return utilization == 0 ? TEADS_CURVE[0] : TEADS_CURVE[TEADS_CURVE.length - 1];'/]
+	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+}
+
+class ScarfVm extends VmSimple {
+	public static final ScarfVm NULL = new ScarfVm("", 0, 1, "", null, Collections.emptyList()) {
+		@Override public boolean isCreated() { return false; }
+		@Override public String toString() { return "ScarfVm.NULL"; }
+	};
+	private final String name;
+	private final String component;
+	private final ScarfHost targetHost;
+	private final List<String> allowedTiers;
+	
+	public ScarfVm(String name, double mipsCapacity, long pesNumber, String component, ScarfHost targetHost, List<String> allowedTiers) {
+		super(mipsCapacity, pesNumber);
+		this.name = name;
+		this.component = component;
+		this.targetHost = targetHost;
+		this.allowedTiers = allowedTiers;
+		this.enableUtilizationStats();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getComponent() {
+		return component;
+	}
+
+	public ScarfHost getTargetHost() {
+		return targetHost;
+	}
+	
+	public List<String> getAllowedTiers() {
+		return allowedTiers;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
+	
+}
+
+class ScarfCloudlet extends CloudletSimple {
+	private final String name;
+	private User user;
+	private final String component;
+	private final String interaction;
+	private CarbonResult totalCarbon = new CarbonResult(0.0, 0.0);
+	
+	public ScarfCloudlet(long length, int pesNumber, UtilizationModel utilizationModel, String name, User user, String component, String interaction) {
+		super(length, pesNumber, utilizationModel);
+		this.name = name;
+		this.user = user;
+		this.component = component;
+		this.interaction = interaction;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public String getInteraction() {
+		return interaction;
+	}
+
+	public String getComponent() {
+		return component;
+	}
+
+	public double getTeadsSci() {
+		return totalCarbon.teadsEstimate();
+	}
+	
+	public double getPowerModelSci() {
+		return totalCarbon.powerModelEstimate();
+	}
+
+	@Override
+    public boolean setStatus(final Status status) {
+        boolean changed = super.setStatus(status);
+        if (changed && status == Status.SUCCESS) {
+            finalizeCarbonAccount();
+        }
+        return changed;
+    }
+
+	public void finalizeCarbonAccount() {
+		ScarfHost host = (ScarfHost) getVm().getHost();
+		double resourceShare = (double) getPesNumber() / host.getPesNumber();
+		double interval = getTotalExecutionTime();
+		CarbonResult hostCarbonResult = host.computeSci(interval, -1.0);
+		this.totalCarbon = new CarbonResult(hostCarbonResult.teadsEstimate() * resourceShare, hostCarbonResult.powerModelEstimate() * resourceShare);
+	}
+}
+
+class ScarfAllocationPolicy extends VmAllocationPolicyAbstract {
+	private final List<ScarfHost> allowedHosts;
+	
+	public ScarfAllocationPolicy(List<ScarfHost> allowedHosts) {
+		this.allowedHosts = allowedHosts;
+	}
+	
+	@Override
+	protected Optional<Host> defaultFindHostForVm(Vm vm) {
+		if(vm instanceof ScarfVm svm) {
+			ScarfHost targetHost = svm.getTargetHost();
+			if (targetHost != null && targetHost.isSuitableForVm(vm)) {
+				return Optional.of(targetHost);
+			}
+			return Optional.empty();
+		} else {
+			return Optional.of(allowedHosts.stream()
+					.filter(host -> host.isSuitableForVm(vm))
+					.findFirst()
+					.orElseThrow());
+		}
+	}
+}
+
+class ScarfDatacenterBroker extends DatacenterBrokerSimple {
+	private final Map<String, List<ScarfVm>> routingTable = new HashMap<>();
+
+	public ScarfDatacenterBroker(CloudSimPlus simulation) {
+		super(simulation);
+	}
+
+	@Override
+	protected Vm defaultVmMapper(Cloudlet cloudlet) {
+		if (cloudlet instanceof ScarfCloudlet cl) {
+			String tier = cl.getUser().getTier();
+			List<ScarfVm> candidates = routingTable.getOrDefault(cl.getComponent(), Collections.emptyList());
+			if (candidates.isEmpty()) System.out.println("Something went wrong when placing cloudlet " + cl);
+			return candidates.stream()
+                .filter(vm -> vm.getAllowedTiers().contains(tier))
+				.min(Comparator.comparingInt(vm -> vm.getAllowedTiers().size()))
+                .orElse(ScarfVm.NULL);
+        } 
+        return super.defaultVmMapper(cloudlet);
+	}
+
+	public void registerVm(String component, ScarfVm vm) {
+		routingTable.computeIfAbsent(component, _ -> new ArrayList<>()).add(vm);
+	}
+
+	public void submitCloudletAtFront(ScarfCloudlet cloudlet) {
+		if (cloudlet.getSimulation().isRunning()) {
+			cloudlet.setBroker(this);
+			getCloudletWaitingList().addFirst(cloudlet);
+		} else {
+			submitCloudlet(cloudlet);
+		}
+	}
+}
+
+class ScarfSimulationSummary {
+	@JsonProperty("interactions")
+	private final Map<InteractionKey, InteractionSeries> interactions = new HashMap<>();
+	@JsonProperty("devices")
+	private final Map<String, HostSeries> hosts = new HashMap<>();
+
+	public ScarfSimulationSummary(List<User> users, List<ScarfHost> hosts) {
+		for(User user : users) {
+			if (user.getExecutedCloudlets().isEmpty()) continue;
+			Map<String, List<ScarfCloudlet>> userInteractions = user.getExecutedCloudlets().stream().collect(Collectors.groupingBy(ScarfCloudlet::getInteraction));
+			for(Map.Entry<String, List<ScarfCloudlet>> interactionDetails : userInteractions.entrySet()) {
+				InteractionKey key = new InteractionKey(interactionDetails.getKey(), user.getTier());
+				CarbonResult totalInteractionSci = new CarbonResult(interactionDetails.getValue().stream().mapToDouble(ScarfCloudlet::getTeadsSci).sum(), interactionDetails.getValue().stream().mapToDouble(ScarfCloudlet::getPowerModelSci).sum());
+				//double duration = interactionDetails.getValue().stream().mapToDouble(Cloudlet::getFinishTime).max().orElse(0.0) - interactionDetails.getValue().stream().mapToDouble(Cloudlet::getStartTime).min().orElse(0.0);
+				double duration = interactionDetails.getValue().stream().mapToDouble(Cloudlet::getTotalExecutionTime).sum();
+				this.interactions.computeIfAbsent(key, _ -> new InteractionSeries()).addValue(totalInteractionSci, duration);
+			}
+		}
+		for(ScarfHost host : hosts) {
+			this.hosts.computeIfAbsent(host.getName(), _ -> new HostSeries()).addTrace(host.getCarbonTimeSeries());
+		}
+	}
+
+	public Map<InteractionKey, InteractionSeries> getInteractions() {
+		return interactions;
+	}
+
+	public Map<String, HostSeries> getHosts() {
+		return hosts;
+	}
+}
+
+class ScarfGlobalSummary {
+	@JsonProperty("metadata")
+	Metadata metadata;
+	@JsonProperty("interactions")
+	private final Map<InteractionKey, List<InteractionSeries>> interactions;
+	@JsonProperty("devices")
+	private final Map<String, List<HostSeries>> hosts;
+	
+	public ScarfGlobalSummary(Metadata metadata) {
+		this.metadata = metadata;
+		this.interactions = new HashMap<>();
+		this.hosts = new HashMap<>();
+	}
+	
+	public void merge(ScarfSimulationSummary repetition) {
+		repetition.getInteractions().forEach((key, series) ->
+			this.interactions.computeIfAbsent(key, _ -> new ArrayList<>()).add(series));
+		repetition.getHosts().forEach((hostName, series) ->
+			this.hosts.computeIfAbsent(hostName, _ -> new ArrayList<>()).add(series));
+	}
+}
+
+class User {
+	private final String name;
+	private final double startTime;
+	private String interactionHistory;
+	private final String preferredRegion;
+	private final String tier;
+	private final List<ScarfCloudlet> executedCloudlets = new ArrayList<>(); 
+	private static final AtomicInteger userIdd = new AtomicInteger(0);
+	
+	public User(double st) {
+		this.name = "User" + userIdd.getAndIncrement();
+		this.startTime = st;
+		this.interactionHistory = "";
+		this.preferredRegion = Utils.REGIONS.get(Utils.rng.nextInt(Utils.REGIONS.size()));
+		this.tier = Utils.TIER_MAP.ceilingEntry(Utils.rng.nextInt(Utils.TIER_MAP.lastKey())).getValue();
+	}
+
+	public String getPreferredRegion() {
+		return preferredRegion;
+	}
+
+	public double getStartTime() {
+		return startTime;
+	}
+	
+	public static void resetIdCount() {
+		userIdd.set(0);
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public String getTier() {
+		return tier;
+	}
+
+	public List<ScarfCloudlet> getExecutedCloudlets() {
+		return executedCloudlets;
+	}
+
+	public void assignCloudlet(ScarfCloudlet cl) {
+		this.executedCloudlets.add(cl);
+	}
+
+	public void assignFinalCloudlet(ScarfCloudlet cl, double endTime) {
+		interactionHistory += "\n\t→" + cl.getInteraction() + " ['['/]" + cl.getVm() + "@" + cl.getVm().getHost() + " at time " + String.format(Locale.ENGLISH, "%.2f", endTime) + " s[']'/]";
+		this.executedCloudlets.add(cl);
+	}
+	
+	@Override
+	public String toString() {
+		String teadsSCI = String.format(Locale.ENGLISH, "%.3e", this.executedCloudlets.stream().mapToDouble(ScarfCloudlet::getTeadsSci).sum());
+		String pmSCI = String.format(Locale.ENGLISH, "%.3e", this.executedCloudlets.stream().mapToDouble(ScarfCloudlet::getPowerModelSci).sum());
+		return name + " (" + tier + ") from " + preferredRegion + " at time " + String.format(Locale.ENGLISH, "%.2f", startTime) + " s {TeadsSCI = " + teadsSCI + " gCO2eq, PowerModelSCI = " + pmSCI + " gC02eq}" + interactionHistory;
+	}
+}
+
+class ActivityNode {
+	private final TriConsumer<EventInfo, User, BiConsumer<EventInfo, User>> value;
+	private final List<ActivityNode> children = new ArrayList<>();
+	private final List<Integer> routingWeights = new ArrayList<>();
+	private static final int DEFAULT_WEIGHT = 100;
+	
+	public ActivityNode(TriConsumer<EventInfo, User, BiConsumer<EventInfo, User>> value) {
+		this.value = value;
+	}
+	
+	public void addChild(ActivityNode t){
+		this.children.add(t);
+		this.routingWeights.add(DEFAULT_WEIGHT);
+	}
+	
+	public void addChild(ActivityNode t, int weight) {
+		this.children.add(t);
+		this.routingWeights.add(weight);
+	}
+	
+	private ActivityNode getNext() {
+		if(this.children.size() == 1) {
+			return this.children.getFirst();
+		} else {
+			int totalWeight = this.routingWeights.stream().mapToInt(Integer::intValue).sum();
+			int extractedWeight = Utils.rng.nextInt(totalWeight + 1);
+			int runningSum = 0;
+			for(int j = 0; j < this.routingWeights.size(); j++) {
+				runningSum += this.routingWeights.get(j);
+				if(runningSum >= extractedWeight) return this.children.get(j);
+			}
+			return null;
+		}
+	}
+	
+	private BiConsumer<EventInfo, User> resolveValue() {
+		if(children.isEmpty()) {
+			return null;
+		} else {
+			ActivityNode next = getNext();
+			assert next != null;
+			return (evt, usr) -> next.value.accept(evt, usr, next.resolveValue());
+		}
+	}
+	
+	public void process(User user) {
+		value.accept(null, user, resolveValue());
+	}
+	
+	public void process(User user, EventInfo evt) {
+		value.accept(evt, user, resolveValue());
+	}
+}
+
+/* MISCELLANEOUS */
+
+class Utils {
+	static final int CARBON_SYNC_TAG = 123456;
+	static final long SEED = System.currentTimeMillis();
+	static Random rng = new Random(SEED);
+	static Map<String, Integer> gcis = new HashMap<>();
+	static final int EXEC_TIME = 3600 * 1000; //MILLISECONDS
+	static final int REPETITIONS = [repetitions/];
+	static final List<String> REGIONS = List.of([for (r : String | UMLModel.getAppliedProfile('sciuml').eAllContents(ecore::EEnum) -> select(e | e.name = 'Region').eLiterals.name) separator(', ')]"[r/]"[/for]);
+	static final NavigableMap<Integer, String> TIER_MAP = new TreeMap<>();
+	static final Logger log = LoggerFactory.getLogger(Utils.class);
+	
+	static {
+		[let tierSpecifications : Sequence(uml::Package) = UMLModel.eContents(uml::Package) -> select(p | not p.getAppliedStereotype('sciuml::TierSpecifications').oclIsUndefined())]
+		[if (tierSpecifications -> size() = 0 or tierSpecifications -> size() > 1)]
+		TIER_MAP.put(100, "Standard");
+		[else]
+		[for (t : uml::Class | tierSpecifications -> any(true).eContents(uml::Class) -> select(t | not t.getAppliedStereotype('sciuml::Tier').oclIsUndefined()))]
+		TIER_MAP.put([t.getValue(t.getAppliedStereotype('sciuml::Tier'), 'incidence')/], "[t.name/]");
+		[/for]
+		[/if]
+		[/let] [comment tierSpecifications/]
+
+		String currentRegion = null;
+		String currentElement = null;
+		
+		try {
+			XMLInputFactory factory = XMLInputFactory.newInstance();
+			XMLStreamReader reader = factory.createXMLStreamReader(Utils.class.getClassLoader().getResourceAsStream("gcis.xml"));
+			
+			while(reader.hasNext()) {
+				int event = reader.next();
+				
+				switch(event) {
+				case XMLStreamConstants.START_ELEMENT:
+					currentElement = reader.getLocalName();
+					if("region".equals(currentElement)) {
+						currentRegion = reader.getAttributeValue(null, "name");
+					}
+					break;
+					
+				case XMLStreamConstants.CHARACTERS:
+					String text = reader.getText().trim();
+					if (!text.isEmpty() && "carbon_intensity".equals(currentElement)) {
+						assert currentRegion != null;
+						gcis.put(currentRegion.replaceAll("-", "_"), Integer.parseInt(text));
+					}
+					break;
+					
+				case XMLStreamConstants.END_ELEMENT:
+					currentElement = null;
+					break;
+				}
+			}
+			reader.close();
+		} catch (Exception e) {
+			log.info(e.getMessage());
+		}
+	}
+}
+[/file]
+[/let] [comment packageName /]
+[/let] [comment name /]
+[/template]
+
+[template public generateInteraction(cloudletStart : uml::OccurrenceSpecification, nextCloudletStart : uml::OccurrenceSpecification, availableVms : Sequence(uml::ExecutionEnvironment))]
+[if not nextCloudletStart.oclIsUndefined()]
+[let following : uml::OccurrenceSpecification = cloudletStart.followingCloudletStart()]
+[following.generateInteraction(following.followingCloudletStart(), availableVms)/]
+[/let] [comment following /]
+[/if]  [comment recursion /]
+[let eps : uml::Stereotype = cloudletStart.getAppliedStereotype('sciuml::CloudletSpecification')]
+[let end : uml::OccurrenceSpecification = cloudletStart.cloudletEnd()]
+[let ends : uml::Stereotype = end.getAppliedStereotype('sciuml::CloudletSpecification')]
+[let component : uml::Component = cloudletStart.covered 
+	-> any(true)
+	.represents.eContainer(uml::Component)]
+[let vm : uml::ExecutionEnvironment = availableVms -> select(ee | ee.deployment -> exists(
+	d | d.deployedArtifact -> selectByKind(uml::Artifact) -> exists(
+		art | art.manifestation -> exists(
+			m | m.utilizedElement = component
+		)
+	)
+)) -> any(true)]
+[let device : uml::Device = vm.eContainer(uml::Device)]
+[let ds : uml::Stereotype = device.getAppliedStereotype('sciuml::EmittingDevice')]
+[let vs : uml::Stereotype = vm.getAppliedStereotype('sciuml::VirtualMachine')]
+[let cc : String = 'cl' + cloudletStart.name.safe()]
+ScarfCloudlet [cc/] = new ScarfCloudlet([end.getValue(ends, 'executedMIs')/], [end.getValue(ends, 'requiredCores')/], new UtilizationModelFull(), "[cc.substring(3)/]", user, "[component.name/]", "[cloudletStart.eContainer(uml::Interaction).name.safe()/]");
+[cc/].setSizes(1024);
+[cc/].setUtilizationModelRam(new UtilizationModelDynamic(0.0001));
+[cc/].setUtilizationModelBw(new UtilizationModelDynamic(0.0001));
+newCloudlets.add([cc/]);
+[if end.oclIsTypeOf(uml::ExecutionOccurrenceSpecification)]
+if(next != null) {
+	[cc/].addOnFinishListener(event -> {
+		double clk = [cc/].getSimulation().clock();
+		user.assignFinalCloudlet([cc/], clk);
+		((ScarfHost) [cc/].getVm().getHost()).updateUtilization(clk);
+		next.accept(event, user);
+	});
+}
+[/if]  [comment ifFinal /]
+[if not nextCloudletStart.oclIsUndefined()]
+[let nc : String = 'cl' + nextCloudletStart.name.safe()]
+[cc/].addOnFinishListener(_ -> {
+	user.assignCloudlet([cc/]);
+	broker.submitCloudletAtFront([nc/]);
+});
+[/let] [comment nc /]
+[/if]  [comment ifHasNext /]
+[if cloudletStart.oclIsTypeOf(uml::ExecutionOccurrenceSpecification)]
+broker.submitCloudlet([cc/]);
+[/if]  [comment ifInitial /]
+[/let] [comment cc /]
+[/let] [comment vs /]
+[/let] [comment ds /]
+[/let] [comment device /]
+[/let] [comment vm /]
+[/let] [comment component /]
+[/let] [comment ends /]
+[/let] [comment end /]
+[/let] [comment eps/]
+[/template]
+
+[template public iatFormula(dist : String, p1 : Real, p2 : Real)]
+[if (dist = 'Exponential')](-Math.log(1 - Utils.rng.nextDouble()) / [p1/]) * 1000.0;
+[elseif (dist = 'Uniform')]([p1/] + ([p2/] - [p1/]) * Utils.rng.nextDouble()) * 1000.0;
+[elseif (dist = 'Constant')][p1/] * 1000.0;
+[elseif (dist = 'Erlang')]0;
+for(int i = 0; i < [p1.round()/]; i++) {
+	iat += (-Math.log(1 - Utils.rng.nextDouble()) / [p2/]) * 1000.0;
+}
+[else][comment Lognormal or Log-normal /](Math.exp(Utils.rng.nextGaussian() * [p1/] + [p2/])) * 1000.0;
+[/if]
+[/template]
+
+
+[query public safe(s : String) : String = s.toUpperFirst().replaceAll('[^A-Za-z0-9_]', '')/]
+[query public metadataSafe(s : String) : String = s.toUpperFirst().replaceAll('[^A-Za-z0-9_-]', '')/]
+
+[query public isStarting(os : uml::OccurrenceSpecification) : Boolean =
+	let oss : uml::Stereotype = os.getAppliedStereotype('sciuml::CloudletSpecification') in
+	if oss.oclIsUndefined() then
+		false
+	else
+		let exMIs : Integer = os.getValue(oss, 'executedMIs').oclAsType(Integer) in
+		exMIs = 0
+	endif
+/]
+
+[query public canBeEnd(os : uml::OccurrenceSpecification) : Boolean =
+	os.oclIsTypeOf(uml::ExecutionOccurrenceSpecification)
+	or
+	os.eContainer(uml::Interaction).eContents(uml::Message)
+	-> reject(m | m.messageSort = uml::MessageSort::asynchCall)
+	-> collectNested(sendEvent)
+	-> includes(os)
+/]
+
+[query public events(ll : uml::Lifeline) : OrderedSet(uml::OccurrenceSpecification) =
+	ll.interaction.fragment -> selectByKind(uml::OccurrenceSpecification)-> select (os | os.covered -> includes(ll)) -> asOrderedSet()
+/]
+
+[query public cloudletEnd(o : uml::OccurrenceSpecification) : uml::OccurrenceSpecification =
+	if o.isStarting() then
+		let currentLifeline : uml::Lifeline = o.eContainer(uml::Interaction).eContents(uml::Lifeline) -> select(l | l.events() -> includes(o)) -> any(true) in
+		if currentLifeline.oclIsUndefined() then
+			null
+		else
+			let covereds : OrderedSet(uml::OccurrenceSpecification) = currentLifeline.events() in
+			let successors : OrderedSet(uml::OccurrenceSpecification) = covereds -> subOrderedSet(covereds -> indexOf(o), covereds -> size()) -> excluding(o) -> asOrderedSet() in
+			if successors -> oclIsUndefined() then
+				null
+			else
+				successors -> select(os | os.canBeEnd()) -> first()
+			endif
+		endif
+	else
+		null
+	endif	
+/]
+
+[query public followingCloudletStart(o : uml::OccurrenceSpecification) : uml::OccurrenceSpecification =
+	let currentEnd : uml::OccurrenceSpecification = if o.isStarting() then o.cloudletEnd() else o endif in
+	let involvedMessage : uml::Message = o.eContainer(uml::Interaction).eContents(uml::Message)
+		-> select(m | m.sendEvent = currentEnd)
+		-> any(true) in
+	if involvedMessage.oclIsUndefined() then
+		null
+	else
+		involvedMessage.receiveEvent.oclAsType(uml::OccurrenceSpecification)
+	endif
+/]

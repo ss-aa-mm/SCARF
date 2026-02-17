@@ -41,3 +41,6 @@ node_modules/
 
 #Tailwind/Flowbite generated stylesheets
 src/main/resources/static/css/output.css
+
+#Acceleo Compiled Transformations
+*.emtl

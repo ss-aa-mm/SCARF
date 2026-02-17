@@ -1,0 +1,71 @@
+package se.lnu.scarf;
+
+import org.eclipse.acceleo.model.mtl.MtlPackage;
+import org.eclipse.acceleo.model.mtl.util.MtlResourceFactoryImpl;
+import org.eclipse.acceleo.parser.AcceleoParser;
+import org.eclipse.acceleo.parser.AcceleoSourceBuffer;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.uml2.uml.UMLPackage;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.*;
+
+@SuppressWarnings("deprecation")
+public class AcceleoCompiler {
+    public static void main(String[] args) {
+        try {
+            UMLPackage.eINSTANCE.eClass();
+
+            URL stdlib =
+                    org.eclipse.acceleo.common.AcceleoCommonPlugin.class
+                            .getResource("/model/mtlstdlib.ecore");
+            assert stdlib != null;
+            URIConverter.URI_MAP.put(
+                    URI.createURI("http://www.eclipse.org/acceleo/mtl/3.0/mtlstdlib.ecore"),
+                    URI.createURI(stdlib.toString())
+            );
+
+            URL nonStdlib =
+                    org.eclipse.acceleo.common.AcceleoCommonPlugin.class
+                            .getResource("/model/mtlnonstdlib.ecore");
+
+            assert nonStdlib != null;
+            URIConverter.URI_MAP.put(
+                    URI.createURI("http://www.eclipse.org/acceleo/mtl/3.0/mtlnonstdlib.ecore"),
+                    URI.createURI(nonStdlib.toString())
+            );
+
+            ResourceSet resourceSet = new ResourceSetImpl();
+            resourceSet.getPackageRegistry().put(MtlPackage.eNS_URI, MtlPackage.eINSTANCE);
+            resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("mtl", new MtlResourceFactoryImpl());
+            resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emtl", new XMIResourceFactoryImpl());
+            resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
+
+            File mtlSource = new File("src/main/resources/templates/main.mtl");
+            File emtlDestination = new File("src/main/resources/static/main.emtl");
+            URI outURI = URI.createFileURI(emtlDestination.getAbsolutePath());
+            Resource emtlResource = resourceSet.createResource(outURI);
+
+            AcceleoSourceBuffer acceleoSourceBuffer = new AcceleoSourceBuffer(mtlSource);
+            AcceleoParser ap = new AcceleoParser();
+            ap.parse(acceleoSourceBuffer, emtlResource, new ArrayList<>());
+
+            Map<Object, Object> options = new HashMap<>();
+            options.put(XMLResource.OPTION_FORMATTED, Boolean.TRUE);
+            options.put(XMLResource.OPTION_DECLARE_XML, Boolean.TRUE);
+            options.put(XMLResource.OPTION_ENCODING, "UTF-8");
+            emtlResource.save(options);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}

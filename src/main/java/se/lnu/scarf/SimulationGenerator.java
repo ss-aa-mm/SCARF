@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimulationGenerator extends AbstractAcceleoGenerator {
-    public static final String MODULE_FILE_NAME = "/org/lnu/cloudSimCreator/main";
+    public static final String MODULE_FILE_NAME = "main";
     public static final String[] TEMPLATE_NAMES = { "projectGenerator" };
     private final ResourceSet rs = new ResourceSetImpl();
 
