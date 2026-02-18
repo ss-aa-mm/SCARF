@@ -199,7 +199,13 @@
             <version>2.20.1</version>
         </dependency>
 
-
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 
@@ -208,6 +214,67 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.15.0</version>
+                <executions>
+                    <execution>
+                        <id>npm install</id>
+                        <goals><goal>install-node-and-npm</goal></goals>
+                        <configuration>
+                            <nodeVersion>v20.11.1</nodeVersion>
+                            <npmVersion>10.2.4</npmVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm ci</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>ci --include=optional</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm build</id>
+                        <goals><goal>npm</goal></goals>
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.6.3</version>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals><goal>java</goal></goals>
+                        <configuration>
+                            <mainClass>se.lnu.scarf.AcceleoCompiler</mainClass>
+                            <classpathScope>compile</classpathScope>
+                            <includeProjectDependencies>true</includeProjectDependencies>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.30</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
             </plugin>
         </plugins>
     </build>

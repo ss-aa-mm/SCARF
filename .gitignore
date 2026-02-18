@@ -35,6 +35,7 @@ build/
 
 # Node dependencies
 node_modules/
+node/
 
 #MacOS
 .DS_Store

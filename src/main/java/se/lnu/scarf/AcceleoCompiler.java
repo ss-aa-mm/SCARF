@@ -1,5 +1,6 @@
 package se.lnu.scarf;
 
+import org.eclipse.acceleo.common.AcceleoCommonPlugin;
 import org.eclipse.acceleo.model.mtl.MtlPackage;
 import org.eclipse.acceleo.model.mtl.util.MtlResourceFactoryImpl;
 import org.eclipse.acceleo.parser.AcceleoParser;
@@ -21,28 +22,12 @@ import java.util.*;
 
 @SuppressWarnings("deprecation")
 public class AcceleoCompiler {
+    private static final List<String> requiredLibraries = List.of("mtlstdlib.ecore", "mtlnonstdlib.ecore");
+
     public static void main(String[] args) {
         try {
             UMLPackage.eINSTANCE.eClass();
-
-            URL stdlib =
-                    org.eclipse.acceleo.common.AcceleoCommonPlugin.class
-                            .getResource("/model/mtlstdlib.ecore");
-            assert stdlib != null;
-            URIConverter.URI_MAP.put(
-                    URI.createURI("http://www.eclipse.org/acceleo/mtl/3.0/mtlstdlib.ecore"),
-                    URI.createURI(stdlib.toString())
-            );
-
-            URL nonStdlib =
-                    org.eclipse.acceleo.common.AcceleoCommonPlugin.class
-                            .getResource("/model/mtlnonstdlib.ecore");
-
-            assert nonStdlib != null;
-            URIConverter.URI_MAP.put(
-                    URI.createURI("http://www.eclipse.org/acceleo/mtl/3.0/mtlnonstdlib.ecore"),
-                    URI.createURI(nonStdlib.toString())
-            );
+            mapLibraries();
 
             ResourceSet resourceSet = new ResourceSetImpl();
             resourceSet.getPackageRegistry().put(MtlPackage.eNS_URI, MtlPackage.eINSTANCE);
@@ -66,6 +51,17 @@ public class AcceleoCompiler {
             emtlResource.save(options);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static void mapLibraries() {
+        for (String library : AcceleoCompiler.requiredLibraries) {
+            URL libURL = AcceleoCommonPlugin.class.getResource("/model/" + library);
+            assert libURL != null;
+            URIConverter.URI_MAP.put(
+                    URI.createURI(MtlPackage.eNS_URI + "/" + library),
+                    URI.createURI(libURL.toString())
+            );
         }
     }
 }
