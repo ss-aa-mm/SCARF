@@ -2,11 +2,12 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
-    branches: [ main ]
 
 jobs:
   build:
@@ -26,9 +27,10 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
+        shell: bash
         run: |
          if [[ "$RUNNER_OS" == "Windows" ]]; then
-         .\mvnw clean verify
+         ./mvnw.cmd clean verify
          else
          ./mvnw clean verify
          fi
