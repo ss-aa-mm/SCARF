@@ -15,10 +15,21 @@
     <description>SCARF</description>
     <url/>
     <licenses>
-        <license/>
+        <license>
+            <name>GNU General Public License v3.0</name>
+            <url>https://ww.gnu.org/licenses/gpl-3.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
     </licenses>
     <developers>
-        <developer/>
+        <developer>
+            <id>sg</id>
+            <name>Samuele Giussani</name>
+            <email>samuele.giussani@lnu.se</email>
+            <organization>Linnaeus University</organization>
+            <organizationUrl>https://www.lnu.se</organizationUrl>
+            <roles><role>Developer</role></roles>
+        </developer>
     </developers>
     <scm>
         <connection/>
@@ -177,7 +188,7 @@
         <dependency>
             <groupId>org.cloudsimplus</groupId>
             <artifactId>cloudsimplus</artifactId>
-            <version>LATEST</version>
+            <version>8.5.7</version>
         </dependency>
 
         <!-- Jackson -->
