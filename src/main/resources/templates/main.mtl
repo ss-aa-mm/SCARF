@@ -66,9 +66,9 @@ public class [name/] {
 		CloudSimPlus simulation = new CloudSimPlus();
 		ScarfDatacenterBroker broker = new ScarfDatacenterBroker(simulation);
 
-		[let devices : Sequence(uml::Device) = UMLModel.eAllContents(uml::Device) -> select(dev | not dev.getAppliedStereotype('sciuml::EmittingDevice').oclIsUndefined())]
-		[let executionEnvironments : Sequence(uml::ExecutionEnvironment) = devices -> collectNested(eContents(uml::ExecutionEnvironment)) -> flatten() -> select(env | not env.getAppliedStereotype('sciuml::VirtualMachine').oclIsUndefined())]
-		[let regions : Set(String) = devices -> collect(d | d.getValue(d.getAppliedStereotype('sciuml::EmittingDevice'), 'region')).oclAsType(uml::EnumerationLiteral).name -> asSet()]
+		[let devices : Sequence(uml::Device) = UMLModel.eAllContents(uml::Device) -> select(dev | not dev.getAppliedStereotype('sciuml::CarbonEmittingDevice').oclIsUndefined())]
+		[let executionEnvironments : Sequence(uml::ExecutionEnvironment) = devices -> collectNested(eContents(uml::ExecutionEnvironment)) -> flatten() -> select(env | not env.getAppliedStereotype('sciuml::CarbonEmittingEE').oclIsUndefined())]
+		[let regions : Set(String) = devices -> collect(d | d.getValue(d.getAppliedStereotype('sciuml::CarbonEmittingDevice'), 'region')).oclAsType(uml::EnumerationLiteral).name -> asSet()]
 		hostList = new ArrayList<>([devices -> size()/]);
 		ArrayList<ScarfCloudlet> cloudletList = new ArrayList<>();
 		ArrayList<ScarfVm> newVms;
@@ -78,22 +78,22 @@ public class [name/] {
 		Datacenter datacenter;
 
 		[for (region : String | regions)]
-		[let regionalDevices : Sequence(uml::Device) = devices -> select(d | d.getValue(d.getAppliedStereotype('sciuml::EmittingDevice'), 'region').oclAsType(uml::EnumerationLiteral).name = region)]
+		[let regionalDevices : Sequence(uml::Device) = devices -> select(d | d.getValue(d.getAppliedStereotype('sciuml::CarbonEmittingDevice'), 'region').oclAsType(uml::EnumerationLiteral).name = region)]
 		newHosts = new ArrayList<>([regionalDevices -> size()/]);
-		newVms = new ArrayList<>([regionalDevices -> collectNested(eContents(uml::ExecutionEnvironment)) -> flatten() -> select(env | not env.getAppliedStereotype('sciuml::VirtualMachine').oclIsUndefined()) -> size()/]);
+		newVms = new ArrayList<>([regionalDevices -> collectNested(eContents(uml::ExecutionEnvironment)) -> flatten() -> select(env | not env.getAppliedStereotype('sciuml::CarbonEmittingEE').oclIsUndefined()) -> size()/]);
 		[for (device : uml::Device | regionalDevices)]
-		[let ds : uml::Stereotype = device.getAppliedStereotype('sciuml::EmittingDevice')]
+		[let ds : uml::Stereotype = device.getAppliedStereotype('sciuml::CarbonEmittingDevice')]
 		host = new ScarfHost("[device.name.safe()/]", [device.getValue(ds, 'ram')/], [device.getValue(ds, 'bandwidth')/], [device.getValue(ds, 'storage')/], [for (n : Integer | Sequence{1..(device.getValue(ds, 'CoresPerCPU').oclAsType(Integer) * device.getValue(ds, 'CPUs').oclAsType(Integer))}) before('List.of(') separator(', ') after('),')]new PeSimple([device.getValue(ds, 'MIPS').oclAsType(Integer) / 1000/])[/for] [device.getValue(ds, 'embodiedEmissions').oclAsType(Real)/], [device.getValue(ds, 'expectedLifespan').oclAsType(Real)/], [device.getValue(ds, 'thermalDesignPowerPerCPU').oclAsType(Real) * device.getValue(ds, 'CPUs').oclAsType(Integer)/]);
 		newHosts.add(host);
-		[for (ee : uml::ExecutionEnvironment | device.eContents(uml::ExecutionEnvironment) -> select(env | not env.getAppliedStereotype('sciuml::VirtualMachine').oclIsUndefined()))]
-		[let es : uml::Stereotype = ee.getAppliedStereotype('sciuml::VirtualMachine')]
+		[for (ee : uml::ExecutionEnvironment | device.eContents(uml::ExecutionEnvironment) -> select(env | not env.getAppliedStereotype('sciuml::CarbonEmittingEE').oclIsUndefined()))]
+		[let es : uml::Stereotype = ee.getAppliedStereotype('sciuml::CarbonEmittingEE')]
 		[let component : String = device.eContents(uml::Artifact) -> select(a | ee.eContents(uml::Deployment) -> any(true).deployedArtifact -> includes(a)) -> collectNested(manifestation) -> flatten() -> any(true).utilizedElement.name]
 		[let tierNames : OclAny = ee.getValue(es, 'allowedTiers')]
 		vm = new ScarfVm("[ee.name.safe()/]", [ee.getValue(es, 'MIPS').oclAsType(Integer) / 1000/], [ee.getValue(es, 'reservedCores')/], "[component/]", host, List.of([for(tier : OclAny | tierNames) separator(', ')]"[tier.eGet('name')/]"[/for]));
 		vm.setRam([ee.getValue(es, 'ram')/]);
 		vm.setBw([ee.getValue(es, 'bandwidth')/]);
 		vm.setSize([ee.getValue(es, 'capacity')/]);
-		vm.setCloudletScheduler(new CloudletScheduler[if (ee.getValue(es, 'deploymentPattern').oclAsType(uml::EnumerationLiteral).name = 'Silo')]Space[else]Time[/if]Shared());
+		vm.setCloudletScheduler(new CloudletScheduler[if (ee.getValue(es, 'deploymentPolicy').oclAsType(uml::EnumerationLiteral).name = 'Silo')]Space[else]Time[/if]Shared());
 		broker.registerVm("[component/]", vm);
 		newVms.add(vm);
 		[/let] [comment tierNames /]
@@ -142,7 +142,7 @@ public class [name/] {
 		[/let] [comment nodeName /]
 		[/for] [comment node /]
 		[for(arrow : uml::ControlFlow | activity.edge -> selectByType(uml::ControlFlow))]
-		[activity.name.safe() + arrow.source.name.safe()/].addChild([activity.name.safe() + arrow.target.name.safe()/][if(not arrow.getAppliedStereotype('sciuml::OptionalFlow').oclIsUndefined())], [arrow.getValue(arrow.getAppliedStereotype('sciuml::OptionalFlow'), 'weight')/][/if]);
+		[activity.name.safe() + arrow.source.name.safe()/].addChild([activity.name.safe() + arrow.target.name.safe()/][if(not arrow.getAppliedStereotype('sciuml::DecisionFlow').oclIsUndefined())], [arrow.getValue(arrow.getAppliedStereotype('sciuml::DecisionFlow'), 'weight')/][/if]);
 		[/for] [comment arrow /]
 		[/for] [comment activity /]
 
@@ -855,9 +855,9 @@ class Utils {
 [following.generateInteraction(following.followingCloudletStart(), availableVms)/]
 [/let] [comment following /]
 [/if]  [comment recursion /]
-[let eps : uml::Stereotype = cloudletStart.getAppliedStereotype('sciuml::CloudletSpecification')]
+[let eps : uml::Stereotype = cloudletStart.getAppliedStereotype('sciuml::TaskSpecification')]
 [let end : uml::OccurrenceSpecification = cloudletStart.cloudletEnd()]
-[let ends : uml::Stereotype = end.getAppliedStereotype('sciuml::CloudletSpecification')]
+[let ends : uml::Stereotype = end.getAppliedStereotype('sciuml::TaskSpecification')]
 [let component : uml::Component = cloudletStart.covered 
 	-> any(true)
 	.represents.eContainer(uml::Component)]
@@ -869,8 +869,8 @@ class Utils {
 	)
 )) -> any(true)]
 [let device : uml::Device = vm.eContainer(uml::Device)]
-[let ds : uml::Stereotype = device.getAppliedStereotype('sciuml::EmittingDevice')]
-[let vs : uml::Stereotype = vm.getAppliedStereotype('sciuml::VirtualMachine')]
+[let ds : uml::Stereotype = device.getAppliedStereotype('sciuml::CarbonEmittingDevice')]
+[let vs : uml::Stereotype = vm.getAppliedStereotype('sciuml::CarbonEmittingEE')]
 [let cc : String = 'cl' + cloudletStart.name.safe()]
 ScarfCloudlet [cc/] = new ScarfCloudlet([end.getValue(ends, 'executedMIs')/], [end.getValue(ends, 'requiredCores')/], new UtilizationModelFull(), "[cc.substring(3)/]", user, "[component.name/]", "[cloudletStart.eContainer(uml::Interaction).name.safe()/]");
 [cc/].setSizes(1024);
@@ -926,7 +926,7 @@ for(int i = 0; i < [p1.round()/]; i++) {
 [query public metadataSafe(s : String) : String = s.toUpperFirst().replaceAll('[^A-Za-z0-9_-]', '')/]
 
 [query public isStarting(os : uml::OccurrenceSpecification) : Boolean =
-	let oss : uml::Stereotype = os.getAppliedStereotype('sciuml::CloudletSpecification') in
+	let oss : uml::Stereotype = os.getAppliedStereotype('sciuml::TaskSpecification') in
 	if oss.oclIsUndefined() then
 		false
 	else
