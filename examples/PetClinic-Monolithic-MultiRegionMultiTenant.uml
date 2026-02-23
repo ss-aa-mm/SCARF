@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:sciuml="http://lnu.se/sciuml" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://lnu.se/sciuml ../src/main/resources/static/sci-uml.profile.uml#_CQVVAA5GEfG4f-sRrijcAQ">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:sciuml="http://lnu.se/sciuml" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://lnu.se/sciuml ../src/main/resources/static/sci-uml.profile.uml#_G7wr4BDDEfGxgZ4uEoemkg">
   <uml:Model xmi:id="_8g7GgKKqEfCuBILNeceiEg" name="PetClinic-Monolithic-MultiRegionMultiTenant">
     <packageImport xmi:type="uml:PackageImport" xmi:id="_8n8UgKKqEfCuBILNeceiEg">
       <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
@@ -212,7 +212,7 @@
     <packagedElement xmi:type="uml:Class" xmi:id="_g5YMUO_FEfCB2dyLoEFXHw" name="PetClinicDatabaseService"/>
     <packagedElement xmi:type="uml:Device" xmi:id="_Ga6roKLFEfCO1JifgY6N0Q" name="eu_server">
       <nestedClassifier xmi:type="uml:Artifact" xmi:id="_amcMcO-2EfCB2dyLoEFXHw" name="SpringMVCArtifact" fileName="PetClinic.jar">
-        <manifestation xmi:type="uml:Manifestation" xmi:id="_zwOWgO_FEfCB2dyLoEFXHw" name="SpringMVCManifestation" supplier="_5emrEO_EEfCB2dyLoEFXHw" utilizedElement="_5emrEO_EEfCB2dyLoEFXHw"/>
+        <manifestation xmi:type="uml:Manifestation" xmi:id="_zwOWgO_FEfCB2dyLoEFXHw" name="SpringMVCManifestation" client="_amcMcO-2EfCB2dyLoEFXHw" supplier="_5emrEO_EEfCB2dyLoEFXHw" utilizedElement="_5emrEO_EEfCB2dyLoEFXHw"/>
       </nestedClassifier>
       <nestedNode xmi:type="uml:ExecutionEnvironment" xmi:id="_K12l4KLFEfCO1JifgY6N0Q" name="SpringBoot_eu">
         <deployment xmi:type="uml:Deployment" xmi:id="_fQeuIO_AEfCB2dyLoEFXHw" client="_K12l4KLFEfCO1JifgY6N0Q" supplier="_amcMcO-2EfCB2dyLoEFXHw" deployedArtifact="_amcMcO-2EfCB2dyLoEFXHw">
@@ -222,7 +222,7 @@
     </packagedElement>
     <packagedElement xmi:type="uml:Device" xmi:id="_fF9eEPFeEfCB2dyLoEFXHw" name="ap_server">
       <nestedClassifier xmi:type="uml:Artifact" xmi:id="_zHaaMPFeEfCB2dyLoEFXHw" name="SpringMVCArtifact" fileName="PetClinic.jar">
-        <manifestation xmi:type="uml:Manifestation" xmi:id="_9cNDwPFeEfCB2dyLoEFXHw" name="SpringMVCManifestation" supplier="_5emrEO_EEfCB2dyLoEFXHw" utilizedElement="_5emrEO_EEfCB2dyLoEFXHw"/>
+        <manifestation xmi:type="uml:Manifestation" xmi:id="_9cNDwPFeEfCB2dyLoEFXHw" name="SpringMVCManifestation" client="_zHaaMPFeEfCB2dyLoEFXHw" supplier="_5emrEO_EEfCB2dyLoEFXHw" utilizedElement="_5emrEO_EEfCB2dyLoEFXHw"/>
       </nestedClassifier>
       <nestedNode xmi:type="uml:ExecutionEnvironment" xmi:id="_rnS3sPFeEfCB2dyLoEFXHw" name="SpringBoot_ap">
         <deployment xmi:type="uml:Deployment" xmi:id="_CzkKAPFfEfCB2dyLoEFXHw" client="_rnS3sPFeEfCB2dyLoEFXHw" supplier="_zHaaMPFeEfCB2dyLoEFXHw" deployedArtifact="_zHaaMPFeEfCB2dyLoEFXHw">
@@ -243,7 +243,7 @@
         <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_OhcQIwKnEfGiGocbrf8DBA" key="Author" value=""/>
       </eAnnotations>
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_c4piEKN3EfCO1JifgY6N0Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="../sci-uml/sci-uml.profile.uml#_CQVVAA5GEfG4f-sRrijcAQ"/>
+        <references xmi:type="ecore:EPackage" href="../sci-uml/sci-uml.profile.uml#_G7wr4BDDEfGxgZ4uEoemkg"/>
       </eAnnotations>
       <appliedProfile xmi:type="uml:Profile" href="../src/main/resources/static/sci-uml.profile.uml#_xRgtoN4vEe-PJ9LyM18TPA"/>
     </profileApplication>
