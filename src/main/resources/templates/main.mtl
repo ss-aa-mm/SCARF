@@ -173,6 +173,15 @@ public class [name/] {
 		
 		try {
 			Files.write(Path.of(basePath, "[packageName/]_" + rep + ".txt"), currentRepUsers.stream().map(Object::toString).toList(), StandardCharsets.UTF_8);
+			List<String> traceReplay = new ArrayList<>();
+			traceReplay.add("time,device,interaction");
+			traceReplay.addAll(currentRepUsers.stream()
+			    .flatMap(u -> u.getExecutedCloudlets().stream())
+			    .filter(ScarfCloudlet::isInitial)
+			    .sorted(Comparator.comparingDouble(ScarfCloudlet::getStartTime))
+			    .map(ScarfCloudlet::toString)
+			    .toList());
+			Files.write(Path.of(basePath, "[packageName/]_" + rep + "_tr.csv"), traceReplay);
 		} catch (IOException e) {
 			log.error(e.getMessage());
 		}
@@ -506,6 +515,7 @@ class ScarfCloudlet extends CloudletSimple {
 	private User user;
 	private final String component;
 	private final String interaction;
+	private boolean initial;
 	private CarbonResult totalCarbon = new CarbonResult(0.0, 0.0);
 	
 	public ScarfCloudlet(long length, int pesNumber, UtilizationModel utilizationModel, String name, User user, String component, String interaction) {
@@ -514,10 +524,15 @@ class ScarfCloudlet extends CloudletSimple {
 		this.user = user;
 		this.component = component;
 		this.interaction = interaction;
+		this.initial = false;
 	}
 	
 	public String getName() {
 		return name;
+	}
+
+	public void markAsInitial() {
+	    this.initial = true;
 	}
 	
 	public User getUser() {
@@ -538,6 +553,19 @@ class ScarfCloudlet extends CloudletSimple {
 	
 	public double getPowerModelSci() {
 		return totalCarbon.powerModelEstimate();
+	}
+
+	public boolean isInitial() {
+        return initial;
+	}
+
+	@Override
+	public String toString() {
+	    return String.format(Locale.ENGLISH, "%.3f,%s,%s",
+	        this.getStartTime(),
+	        ((ScarfVm) getVm()).toString(),
+	        this.interaction
+	    );
 	}
 
 	@Override
@@ -896,6 +924,7 @@ if(next != null) {
 [/let] [comment nc /]
 [/if]  [comment ifHasNext /]
 [if cloudletStart.oclIsTypeOf(uml::ExecutionOccurrenceSpecification)]
+[cc/].markAsInitial();
 broker.submitCloudlet([cc/]);
 [/if]  [comment ifInitial /]
 [/let] [comment cc /]
