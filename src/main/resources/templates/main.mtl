@@ -229,6 +229,8 @@ import org.cloudsimplus.vms.Vm;
 import org.cloudsimplus.vms.VmSimple;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -314,15 +316,15 @@ interface TriConsumer<T, U, V> {
 
 class ScarfDatacenter extends DatacenterSimple {
 	private final String region;
-	private final int gridCarbonIntensity;
+	private final double gridCarbonIntensity;
 	private double lastTimeStamp = 0.0;
 	private static final double INTERVAL = 1000.0;  // 1 s
-	private static final int DEFAULT_GRID_CARBON_INTENSITY = 300;
+	private static final double DEFAULT_GRID_CARBON_INTENSITY = 300.0;
 
 	public ScarfDatacenter(CloudSimPlus simulation, List<ScarfHost> hostList, String region) {
 		super(simulation, hostList, new ScarfAllocationPolicy(hostList));
 		this.region = region;
-		this.gridCarbonIntensity = Utils.gcis.get(region) != null ? Utils.gcis.get(region) : DEFAULT_GRID_CARBON_INTENSITY;
+		this.gridCarbonIntensity = Utils.gciData.get(region) != null ? Utils.gciData.get(region).get("Yearly")['[0]'/] : DEFAULT_GRID_CARBON_INTENSITY;
 	}
 	
 	@Override
@@ -355,7 +357,7 @@ class ScarfDatacenter extends DatacenterSimple {
 		return region;
 	}
 
-	public int getGci() {
+	public double getGci() {
 		return gridCarbonIntensity;
 	}
 }
@@ -818,6 +820,7 @@ class Utils {
 	static final long SEED = System.currentTimeMillis();
 	static Random rng = new Random(SEED);
 	static Map<String, Integer> gcis = new HashMap<>();
+	static Map<String, Map<String, double['[]'/]>> gciData;
 	static final int EXEC_TIME = 3600 * 1000; //MILLISECONDS
 	static final int REPETITIONS = [repetitions/];
 	static final List<String> REGIONS = List.of([for (r : String | UMLModel.getAppliedProfile('sciuml').eAllContents(ecore::EEnum) -> select(e | e.name = 'Region').eLiterals.name) separator(', ')]"[r/]"[/for]);
@@ -870,6 +873,18 @@ class Utils {
 		} catch (Exception e) {
 			log.info(e.getMessage());
 		}
+
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+		    gciData = mapper.readValue(
+                Utils.class.getClassLoader().getResourceAsStream("gci.json"),
+                new TypeReference<>() {}
+            );
+		} catch (Exception e) {
+		    gciData = null;
+		}
+
+		System.out.println(gciData != null ? gciData.get("us_west_1").get("Yearly")['[0]'/] : "No gci Data");
 	}
 }
 [/file]

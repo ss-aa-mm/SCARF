@@ -38,7 +38,7 @@ public class AcceleoCompiler {
             resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
 
             File mtlSource = new File("src/main/resources/templates/main.mtl");
-            File emtlDestination = new File("src/main/resources/static/main.emtl");
+            File emtlDestination = new File("target/classes/static/main.emtl");
             URI outURI = URI.createFileURI(emtlDestination.getAbsolutePath());
             Resource emtlResource = resourceSet.createResource(outURI);
 

@@ -29,6 +29,7 @@ public class CompilationComponent {
         Files.createDirectories(targetFolder);
         copyResource("gcis.dtd", targetFolder);
         copyResource("gcis.xml", targetFolder);
+        copyResource("gci.json", targetFolder);
 
         List<String> sources;
         try (Stream<Path> paths = Files.walk(sourceFolder)) {

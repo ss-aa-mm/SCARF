@@ -16,7 +16,7 @@ import java.util.*;
 public class GridCarbonIntensityDataGenerator {
 
     private static final String GCI_FOLDER = "src/main/resources/gci/";
-    private static final String OUTPUT_FILE = "src/main/resources/static/gci.json";
+    private static final String OUTPUT_FILE = "target/classes/static/gci.json";
     private static final ObjectMapper MAPPER = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
     public static void main(String[] args) {
