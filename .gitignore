@@ -45,3 +45,7 @@ src/main/resources/static/css/output.css
 
 #Acceleo Compiled Transformations
 *.emtl
+
+#Grid Carbon Intensity Data from ElectricityMaps
+src/main/resources/gci/*.csv
+src/main/resources/static/gci.json

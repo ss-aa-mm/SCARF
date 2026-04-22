@@ -218,6 +218,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- TableSaw -->
+        <dependency>
+            <groupId>tech.tablesaw</groupId>
+            <artifactId>tablesaw-core</artifactId>
+            <version>0.43.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -263,10 +270,21 @@
                 <version>3.6.3</version>
                 <executions>
                     <execution>
+                        <id>emtl-generation</id>
                         <phase>process-classes</phase>
                         <goals><goal>java</goal></goals>
                         <configuration>
                             <mainClass>se.lnu.scarf.AcceleoCompiler</mainClass>
+                            <classpathScope>compile</classpathScope>
+                            <includeProjectDependencies>true</includeProjectDependencies>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>gci-dataset-generation</id>
+                        <phase>process-classes</phase>
+                        <goals><goal>java</goal></goals>
+                        <configuration>
+                            <mainClass>se.lnu.scarf.GridCarbonIntensityDataGenerator</mainClass>
                             <classpathScope>compile</classpathScope>
                             <includeProjectDependencies>true</includeProjectDependencies>
                         </configuration>

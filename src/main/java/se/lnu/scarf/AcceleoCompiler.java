@@ -1,5 +1,6 @@
 package se.lnu.scarf;
 
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.acceleo.common.AcceleoCommonPlugin;
 import org.eclipse.acceleo.model.mtl.MtlPackage;
 import org.eclipse.acceleo.model.mtl.util.MtlResourceFactoryImpl;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+@Slf4j
 @SuppressWarnings("deprecation")
 public class AcceleoCompiler {
     private static final List<String> requiredLibraries = List.of("mtlstdlib.ecore", "mtlnonstdlib.ecore");
@@ -49,6 +51,7 @@ public class AcceleoCompiler {
             options.put(XMLResource.OPTION_DECLARE_XML, Boolean.TRUE);
             options.put(XMLResource.OPTION_ENCODING, "UTF-8");
             emtlResource.save(options);
+            log.info("Compiled Interpretation generated at {}", emtlDestination.getAbsolutePath());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
