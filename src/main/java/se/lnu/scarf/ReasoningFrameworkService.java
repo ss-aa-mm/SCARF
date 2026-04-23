@@ -17,6 +17,7 @@ public class ReasoningFrameworkService {
     private final ExecutionComponent executionComponent;
     private final ResultsCreationComponent resultsCreationComponent;
     private final ProgressionStreamer streamer;
+    private final LaunchValidator launchValidator;
     private static final String DELIMITER = "|";
     private static final Logger logger = LoggerFactory.getLogger(ReasoningFrameworkService.class);
 
@@ -25,12 +26,14 @@ public class ReasoningFrameworkService {
                                      CompilationComponent compilationComponent,
                                      ExecutionComponent executionComponent,
                                      ResultsCreationComponent resultsCreationComponent,
+                                     LaunchValidator launchValidator,
                                      ProgressionStreamer streamer) {
         this.validationComponent = validationComponent;
         this.interpretationComponent = interpretationComponent;
         this.compilationComponent = compilationComponent;
         this.executionComponent = executionComponent;
         this.resultsCreationComponent = resultsCreationComponent;
+        this.launchValidator = launchValidator;
         this.streamer = streamer;
     }
 
@@ -47,7 +50,7 @@ public class ReasoningFrameworkService {
             validationComponent.clearResourceSet();
 
             streamer.push("STAGE_COMPILATION", 50, "Compiling the generated simulation...");
-            int result = compilationComponent.compile(compilationBaseDir);
+            int result = compilationComponent.compile(compilationBaseDir, launchValidator.usingSampleGci());
             if (result != 0) throw new RuntimeException("The generated code compilation failed");
 
             streamer.push("STAGE_EXECUTION", 75, "Executing the generated simulation for " + rep + " repetitions...");

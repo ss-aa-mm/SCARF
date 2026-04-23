@@ -21,15 +21,13 @@ public class CompilationComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(CompilationComponent.class);
 
-    public int compile(Path baseFolder) throws Exception {
+    public int compile(Path baseFolder, boolean usingSampleGci) throws Exception {
         logger.info("Launching the compiler and preparing the required dependencies...");
         Path sourceFolder = baseFolder.resolve("src/main/java");
         Path targetFolder = baseFolder.resolve("target/classes");
         String isolatedClasspath = buildTempClasspath(baseFolder);
         Files.createDirectories(targetFolder);
-        copyResource("gcis.dtd", targetFolder);
-        copyResource("gcis.xml", targetFolder);
-        copyResource("gci.json", targetFolder);
+        copyGciResource(targetFolder, usingSampleGci);
 
         List<String> sources;
         try (Stream<Path> paths = Files.walk(sourceFolder)) {
@@ -76,13 +74,15 @@ public class CompilationComponent {
         }
     }
 
-    private static void copyResource(String name, Path targetFolder) throws IOException {
+    private static void copyGciResource(Path targetFolder, boolean usingSampleGci) throws IOException {
+        String name = usingSampleGci ? "sample_gci.json" : "gci.json";
+        String resultingName = "gci.json";
         Files.copy(
                 Objects.requireNonNull(
                         CompilationComponent.class.getClassLoader().getResourceAsStream("static/" + name),
                         "Resource " + name + " can't be copied!"
                 ),
-                targetFolder.resolve(name),
+                targetFolder.resolve(resultingName),
                 StandardCopyOption.REPLACE_EXISTING
         );
     }

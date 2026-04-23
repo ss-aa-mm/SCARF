@@ -819,7 +819,6 @@ class Utils {
 	static final int CARBON_SYNC_TAG = 123456;
 	static final long SEED = System.currentTimeMillis();
 	static Random rng = new Random(SEED);
-	static Map<String, Integer> gcis = new HashMap<>();
 	static Map<String, Map<String, double['[]'/]>> gciData;
 	static final int EXEC_TIME = 3600 * 1000; //MILLISECONDS
 	static final int REPETITIONS = [repetitions/];
@@ -837,42 +836,6 @@ class Utils {
 		[/for]
 		[/if]
 		[/let] [comment tierSpecifications/]
-
-		String currentRegion = null;
-		String currentElement = null;
-		
-		try {
-			XMLInputFactory factory = XMLInputFactory.newInstance();
-			XMLStreamReader reader = factory.createXMLStreamReader(Utils.class.getClassLoader().getResourceAsStream("gcis.xml"));
-			
-			while(reader.hasNext()) {
-				int event = reader.next();
-				
-				switch(event) {
-				case XMLStreamConstants.START_ELEMENT:
-					currentElement = reader.getLocalName();
-					if("region".equals(currentElement)) {
-						currentRegion = reader.getAttributeValue(null, "name");
-					}
-					break;
-					
-				case XMLStreamConstants.CHARACTERS:
-					String text = reader.getText().trim();
-					if (!text.isEmpty() && "carbon_intensity".equals(currentElement)) {
-						assert currentRegion != null;
-						gcis.put(currentRegion.replaceAll("-", "_"), Integer.parseInt(text));
-					}
-					break;
-					
-				case XMLStreamConstants.END_ELEMENT:
-					currentElement = null;
-					break;
-				}
-			}
-			reader.close();
-		} catch (Exception e) {
-			log.info(e.getMessage());
-		}
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {

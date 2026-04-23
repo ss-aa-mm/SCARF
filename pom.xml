@@ -306,6 +306,17 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>templates/main.mtl</exclude>
+                    <exclude>gci/**</exclude>
+                    <exclude>static/css/input.css</exclude>
+                </excludes>
+            </resource>
+        </resources>
     </build>
 
 </project>

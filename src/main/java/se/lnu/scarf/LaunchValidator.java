@@ -11,6 +11,7 @@ public class LaunchValidator {
     private static final String compiledInterpretation = "static/main.emtl";
     private static final String compiledStyleSheet = "static/css/output.css";
     private static final String generatedGci = "static/gci.json";
+    private static boolean useSampleGci = false;
 
     @PostConstruct
     public void checkInit() {
@@ -27,9 +28,14 @@ public class LaunchValidator {
                 throw new RuntimeException(description + " is missing from classpath. Check the pipeline and retry!");
             } else {
                 log.warn("{} not found at classpath: {}. Static defaults will be used!", description, path);
+                useSampleGci = true;
             }
         } else {
             log.info("Found {} at classpath: {}", description, path);
         }
+    }
+
+    public boolean usingSampleGci() {
+        return useSampleGci;
     }
 }
