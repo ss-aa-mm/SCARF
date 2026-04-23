@@ -33,8 +33,6 @@ public class Config implements WebMvcConfigurer {
             t.setName("SCARF-frameworkExecutor-" + t.getId());
             return t;
         });
-        executor.initialize();
-        executor.getThreadPoolExecutor().prestartCoreThread();
         return executor;
     }
 }
