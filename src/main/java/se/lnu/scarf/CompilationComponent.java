@@ -55,18 +55,32 @@ public class CompilationComponent {
     private static String buildTempClasspath(Path baseFolder) throws Exception {
         Path libFolder = baseFolder.resolve("lib");
         Files.createDirectories(libFolder);
-        ProcessBuilder processBuilder = new ProcessBuilder(
-                "mvn",
-                "dependency:copy-dependencies",
-                "-D" + "outputDirectory=" + libFolder.toAbsolutePath(),
-                "-D" + "includeArtifactIds=" + String.join(",", ARTIFACT_IDS)
-        );
-        processBuilder.directory(new File(System.getProperty("user.dir")));
-        Process process = processBuilder.start();
-        int exitCode = process.waitFor();
-        if (exitCode != 0) throw new RuntimeException(
-                "Maven could not copy the dependencies to compile the generated code."
-        );
+        Path containerLib = Path.of("/workspace/BOOT-INF/lib");
+
+        if (Files.exists(containerLib)) {
+            logger.info("Running in container mode");
+            try (Stream<Path> walk = Files.list(containerLib)) {
+                walk.filter(p -> p.toString().endsWith(".jar"))
+                        .filter(p -> ARTIFACT_IDS.stream().anyMatch(p.getFileName().toString()::contains))
+                        .forEach(p -> {
+                            try {
+                                Files.copy(p, libFolder.resolve(p.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+            }
+        } else {
+            logger.info("Running in standard mode");
+            String classpath = System.getProperty("java.class.path");
+            for (String entry : classpath.split(File.pathSeparator)) {
+                if (ARTIFACT_IDS.stream().anyMatch(entry::contains)) {
+                    Path src = Path.of(entry);
+                    Files.copy(src, libFolder.resolve(src.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
+        }
+
         try (Stream<Path> walk = Files.list(libFolder)) {
             return walk.map(Path::toString)
                     .filter(string -> string.endsWith(".jar"))

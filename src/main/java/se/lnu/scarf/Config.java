@@ -30,7 +30,7 @@ public class Config implements WebMvcConfigurer {
         executor.setThreadFactory(r -> {
             Thread t = new Thread(r);
             t.setDaemon(true);
-            t.setName("SCARF-frameworkExecutor-" + t.getId());
+            t.setName("SCARF-frameworkExecutor-" + t.threadId());
             return t;
         });
         return executor;
