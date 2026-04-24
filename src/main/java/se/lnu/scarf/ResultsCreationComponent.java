@@ -7,16 +7,15 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Component
 public class ResultsCreationComponent{
     private static final Logger logger = LoggerFactory.getLogger(ResultsCreationComponent.class);
 
-    public String saveResults(Path resultsDirectory, String packageName) throws IOException {
+    public String saveResults(Path resultsDirectory, String packageName, Path dataDirectory) throws IOException {
         logger.info("Saving simulation results...");
-        Path persistentDirectory = Paths.get("results").toAbsolutePath();
+        Path persistentDirectory = dataDirectory.resolve("results");
         if (!Files.exists(persistentDirectory)) Files.createDirectories(persistentDirectory);
         Path resultsPath = resultsDirectory.resolve(packageName + "_plot.json");
         String simulationId = resultsDirectory.getFileName().toString().substring("scarf-gen-src".length());

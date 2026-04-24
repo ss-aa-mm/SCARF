@@ -21,11 +21,11 @@ public class CompilationComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(CompilationComponent.class);
 
-    public int compile(Path baseFolder, boolean usingSampleGci) throws Exception {
+    public int compile(Path baseFolder, boolean usingSampleGci, boolean inContainer) throws Exception {
         logger.info("Launching the compiler and preparing the required dependencies...");
         Path sourceFolder = baseFolder.resolve("src/main/java");
         Path targetFolder = baseFolder.resolve("target/classes");
-        String isolatedClasspath = buildTempClasspath(baseFolder);
+        String isolatedClasspath = buildTempClasspath(baseFolder, inContainer);
         Files.createDirectories(targetFolder);
         copyGciResource(targetFolder, usingSampleGci);
 
@@ -52,13 +52,13 @@ public class CompilationComponent {
         return result;
     }
 
-    private static String buildTempClasspath(Path baseFolder) throws Exception {
+    private static String buildTempClasspath(Path baseFolder, boolean inContainer) throws Exception {
         Path libFolder = baseFolder.resolve("lib");
         Files.createDirectories(libFolder);
-        Path containerLib = Path.of("/workspace/BOOT-INF/lib");
 
-        if (Files.exists(containerLib)) {
+        if (inContainer) {
             logger.info("Running in container mode");
+            Path containerLib = Path.of("/workspace/BOOT-INF/lib");
             try (Stream<Path> walk = Files.list(containerLib)) {
                 walk.filter(p -> p.toString().endsWith(".jar"))
                         .filter(p -> ARTIFACT_IDS.stream().anyMatch(p.getFileName().toString()::contains))

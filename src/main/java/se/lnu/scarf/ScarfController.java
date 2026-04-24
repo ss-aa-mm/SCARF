@@ -11,10 +11,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Controller
 public class ScarfController {
+    private final LaunchValidator launchValidator;
+
+    public ScarfController(LaunchValidator launchValidator) {
+        this.launchValidator = launchValidator;
+    }
+
     @GetMapping("/")
     public String index() {
         return "index";
@@ -22,7 +27,7 @@ public class ScarfController {
 
     @GetMapping("/results/{resultId}")
     public String results(@PathVariable(value = "resultId") String resultId, Model model, RedirectAttributes redirectAttributes) {
-        Path resultPath = Paths.get("results/" + resultId + ".json");
+        Path resultPath = launchValidator.getDataDirectory().resolve("results").resolve(resultId + ".json");
         if(!Files.exists(resultPath)) {
             redirectAttributes.addFlashAttribute("errorHeader", "Resource not found");
             redirectAttributes.addFlashAttribute("errorMessage", "The selected simulation result does not exist!");

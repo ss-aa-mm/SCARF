@@ -5,19 +5,28 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
+import java.util.Set;
+
 @Slf4j
 @Component
 public class LaunchValidator {
     private static final String compiledInterpretation = "static/main.emtl";
     private static final String compiledStyleSheet = "static/css/output.css";
     private static final String generatedGci = "static/gci.json";
+    private static final Path containerDataDirectory = Path.of("/data");
     private static boolean useSampleGci = false;
+    private static boolean isRunningInContainer = false;
 
     @PostConstruct
     public void checkInit() {
         validateResource(compiledInterpretation, "Compiled Acceleo Interpretation (EMTL)", true);
         validateResource(compiledStyleSheet, "Compiled Style Sheet (CSS)", true);
         validateResource(generatedGci, "GCI Dataset (JSON)", false);
+        checkContainerAndWritePermissions();
     }
 
     private void validateResource(String path, String description, boolean required) {
@@ -35,7 +44,30 @@ public class LaunchValidator {
         }
     }
 
+    private void checkContainerAndWritePermissions() {
+        if (Files.exists(Path.of("/.dockerenv"))) {
+            if (!Files.exists(containerDataDirectory)) {
+                log.error("Container {} directory does not exist." +
+                        " Make sure to mount a volume with -v VOLUME_NAME:{}", containerDataDirectory, containerDataDirectory);
+                throw new IllegalStateException(containerDataDirectory + " does not exist");
+            }
+            if (!Files.isWritable(containerDataDirectory)) {
+                log.error("The {} volume is not writable! Check permissions and retry!", containerDataDirectory);
+                throw new IllegalStateException(containerDataDirectory + " is not writable!");
+            }
+            isRunningInContainer = true;
+        }
+    }
+
     public boolean usingSampleGci() {
         return useSampleGci;
+    }
+
+    public boolean isRunningInContainer() {
+        return isRunningInContainer;
+    }
+
+    public Path getDataDirectory() {
+        return isRunningInContainer ? containerDataDirectory : Path.of("");
     }
 }
