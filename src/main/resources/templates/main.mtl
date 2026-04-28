@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 public class [name/] {
 
 	private static final Logger log = LoggerFactory.getLogger([name/].class);
-	private final ArrayDeque<User> users;
 	private final int USER_TYPES = [UMLModel.eContents(uml::Activity) -> size()/];
 	private final ActivityNode['[]'/] userActivityGraphs = new ActivityNode['['/]USER_TYPES[']'/];
 	final ArrayList<ScarfHost> hostList;
@@ -64,7 +63,7 @@ public class [name/] {
 
 	private [name/](int rep) {
 		CloudSimPlus simulation = new CloudSimPlus();
-		ScarfDatacenterBroker broker = new ScarfDatacenterBroker(simulation);
+		ScarfDatacenterBroker broker = new ScarfDatacenterBroker(simulation, this);
 
 		[let devices : Sequence(uml::Device) = UMLModel.eAllContents(uml::Device) -> select(dev | not dev.getAppliedStereotype('sciuml::CarbonEmittingDevice').oclIsUndefined())]
 		[let executionEnvironments : Sequence(uml::ExecutionEnvironment) = devices -> collectNested(eContents(uml::ExecutionEnvironment)) -> flatten() -> select(env | not env.getAppliedStereotype('sciuml::CarbonEmittingEE').oclIsUndefined())]
@@ -83,13 +82,13 @@ public class [name/] {
 		newVms = new ArrayList<>([regionalDevices -> collectNested(eContents(uml::ExecutionEnvironment)) -> flatten() -> select(env | not env.getAppliedStereotype('sciuml::CarbonEmittingEE').oclIsUndefined()) -> size()/]);
 		[for (device : uml::Device | regionalDevices)]
 		[let ds : uml::Stereotype = device.getAppliedStereotype('sciuml::CarbonEmittingDevice')]
-		host = new ScarfHost("[device.name.safe()/]", [device.getValue(ds, 'ram')/], [device.getValue(ds, 'bandwidth')/], [device.getValue(ds, 'storage')/], [for (n : Integer | Sequence{1..(device.getValue(ds, 'CoresPerCPU').oclAsType(Integer) * device.getValue(ds, 'CPUs').oclAsType(Integer))}) before('List.of(') separator(', ') after('),')]new PeSimple([device.getValue(ds, 'MIPS').oclAsType(Integer) / 1000/])[/for] [device.getValue(ds, 'embodiedEmissions').oclAsType(Real)/], [device.getValue(ds, 'expectedLifespan').oclAsType(Real)/], [device.getValue(ds, 'thermalDesignPowerPerCPU').oclAsType(Real) * device.getValue(ds, 'CPUs').oclAsType(Integer)/]);
+		host = new ScarfHost("[device.name.safe()/]", [device.getValue(ds, 'ram')/], [device.getValue(ds, 'bandwidth')/], [device.getValue(ds, 'storage')/], [for (n : Integer | Sequence{1..(device.getValue(ds, 'CoresPerCPU').oclAsType(Integer) * device.getValue(ds, 'CPUs').oclAsType(Integer))}) before('List.of(') separator(', ') after('),')]new PeSimple([device.getValue(ds, 'MIPS').oclAsType(Integer)/] / Utils.UNITS_OF_TIME_PER_SECOND)[/for] [device.getValue(ds, 'embodiedEmissions').oclAsType(Real)/], [device.getValue(ds, 'expectedLifespan').oclAsType(Real)/], [device.getValue(ds, 'thermalDesignPowerPerCPU').oclAsType(Real) * device.getValue(ds, 'CPUs').oclAsType(Integer)/]);
 		newHosts.add(host);
 		[for (ee : uml::ExecutionEnvironment | device.eContents(uml::ExecutionEnvironment) -> select(env | not env.getAppliedStereotype('sciuml::CarbonEmittingEE').oclIsUndefined()))]
 		[let es : uml::Stereotype = ee.getAppliedStereotype('sciuml::CarbonEmittingEE')]
 		[let component : String = device.eContents(uml::Artifact) -> select(a | ee.eContents(uml::Deployment) -> any(true).deployedArtifact -> includes(a)) -> collectNested(manifestation) -> flatten() -> any(true).utilizedElement.name]
 		[let tierNames : OclAny = ee.getValue(es, 'allowedTiers')]
-		vm = new ScarfVm("[ee.name.safe()/]", [ee.getValue(es, 'MIPS').oclAsType(Integer) / 1000/], [ee.getValue(es, 'reservedCores')/], "[component/]", host, List.of([for(tier : OclAny | tierNames) separator(', ')]"[tier.eGet('name')/]"[/for]));
+		vm = new ScarfVm("[ee.name.safe()/]", [ee.getValue(es, 'MIPS').oclAsType(Integer)/] / Utils.UNITS_OF_TIME_PER_SECOND, [ee.getValue(es, 'reservedCores')/], "[component/]", host, List.of([for(tier : OclAny | tierNames) separator(', ')]"[tier.eGet('name')/]"[/for]));
 		vm.setRam([ee.getValue(es, 'ram')/]);
 		vm.setBw([ee.getValue(es, 'bandwidth')/]);
 		vm.setSize([ee.getValue(es, 'capacity')/]);
@@ -146,23 +145,9 @@ public class [name/] {
 		[/for] [comment arrow /]
 		[/for] [comment activity /]
 
-		double tt = 0.0;
-		users = new ArrayDeque<>();
 		currentRepUsers = new ArrayList<>();
 		User.resetIdCount();
-		while(tt < Utils.EXEC_TIME) {
-			User u = new User(tt);
-			if(tt == 0.0) {
-				currentRepUsers.add(u);
-				this.randomUserType().process(u);
-			} else {
-				users.add(u);
-			}
-			double iat = [iatFormula(dist, p1, p2)/]
-			tt += iat;
-		}
 
-		simulation.addOnClockTickListener(this::checkArrivals);
 		simulation.terminateAt(Utils.EXEC_TIME);
 		simulation.start();
 
@@ -187,17 +172,13 @@ public class [name/] {
 		}
 	}
 
-	public void checkArrivals(EventInfo evt) {
-		if(!users.isEmpty() && users.peek().getStartTime() <= evt.getTime()) {
-			User user = users.pop();
-			currentRepUsers.add(user);
-			this.randomUserType().process(user, evt);
-		}
-	}
-
-	private ActivityNode randomUserType() {
+	ActivityNode randomUserType() {
 		return this.userActivityGraphs['['/]Utils.rng.nextInt(USER_TYPES)[']'/];
 	}
+
+	void addUser(User user) {
+        this.currentRepUsers.add(user);
+    }
 }
 [/file]
 [file('Utils.java', false, 'UTF-8')]
@@ -207,10 +188,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
-
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamReader;
 
 import org.cloudsimplus.allocationpolicies.VmAllocationPolicyAbstract;
 import org.cloudsimplus.brokers.DatacenterBrokerSimple;
@@ -318,7 +295,7 @@ class ScarfDatacenter extends DatacenterSimple {
 	private final String region;
 	private final double gridCarbonIntensity;
 	private double lastTimeStamp = 0.0;
-	private static final double INTERVAL = 1000.0;  // 1 s
+	private static final double INTERVAL = Utils.UNITS_OF_TIME_PER_SECOND;  // 1 s
 	private static final double DEFAULT_GRID_CARBON_INTENSITY = 300.0;
 
 	public ScarfDatacenter(CloudSimPlus simulation, List<ScarfHost> hostList, String region) {
@@ -425,7 +402,7 @@ class ScarfHost extends HostSimple {
 	}
 
 	public CarbonResult computeSci(double interval, double meanUtilization) {
-		double intervalSeconds = interval / 1000;
+		double intervalSeconds = interval / Utils.UNITS_OF_TIME_PER_SECOND;
 		double utilization = meanUtilization == -1.0 ? this.getCpuPercentUtilization() : meanUtilization;
 		double usedPowerTeads = this.thermalDesignPower * calculateTeads(utilization);
 		double usedPowerPowerModel = getPowerModel().getPower(utilization);
@@ -614,9 +591,11 @@ class ScarfAllocationPolicy extends VmAllocationPolicyAbstract {
 
 class ScarfDatacenterBroker extends DatacenterBrokerSimple {
 	private final Map<String, List<ScarfVm>> routingTable = new HashMap<>();
+	private final [name/] repetition;
 
-	public ScarfDatacenterBroker(CloudSimPlus simulation) {
+	public ScarfDatacenterBroker(CloudSimPlus simulation, [name/] repetition) {
 		super(simulation);
+		this.repetition = repetition;
 	}
 
 	@Override
@@ -633,9 +612,36 @@ class ScarfDatacenterBroker extends DatacenterBrokerSimple {
         return super.defaultVmMapper(cloudlet);
 	}
 
+	@Override
+    public void processEvent(SimEvent ev) {
+        if(ev.getTag() == Utils.USER_ARRIVAL_TAG) {
+            double now = this.getSimulation().clock();
+
+            User user = new User(now);
+            this.repetition.addUser(user);
+            this.repetition.randomUserType().process(user);
+
+            double iat = [iatFormula(dist, p1, p2)/]
+            this.scheduleNextArrival(iat);
+        }
+        super.processEvent(ev);
+    }
+
+    @Override
+    public void startInternal() {
+        super.startInternal();
+        this.scheduleNextArrival(0.0);
+    }
+
 	public void registerVm(String component, ScarfVm vm) {
 		routingTable.computeIfAbsent(component, _ -> new ArrayList<>()).add(vm);
 	}
+
+	private void scheduleNextArrival(double arrivalTime) {
+        if(arrivalTime >= Utils.EXEC_TIME) return;
+
+        this.schedule(this, arrivalTime, Utils.USER_ARRIVAL_TAG);
+    }
 
 	public void submitCloudletAtFront(ScarfCloudlet cloudlet) {
 		if (cloudlet.getSimulation().isRunning()) {
@@ -817,10 +823,12 @@ class ActivityNode {
 
 class Utils {
 	static final int CARBON_SYNC_TAG = 123456;
+	static final int USER_ARRIVAL_TAG = 654321;
 	static final long SEED = System.currentTimeMillis();
 	static Random rng = new Random(SEED);
 	static Map<String, Map<String, double['[]'/]>> gciData;
-	static final int EXEC_TIME = 3600 * 1000; //MILLISECONDS
+	static final double UNITS_OF_TIME_PER_SECOND = 1000.0; // Internal units of time are equivalent to milliseconds (1000 units = 1000 milliseconds = 1 second)
+	static final double EXEC_TIME = 3600 * UNITS_OF_TIME_PER_SECOND;
 	static final int REPETITIONS = [repetitions/];
 	static final List<String> REGIONS = List.of([for (r : String | UMLModel.getAppliedProfile('sciuml').eAllContents(ecore::EEnum) -> select(e | e.name = 'Region').eLiterals.name) separator(', ')]"[r/]"[/for]);
 	static final NavigableMap<Integer, String> TIER_MAP = new TreeMap<>();
@@ -917,14 +925,14 @@ broker.submitCloudlet([cc/]);
 [/template]
 
 [template public iatFormula(dist : String, p1 : Real, p2 : Real)]
-[if (dist = 'Exponential')](-Math.log(1 - Utils.rng.nextDouble()) / [p1/]) * 1000.0;
-[elseif (dist = 'Uniform')]([p1/] + ([p2/] - [p1/]) * Utils.rng.nextDouble()) * 1000.0;
-[elseif (dist = 'Constant')][p1/] * 1000.0;
+[if (dist = 'Exponential')](-Math.log(1 - Utils.rng.nextDouble()) / [p1/]) * Utils.UNITS_OF_TIME_PER_SECOND;
+[elseif (dist = 'Uniform')]([p1/] + ([p2/] - [p1/]) * Utils.rng.nextDouble()) * Utils.UNITS_OF_TIME_PER_SECOND;
+[elseif (dist = 'Constant')][p1/] * Utils.UNITS_OF_TIME_PER_SECOND;
 [elseif (dist = 'Erlang')]0;
 for(int i = 0; i < [p1.round()/]; i++) {
-	iat += (-Math.log(1 - Utils.rng.nextDouble()) / [p2/]) * 1000.0;
+	iat += (-Math.log(1 - Utils.rng.nextDouble()) / [p2/]) * Utils.UNITS_OF_TIME_PER_SECOND;
 }
-[else][comment Lognormal or Log-normal /](Math.exp(Utils.rng.nextGaussian() * [p1/] + [p2/])) * 1000.0;
+[else][comment Lognormal or Log-normal /](Math.exp(Utils.rng.nextGaussian() * [p1/] + [p2/])) * Utils.UNITS_OF_TIME_PER_SECOND;
 [/if]
 [/template]
 
