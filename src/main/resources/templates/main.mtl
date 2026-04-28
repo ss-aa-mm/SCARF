@@ -16,6 +16,8 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.function.BiConsumer;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.LoggerContext;
 import org.cloudsimplus.core.CloudSimPlus;
 import org.cloudsimplus.datacenters.Datacenter;
 import org.cloudsimplus.listeners.EventInfo;
@@ -39,6 +41,12 @@ public class [name/] {
 	final ArrayList<ScarfHost> hostList;
 	final ArrayList<User> currentRepUsers;
 	static String basePath;
+
+	static {
+        Log.setLevel(Level.WARN);
+        LoggerContext ctx = (LoggerContext) LoggerFactory.getILoggerFactory();
+        ctx.getLogger("[packageName/]").setLevel(Level.INFO);
+    }
 
 	public static void main(String['[]'/] args) {
 		basePath = (args.length > 0) ? args['[0]'/] : ".";
@@ -851,11 +859,11 @@ class Utils {
                 Utils.class.getClassLoader().getResourceAsStream("gci.json"),
                 new TypeReference<>() {}
             );
+            log.info("Grid Carbon Intensity values read from file!");
 		} catch (Exception e) {
 		    gciData = null;
+		    log.warn("No Grid Carbon Intensity file provided (not even a sample one)! A constant value will be used for all Datacenters.")
 		}
-
-		System.out.println(gciData != null ? gciData.get("us_west_1").get("Yearly")['[0]'/] : "No gci Data");
 	}
 }
 [/file]
