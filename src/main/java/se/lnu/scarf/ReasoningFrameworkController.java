@@ -29,7 +29,10 @@ public class ReasoningFrameworkController {
             @RequestParam("repetitions") Integer repetitions,
             @RequestParam("distribution") String interArrivalDistribution,
             @RequestParam("param1") Double param1,
-            @RequestParam("param2") Double param2
+            @RequestParam("param2") Double param2,
+            @RequestParam("startTime") String startTime,
+            @RequestParam("duration") Integer durationInHours,
+            @RequestParam("refPeriod") String referencePeriod
             ) {
         if (umlFile.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The selected file is empty");
@@ -45,7 +48,10 @@ public class ReasoningFrameworkController {
                     repetitions,
                     interArrivalDistribution,
                     param1,
-                    param2
+                    param2,
+                    startTime,
+                    durationInHours,
+                    referencePeriod
             );
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong");

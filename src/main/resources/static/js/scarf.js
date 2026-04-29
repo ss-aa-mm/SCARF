@@ -8,6 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const param2Label = document.getElementById('param2Label');
     const param1Field = document.getElementById('param1Field');
     const param2Field = document.getElementById('param2Field');
+    const startTime = document.getElementById('startTime');
+    const duration = document.getElementById('duration');
+    const refPeriod = document.getElementById('refPeriod');
+    const errorBanner = document.getElementById('errorBanner');
+    const errorList = document.getElementById('errorList');
     const runBtn = document.getElementById('runBtn');
     const repetitions = document.getElementById('repetitions');
     const bar = document.getElementById('progress-bar');
@@ -20,20 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     runBtn.addEventListener('click', async () => {
-        if (!fileInput.files.length) return alert("Select a model first!");
-        const isSecondParamRequired = !param2Field.classList.contains("invisible");
-        if (!repetitions.value ||
-            !distSelect.value ||
-            !param1Field.value ||
-            (!param2Field.value && isSecondParamRequired))
-            return alert("Please set all the required simulation parameters first!")
+        if (!validateSimulation()) return;
 
         const formData = new FormData();
         formData.append("file", fileInput.files[0]);
         formData.append("repetitions", repetitions.value);
         formData.append("distribution", distSelect.value);
         formData.append("param1", param1Field.value);
-        formData.append("param2", isSecondParamRequired ? param2Field.value : 0);
+        formData.append("param2", !param2Field.classList.contains('invisible') ? param2Field.value : 0);
+        formData.append("startTime", startTime.value);
+        formData.append("duration", duration.value);
+        formData.append("refPeriod", refPeriod.value);
 
         setEnabled(buttons, false);
         const response = await fetch("/interpretation", {
@@ -93,6 +95,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
         }
     });
+
+    function validateSimulation() {
+        const isSecondParamRequired = !param2Field.classList.contains('invisible');
+
+        const rules = [
+            { el: fileNameDisplay, pass: fileInput.files.length > 0, msg: 'An Architecture Description UML file must be selected' },
+            { el: distSelect, pass: !!distSelect.value, msg: 'An Inter-arrival distribution must be specified' },
+            { el: param1Field, pass: !!param1Field.value, msg: 'The main distribution parameter is required' },
+            { el: param2Field, pass: !isSecondParamRequired || !!param2Field.value, msg: 'The second distribution parameter is required' },
+            { el: startTime, pass: !!startTime.value, msg: 'A simulation start time (UTC) is required' },
+            { el: duration, pass: !!duration.value, msg: 'The simulation duration is required' },
+            { el: refPeriod, pass: !!refPeriod.value, msg: 'A reference period is required' }
+        ];
+
+        const errors = rules.filter(r => !r.pass);
+
+        // Highlight invalid fields
+        rules.forEach(({ el, pass }) => {
+            if (!el) return;
+            el.classList.toggle('border-red-300',  !pass);
+            el.classList.toggle('bg-red-50',       !pass);
+            el.classList.toggle('border-gray-200', pass);
+            el.classList.toggle('bg-gray-50',      pass);
+        });
+
+        // Show/hide inline banner
+        if (errors.length > 0) {
+            errorBanner.classList.remove('hidden');
+            errorBanner.classList.add('flex');
+            errorList.innerHTML = errors
+                .map(e => `<li>${e.msg}</li>`)
+                .join('');
+            errorBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            return false;
+        }
+
+        errorBanner.classList.add('hidden');
+        errorBanner.classList.remove('flex');
+        return true;
+    }
 
     function updateSimState(eventData, evtSource = null) {
         const [header, percentText, ...rest] = eventData.split(":");

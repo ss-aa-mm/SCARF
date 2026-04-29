@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,16 @@ public class InterpretationComponent {
     private String mainClassQualifiedName;
     private String packageName;
 
-    public Path interpret(Model umlModel, Integer rep, String distribution, Double p1, Double p2) throws IOException {
+    public Path interpret(
+            Model umlModel,
+            Integer rep,
+            String distribution,
+            Double p1,
+            Double p2,
+            String startTime,
+            Integer durationInHours,
+            String referencePeriod
+    ) throws IOException {
         logger.info("Interpreting the UML model...");
         Path baseDir = Files.createTempDirectory("scarf-gen-src");
         File targetFolder = baseDir.toFile();
@@ -36,8 +46,9 @@ public class InterpretationComponent {
         if(!packageFolder.mkdirs() && !packageFolder.exists()) throw new IOException("Could not create folder "
                 + packageFolder.getAbsolutePath());
 
+        Integer startTimeHours = LocalTime.parse(startTime).getHour();
         SimulationGenerator acceleoGenerator = new SimulationGenerator(umlModel, packageFolder,
-                new ArrayList<Object>(List.of(rep, distribution, p1, p2))
+                new ArrayList<Object>(List.of(rep, distribution, p1, p2, startTimeHours, durationInHours, referencePeriod))
         );
         acceleoGenerator.doGenerate(new BasicMonitor());
         logger.info("Code generation complete.");

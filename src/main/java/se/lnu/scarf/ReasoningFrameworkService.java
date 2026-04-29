@@ -38,14 +38,24 @@ public class ReasoningFrameworkService {
     }
 
     @Async("frameworkExecutor")
-    public void runAsync(byte[] file, String originalFilename, Integer rep, String distribution, Double p1, Double p2) {
+    public void runAsync(
+            byte[] file,
+            String originalFilename,
+            Integer rep,
+            String distribution,
+            Double p1,
+            Double p2,
+            String startTime,
+            Integer durationInHours,
+            String referencePeriod
+    ) {
         try {
             streamer.push("STAGE_VALIDATION", 5, "Validating UML Architecture...");
             Model umlModel = validationComponent.resolveAndValidate(file, originalFilename);
             if (umlModel == null) throw new RuntimeException("The provided UML model could not be resolved or validated");
 
             streamer.push("STAGE_INTERPRETATION", 25, "Running Interpretation...");
-            Path compilationBaseDir = interpretationComponent.interpret(umlModel, rep, distribution, p1, p2);
+            Path compilationBaseDir = interpretationComponent.interpret(umlModel, rep, distribution, p1, p2, startTime, durationInHours, referencePeriod);
             if (compilationBaseDir == null) throw new RuntimeException("The provided UML model could not be interpreted");
             validationComponent.clearResourceSet();
 

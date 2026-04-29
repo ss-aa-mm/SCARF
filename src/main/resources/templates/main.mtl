@@ -1,7 +1,7 @@
 [comment encoding = UTF-8 /]
 [module main('http://www.eclipse.org/uml2/5.0.0/UML')]
 
-[template public projectGenerator(UMLModel : uml::Model, repetitions : Integer, dist : String, p1 : Real, p2 : Real)]
+[template public projectGenerator(UMLModel : uml::Model, repetitions : Integer, dist : String, p1 : Real, p2 : Real, startTimeHours : Integer, durationInHours : Integer, referencePeriod : String)]
 [comment @main/]
 [let name : String = UMLModel.name.toLowerCase().safe()]
 [let packageName : String = name.toLowerCase()]
@@ -838,13 +838,13 @@ class ActivityNode {
 class Utils {
 	static final int CARBON_SYNC_TAG = 123456;
 	static final int USER_ARRIVAL_TAG = 654321;
-	static final String REFERENCE_PERIOD = "Yearly";
-	static final OffsetTime SIMULATION_START_TIME_UTC = OffsetTime.of(0, 0, 0, 0, ZoneOffset.UTC);
+	static final String REFERENCE_PERIOD = "[referencePeriod/]";
+	static final OffsetTime SIMULATION_START_TIME_UTC = OffsetTime.of([startTimeHours/], 0, 0, 0, ZoneOffset.UTC);
 	static final long SEED = System.currentTimeMillis();
 	static Random rng = new Random(SEED);
 	static Map<String, Map<String, double['[]'/]>> gciData;
 	static final double UNITS_OF_TIME_PER_SECOND = 1000.0; // Internal units of time are equivalent to milliseconds (1000 units = 1000 milliseconds = 1 second)
-	static final double EXEC_TIME = 3600 * UNITS_OF_TIME_PER_SECOND;
+	static final double EXEC_TIME = [durationInHours * 3600/] * UNITS_OF_TIME_PER_SECOND;
 	static final int REPETITIONS = [repetitions/];
 	static final List<String> REGIONS = List.of([for (r : String | UMLModel.getAppliedProfile('sciuml').eAllContents(ecore::EEnum) -> select(e | e.name = 'Region').eLiterals.name) separator(', ')]"[r/]"[/for]);
 	static final NavigableMap<Integer, String> TIER_MAP = new TreeMap<>();
