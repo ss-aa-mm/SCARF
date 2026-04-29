@@ -159,10 +159,10 @@ public class [name/] {
 		simulation.terminateAt(Utils.EXEC_TIME);
 		simulation.start();
 
-		System.out.println("Finished Simulation Repetition #" + rep);
-		System.out.println("Executed Cloudlets: " + cloudletList.size());
-		System.out.println("Total Cloudlets Teads SCI: " + cloudletList.stream().mapToDouble(ScarfCloudlet::getTeadsSci).sum());
-		System.out.println("Total Cloudlets PowerModel SCI: " + cloudletList.stream().mapToDouble(ScarfCloudlet::getPowerModelSci).sum());
+		log.info("Finished Simulation Repetition #" + rep);
+		log.info("Executed Cloudlets: " + cloudletList.size());
+		log.info("Total Cloudlets Teads SCI: " + cloudletList.stream().mapToDouble(ScarfCloudlet::getTeadsSci).sum());
+		log.info("Total Cloudlets PowerModel SCI: " + cloudletList.stream().mapToDouble(ScarfCloudlet::getPowerModelSci).sum());
 		
 		try {
 			Files.write(Path.of(basePath, "[packageName/]_" + rep + ".txt"), currentRepUsers.stream().map(Object::toString).toList(), StandardCharsets.UTF_8);
@@ -192,6 +192,8 @@ public class [name/] {
 [file('Utils.java', false, 'UTF-8')]
 package [packageName/];
 
+import java.time.OffsetTime;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
@@ -301,7 +303,6 @@ interface TriConsumer<T, U, V> {
 
 class ScarfDatacenter extends DatacenterSimple {
 	private final String region;
-	private final double gridCarbonIntensity;
 	private double lastTimeStamp = 0.0;
 	private static final double INTERVAL = Utils.UNITS_OF_TIME_PER_SECOND;  // 1 s
 	private static final double DEFAULT_GRID_CARBON_INTENSITY = 300.0;
@@ -309,7 +310,6 @@ class ScarfDatacenter extends DatacenterSimple {
 	public ScarfDatacenter(CloudSimPlus simulation, List<ScarfHost> hostList, String region) {
 		super(simulation, hostList, new ScarfAllocationPolicy(hostList));
 		this.region = region;
-		this.gridCarbonIntensity = Utils.gciData.get(region) != null ? Utils.gciData.get(region).get("Yearly")['[0]'/] : DEFAULT_GRID_CARBON_INTENSITY;
 	}
 	
 	@Override
@@ -342,8 +342,14 @@ class ScarfDatacenter extends DatacenterSimple {
 		return region;
 	}
 
-	public double getGci() {
-		return gridCarbonIntensity;
+	public double getGci(double clock) {
+	    if (Utils.gciData == null) return DEFAULT_GRID_CARBON_INTENSITY;
+	    Map<String, double['[]'/]> regionData = Utils.gciData.get(region);
+	    if (regionData == null) return DEFAULT_GRID_CARBON_INTENSITY;
+	    double['[]'/] periodData = regionData.get(Utils.REFERENCE_PERIOD);
+	    if (periodData == null) return DEFAULT_GRID_CARBON_INTENSITY;
+	    OffsetTime currentUTCTime = Utils.SIMULATION_START_TIME_UTC.plusSeconds((long) (clock / Utils.UNITS_OF_TIME_PER_SECOND));
+	    return periodData['[currentUTCTime.getHour()]'/];
 	}
 }
 
@@ -418,7 +424,7 @@ class ScarfHost extends HostSimple {
 		double deviceEnergyPowerModel = (intervalSeconds * usedPowerPowerModel) / 3600000.0;
 		double energyTeads = deviceEnergyTeads + NETWORK_ENERGY;
 		double energyPowerModel = deviceEnergyPowerModel + NETWORK_ENERGY;
-		double gci = ((ScarfDatacenter) this.getDatacenter()).getGci();
+		double gci = ((ScarfDatacenter) this.getDatacenter()).getGci(this.getSimulation().clock());
 		double carbonOperationalTeads = energyTeads * gci;
 		double carbonOperationalPowerModel = energyPowerModel * gci;
 		double carbonEmbodied = this.embodiedEmissions * (intervalSeconds / this.expectedLifespan);
@@ -832,6 +838,8 @@ class ActivityNode {
 class Utils {
 	static final int CARBON_SYNC_TAG = 123456;
 	static final int USER_ARRIVAL_TAG = 654321;
+	static final String REFERENCE_PERIOD = "Yearly";
+	static final OffsetTime SIMULATION_START_TIME_UTC = OffsetTime.of(0, 0, 0, 0, ZoneOffset.UTC);
 	static final long SEED = System.currentTimeMillis();
 	static Random rng = new Random(SEED);
 	static Map<String, Map<String, double['[]'/]>> gciData;
