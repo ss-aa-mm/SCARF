@@ -862,7 +862,7 @@ class Utils {
             log.info("Grid Carbon Intensity values read from file!");
 		} catch (Exception e) {
 		    gciData = null;
-		    log.warn("No Grid Carbon Intensity file provided (not even a sample one)! A constant value will be used for all Datacenters.")
+		    log.warn("No Grid Carbon Intensity file provided (not even a sample one)! A constant value will be used for all Datacenters.");
 		}
 	}
 }
