@@ -46,9 +46,10 @@ public class InterpretationComponent {
         if(!packageFolder.mkdirs() && !packageFolder.exists()) throw new IOException("Could not create folder "
                 + packageFolder.getAbsolutePath());
 
-        Integer startTimeHours = LocalTime.parse(startTime).getHour();
+        LocalTime startTimeParsed = LocalTime.parse(startTime);
         SimulationGenerator acceleoGenerator = new SimulationGenerator(umlModel, packageFolder,
-                new ArrayList<Object>(List.of(rep, distribution, p1, p2, startTimeHours, durationInHours, referencePeriod))
+                new ArrayList<Object>(List.of(rep, distribution, p1, p2,
+                        startTimeParsed.getHour(), startTimeParsed.getMinute(), durationInHours, referencePeriod))
         );
         acceleoGenerator.doGenerate(new BasicMonitor());
         logger.info("Code generation complete.");

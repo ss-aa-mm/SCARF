@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+
+<div th:fragment="solarTimePicker(fieldId, label, defaultValue)"
+     class="flex flex-col gap-2 relative">
+
+    <label th:for="${fieldId} + '-manual'"
+           class="text-sm font-semibold text-gray-600"
+           th:text="${label}">Start time (UTC)</label>
+
+    <!-- Hidden field submitted with the form -->
+    <input type="hidden"
+           th:id="${fieldId}"
+           th:name="${fieldId}"
+           th:value="${defaultValue ?: '00:00'}">
+
+    <!-- Trigger row: icon button -->
+    <div th:id="${fieldId} + '-trigger'"
+         class="stp-trigger w-full">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" class="text-gray-400 flex-shrink-0">
+            <circle cx="8" cy="8" r="6.75" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 5v3.5l2 2" stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span th:id="${fieldId} + '-display'"
+              class="text-sm font-medium text-gray-900 flex-1"
+              th:text="${defaultValue ?: '00:00'} + ' UTC'">00:00 UTC</span>
+    </div>
+
+    <!-- Popup -->
+    <div th:id="${fieldId} + '-popup'" class="stp-popup">
+
+        <div th:id="${fieldId} + '-map-loading'"
+             class="flex items-center justify-center h-48 text-sm text-gray-400">
+            Loading map…
+        </div>
+        <svg th:id="${fieldId} + '-map-svg'"
+             viewBox="0 0 640 320"
+             class="w-full h-auto rounded-lg hidden">
+        </svg>
+
+        <!-- Slider -->
+        <div class="flex items-center gap-3">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" class="text-gray-400 flex-shrink-0">
+                <circle cx="8" cy="8" r="5" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M8 2v1M8 13v1M2 8h1M13 8h1"
+                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <input type="range"
+                   th:id="${fieldId} + '-slider'"
+                   min="0" max="1439" step="1"
+                   class="flex-1 accent-blue-500">
+            <span th:id="${fieldId} + '-badge'"
+                  class="text-sm font-semibold text-gray-900 min-w-[46px] text-right tabular-nums">
+                --:--
+            </span>
+        </div>
+
+        <!-- Footer -->
+        <div class="flex justify-between items-center pt-2 border-t border-gray-100">
+            <div class="flex items-center gap-2">
+                <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Manual:</span>
+                <input type="text"
+                       th:id="${fieldId} + '-manual'"
+                       placeholder="HH:MM"
+                       maxlength="5"
+                       class="stp-manual-input"
+                       th:value="${defaultValue ?: '00:00'}">
+            </div>
+            <button type="button"
+                    th:id="${fieldId} + '-confirm'"
+                    class="h-9 px-5 bg-blue-600 hover:bg-blue-700 text-white
+                     text-xs font-semibold rounded-full transition-colors">
+                Confirm
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Per-instance init -->
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            SolarTimePicker.init(
+                /*[[${fieldId}]]*/ 'startTime',
+                /*[[${defaultValue ?: '00:00'}]]*/ '00:00'
+            );
+        });
+    </script>
+
+</div>
+</body>
+</html>

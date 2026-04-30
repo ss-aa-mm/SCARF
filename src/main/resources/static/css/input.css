@@ -23,6 +23,38 @@
     hover:scale-105 shadow-lg shadow-gray-500/20 cursor-not-allowed
 }
 
+/* SOLAR MAP UTILITIES */
+
+.stp-trigger {
+    @apply h-11 bg-gray-50 border border-gray-200 text-gray-900 text-sm
+    rounded-lg flex items-center gap-3 px-4 cursor-pointer select-none
+    transition-all;
+}
+
+.stp-trigger:hover  { @apply border-gray-300; }
+
+.stp-trigger.open   { @apply border-blue-500 ring-2 ring-blue-200; }
+
+.stp-popup {
+    @apply absolute z-50 bg-white border border-gray-200 rounded-xl shadow-xl p-4
+    hidden flex-col gap-3;
+    top: calc(100% + 8px);
+    left: 0;
+    width: min(640px, calc(100vw - 2rem));
+}
+
+.stp-popup.open { @apply flex; }
+
+.stp-manual-input {
+    @apply h-9 w-24 bg-gray-50 border border-gray-200 text-gray-900 text-sm
+    rounded-lg px-3 text-center font-mono tracking-widest
+    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none;
+}
+
+.stp-manual-input.invalid {
+    @apply border-red-300 bg-red-50 text-red-700;
+}
+
 /* WHITELIST CLASSES */
 .text-red-400 { @apply text-red-400 }
 .text-green-400 { @apply text-green-400 }

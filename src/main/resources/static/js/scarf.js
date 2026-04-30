@@ -73,23 +73,23 @@ document.addEventListener('DOMContentLoaded', () => {
         switch (value) {
             case 'Exponential':
             case 'Constant':
-                param1Label.textContent = "Rate:";
+                param1Label.textContent = "Rate";
                 break;
             case 'Uniform':
-                param1Label.textContent = "Min:";
-                param2Label.textContent = "Max:";
+                param1Label.textContent = "Min";
+                param2Label.textContent = "Max";
                 param2Label.classList.remove('invisible');
                 param2Field.classList.remove('invisible');
                 break;
             case 'Erlang':
-                param1Label.textContent = "Shape (k):";
-                param2Label.textContent = "Rate:";
+                param1Label.textContent = "Shape (k)";
+                param2Label.textContent = "Rate";
                 param2Label.classList.remove('invisible');
                 param2Field.classList.remove('invisible');
                 break;
             case 'Log-normal':
-                param1Label.textContent = "Log-mean (μ):";
-                param2Label.textContent = "Log-std (σ):";
+                param1Label.textContent = "Log-mean (μ)";
+                param2Label.textContent = "Log-std (σ)";
                 param2Label.classList.remove('invisible');
                 param2Field.classList.remove('invisible');
                 break;

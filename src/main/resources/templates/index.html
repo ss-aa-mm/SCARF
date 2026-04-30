@@ -5,7 +5,10 @@
     <link th:href="@{/images/favicon.ico}" rel="icon" type="image/x-icon"/>
     <link th:href="@{/images/favicon.png}" rel="icon" type="image/png" sizes="32x32"/>
     <link th:href="@{/css/output.css}" rel="stylesheet"/>
+    <script th:src="@{/js/vendor/d3.min.js}"></script>
+    <script th:src="@{/js/vendor/topojson.min.js}"></script>
     <script th:src="@{/js/scarf.js}"></script>
+    <script th:src="@{/js/solar-time-picker.js}"></script>
     <title>SCARF</title>
 </head>
 <body>
@@ -95,11 +98,11 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="flex flex-col gap-2">
-        <label for="startTime" class="text-sm font-semibold text-gray-600">Start time (UTC)</label>
-        <input id="startTime" type="time" value="00:00" step="3600"
-               class="h-11 bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full px-4">
-      </div>
+        <div class="flex flex-col gap-2" th:replace="~{fragments/solar-map :: solarTimePicker(
+          fieldId='startTime',
+          label='Start time (UTC)',
+          defaultValue='00:00'
+      )}"></div>
       <div class="flex flex-col gap-2">
         <label for="duration" class="text-sm font-semibold text-gray-600">Duration (hours)</label>
         <input id="duration" type="number" min="1" max="24" step="1" value="1"
@@ -149,6 +152,6 @@
 
 </main>
 
-<script th:src="@{/js/flowbite.min.js}"></script>
+<script th:src="@{/js/vendor/flowbite.min.js}"></script>
 </body>
 </html>
