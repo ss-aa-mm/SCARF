@@ -63,7 +63,6 @@ public class [name/] {
 	public static void main(String['[]'/] args) {
 		basePath = (args.length > 0) ? args['[0]'/] : ".";
 		ScarfGlobalSummary out = new ScarfGlobalSummary(new Metadata("[UMLModel.name.metadataSafe()/]", [repetitions/], "[dist + '(' + p1 + ', ' + p2 + ')'/]"));
-		Log.setLevel(ch.qos.logback.classic.Level.WARN);
 		for(int i = 0; i < Utils.REPETITIONS; i++) {
 			[name/] r = new [name/](i + 1);
 			out.merge(new ScarfSimulationSummary(r.currentRepUsers, r.hostList));
@@ -78,7 +77,7 @@ public class [name/] {
 			log.error(e.getMessage());
 		}
 
-		Log.setLevel(ch.qos.logback.classic.Level.INFO);
+		Log.setLevel(Level.INFO);
 	}
 
 	private [name/](int rep) {
@@ -112,7 +111,11 @@ public class [name/] {
 		vm.setRam([ee.getValue(es, 'ram')/]);
 		vm.setBw([ee.getValue(es, 'bandwidth')/]);
 		vm.setSize([ee.getValue(es, 'capacity')/]);
-		vm.setCloudletScheduler(new CloudletScheduler[if (ee.getValue(es, 'deploymentPolicy').oclAsType(uml::EnumerationLiteral).name.substring(1, 4) = 'Silo')]Space[else]Time[/if]Shared());
+		[let depPolicy: String = ee.getValue(es, 'deploymentPolicy').oclAsType(uml::EnumerationLiteral).name]
+		vm.setPriority([if (depPolicy = 'SiloIsolation')]true[else]false[/if]);
+		vm.setIsolationThreshold([if (depPolicy = 'SiloBestEffort')]0.85[else]1.0[/if]);
+		vm.setCloudletScheduler(new CloudletScheduler[if (depPolicy.substring(1, 4) = 'Silo')]Space[else]Time[/if]Shared());
+		[/let] [comment depPolicy /]
 		broker.registerVm("[component/]", vm);
 		newVms.add(vm);
 		[/let] [comment tierNames /]
@@ -171,10 +174,10 @@ public class [name/] {
 		simulation.terminateAt(Utils.EXEC_TIME);
 		simulation.start();
 
-		log.info("Finished Simulation Repetition #" + rep);
-		log.info("Executed Cloudlets: " + cloudletList.size());
-		log.info("Total Cloudlets Teads SCI: " + cloudletList.stream().mapToDouble(ScarfCloudlet::getTeadsSci).sum());
-		log.info("Total Cloudlets PowerModel SCI: " + cloudletList.stream().mapToDouble(ScarfCloudlet::getPowerModelSci).sum());
+		log.info("Finished Simulation Repetition #{}", rep);
+		log.info("Executed Cloudlets: {}", cloudletList.size());
+		log.info("Total Cloudlets Teads SCI: {}", cloudletList.stream().mapToDouble(ScarfCloudlet::getTeadsSci).sum());
+		log.info("Total Cloudlets PowerModel SCI: {}", cloudletList.stream().mapToDouble(ScarfCloudlet::getPowerModelSci).sum());
 		
 		try {
 			Files.write(Path.of(basePath, "[packageName/]_" + rep + ".txt"), currentRepUsers.stream().map(Object::toString).toList(), StandardCharsets.UTF_8);
@@ -354,12 +357,13 @@ class ScarfDatacenter extends DatacenterSimple {
 		return region;
 	}
 
-	public double getGci(double clock) {
+	public double getGci() {
 	    if (Utils.gciData == null) return DEFAULT_GRID_CARBON_INTENSITY;
 	    Map<String, double['[]'/]> regionData = Utils.gciData.get(region);
 	    if (regionData == null) return DEFAULT_GRID_CARBON_INTENSITY;
 	    double['[]'/] periodData = regionData.get(Utils.REFERENCE_PERIOD);
 	    if (periodData == null) return DEFAULT_GRID_CARBON_INTENSITY;
+	    double clock = this.getSimulation().clock();
 	    OffsetTime currentUTCTime = Utils.SIMULATION_START_TIME_UTC.plusSeconds((long) (clock / Utils.UNITS_OF_TIME_PER_SECOND));
 	    return periodData['[currentUTCTime.getHour()]'/];
 	}
@@ -436,7 +440,7 @@ class ScarfHost extends HostSimple {
 		double deviceEnergyPowerModel = (intervalSeconds * usedPowerPowerModel) / 3600000.0;
 		double energyTeads = deviceEnergyTeads + NETWORK_ENERGY;
 		double energyPowerModel = deviceEnergyPowerModel + NETWORK_ENERGY;
-		double gci = ((ScarfDatacenter) this.getDatacenter()).getGci(this.getSimulation().clock());
+		double gci = ((ScarfDatacenter) this.getDatacenter()).getGci();
 		double carbonOperationalTeads = energyTeads * gci;
 		double carbonOperationalPowerModel = energyPowerModel * gci;
 		double carbonEmbodied = this.embodiedEmissions * (intervalSeconds / this.expectedLifespan);
@@ -482,6 +486,8 @@ class ScarfVm extends VmSimple {
 	private final String component;
 	private final ScarfHost targetHost;
 	private final List<String> allowedTiers;
+	private boolean hasPriority;
+	private double isolationThreshold;
 	
 	public ScarfVm(String name, double mipsCapacity, long pesNumber, String component, ScarfHost targetHost, List<String> allowedTiers) {
 		super(mipsCapacity, pesNumber);
@@ -490,10 +496,20 @@ class ScarfVm extends VmSimple {
 		this.targetHost = targetHost;
 		this.allowedTiers = allowedTiers;
 		this.enableUtilizationStats();
+		this.hasPriority = false;
+		this.isolationThreshold = 0.0;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public double getIsolationThreshold() {
+	    return isolationThreshold;
+	}
+
+	public boolean hasPriority() {
+	    return hasPriority;
 	}
 
 	public String getComponent() {
@@ -507,6 +523,14 @@ class ScarfVm extends VmSimple {
 	public List<String> getAllowedTiers() {
 		return allowedTiers;
 	}
+
+	public void setIsolationThreshold(double t) {
+	    this.isolationThreshold = t;
+	}
+
+	public void setPriority(boolean p) {
+	    this.hasPriority = p;
+	}
 	
 	@Override
 	public String toString() {
@@ -517,7 +541,7 @@ class ScarfVm extends VmSimple {
 
 class ScarfCloudlet extends CloudletSimple {
 	private final String name;
-	private User user;
+	private final User user;
 	private final String component;
 	private final String interaction;
 	private boolean initial;
@@ -565,13 +589,11 @@ class ScarfCloudlet extends CloudletSimple {
 	}
 
 	@Override
-	public String toString() {
-	    return String.format(Locale.ENGLISH, "%.3f,%s,%s",
-	        this.getStartTime(),
-	        ((ScarfVm) getVm()).toString(),
-	        this.interaction
-	    );
-	}
+    public String toString() {
+        return String.format(Locale.ENGLISH, "%.3f,%s,%s",
+            this.getStartTime(), this.getVm(), this.interaction
+        );
+    }
 
 	@Override
     public boolean setStatus(final Status status) {
@@ -625,18 +647,44 @@ class ScarfDatacenterBroker extends DatacenterBrokerSimple {
 	}
 
 	@Override
-	protected Vm defaultVmMapper(Cloudlet cloudlet) {
-		if (cloudlet instanceof ScarfCloudlet cl) {
-			String tier = cl.getUser().getTier();
-			List<ScarfVm> candidates = routingTable.getOrDefault(cl.getComponent(), Collections.emptyList());
-			if (candidates.isEmpty()) System.out.println("Something went wrong when placing cloudlet " + cl);
-			return candidates.stream()
-                .filter(vm -> vm.getAllowedTiers().contains(tier))
-				.min(Comparator.comparingInt(vm -> vm.getAllowedTiers().size()))
-                .orElse(ScarfVm.NULL);
-        } 
+    protected Vm defaultVmMapper(Cloudlet cloudlet) {
+        if (cloudlet instanceof ScarfCloudlet cl) {
+            String tier = cl.getUser().getTier();
+            List<ScarfVm> availableVms = routingTable.getOrDefault(cl.getComponent(), Collections.emptyList());
+            if (availableVms.isEmpty()) Utils.log.error("Something went wrong when placing cloudlet {}", cl);
+
+            List<ScarfVm> eligible = availableVms.stream()
+                    .filter(vm -> vm.getAllowedTiers().contains(tier))
+                    .filter(vm -> vm.getHost().getDatacenter() instanceof ScarfDatacenter)
+                    .toList();
+
+            List<ScarfVm> preferred = eligible.stream()
+                    .filter(vm -> vm.hasPriority() && vm.getCpuPercentUtilization() <= vm.getIsolationThreshold())
+                    .toList();
+
+            if (preferred.isEmpty()) { preferred = eligible; }
+
+            double maxGci = preferred.stream()
+                    .mapToDouble(vm -> ((ScarfDatacenter) vm.getHost().getDatacenter()).getGci())
+                    .filter(Double::isFinite)
+                    .max()
+                    .orElse(0.0);
+
+            return preferred.stream()
+                    .min(Comparator
+                            .comparingDouble(vm -> balancedScore(vm, maxGci))
+                    )
+                    .orElse(ScarfVm.NULL);
+        }
         return super.defaultVmMapper(cloudlet);
-	}
+    }
+
+    private double balancedScore(ScarfVm vm, double maxGci) {
+        double alpha = 0.5;
+        double normUtilization = vm.getCpuPercentUtilization();
+        double normGci = maxGci > 0 ? ((ScarfDatacenter) vm.getHost().getDatacenter()).getGci() / maxGci : 0.0;
+        return alpha * normUtilization + (1 - alpha) * normGci;
+    }
 
 	@Override
     public void processEvent(SimEvent ev) {
