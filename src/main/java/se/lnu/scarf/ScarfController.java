@@ -34,13 +34,17 @@ public class ScarfController {
             return "redirect:/error";
         }
         try {
+            String missingFieldPlaceholder = "N/A";
             String jsonData = Files.readString(resultPath);
             ObjectMapper mapper = new ObjectMapper();
             JsonNode rootNode = mapper.readTree(jsonData);
             JsonNode metadata = rootNode.path("metadata");
-            model.addAttribute("modelName", metadata.path("modelName").asText());
-            model.addAttribute("replications", metadata.path("replications").asText());
-            model.addAttribute("arrivalDistributionDetails", metadata.path("arrivalDistributionDetails").asText());
+            model.addAttribute("modelName", metadata.path("modelName") != null ? metadata.path("modelName").asText() : missingFieldPlaceholder);
+            model.addAttribute("replications", metadata.path("replications") != null ? metadata.path("replications").asText() : missingFieldPlaceholder);
+            model.addAttribute("arrivalDistributionDetails", metadata.path("arrivalDistributionDetails") != null ? metadata.path("arrivalDistributionDetails").asText() : missingFieldPlaceholder);
+            model.addAttribute("startTime", metadata.path("startTime") != null ? metadata.path("startTime").asText() : missingFieldPlaceholder);
+            model.addAttribute("duration", metadata.path("duration") != null ? metadata.path("duration").asText() : missingFieldPlaceholder);
+            model.addAttribute("referencePeriod", metadata.path("referencePeriod") != null ? metadata.path("referencePeriod").asText() : missingFieldPlaceholder);
             model.addAttribute("resultId", resultId);
             model.addAttribute("jsonData", jsonData);
             return "results";

@@ -105,6 +105,7 @@ public class CompilationComponent {
             "jackson-databind",
             "jackson-core",
             "jackson-annotations",
+            "jackson-datatype-jsr310",
             "cloudsimplus",
             "logback-classic",
             "logback-core",

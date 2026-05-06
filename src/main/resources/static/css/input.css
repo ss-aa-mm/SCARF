@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "flowbite/src/themes/default.css";
 
+/* PARAMETERS BOX UTILITIES */
+
 .btn-blue {
     @apply text-sm font-medium text-white bg-blue-700 hover:bg-blue-800
     rounded-lg transition-colors shadow-sm cursor-pointer

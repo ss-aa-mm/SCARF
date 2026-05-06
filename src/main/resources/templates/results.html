@@ -36,18 +36,59 @@
 
 <main class="max-w-6xl mx-auto p-8 flex flex-col gap-8">
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm min-w-0">
-      <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Model Name</p>
-      <h3 class="text-xl md:text-2xl font-black text-gray-900 break-all whitespace-normal [overflow-wrap:anywhere]" id="totalInteractionsCount" th:text="${modelName}">--</h3>
+  <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+
+    <div class="flex items-center gap-3 mb-5 border-b border-gray-50 pb-4">
+      <div class="w-1.5 h-6 bg-green-500 rounded-full"></div>
+      <h2 class="font-bold text-gray-800 text-lg">Simulation Summary</h2>
     </div>
-    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm min-w-0">
-      <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Inter-arrival distribution details</p>
-      <h3 class="text-xl md:text-2xl font-black text-gray-900 break-all whitespace-normal [overflow-wrap:anywhere]" id="activeModelLabel" th:text="${arrivalDistributionDetails}">--</h3>
+
+    <div class="flex items-center gap-3 mb-4">
+      <span class="text-xs font-semibold text-gray-700 uppercase tracking-wide whitespace-nowrap">Model</span>
+      <div class="flex-1 h-px bg-gray-200"></div>
     </div>
-    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm min-w-0">
-      <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Repetitions Analyzed</p>
-      <h3 class="text-xl md:text-2xl font-black text-gray-900 break-all whitespace-normal [overflow-wrap:anywhere]" id="repsCount" th:text="${replications}">--</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-7">
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Model name</p>
+        <p class="text-lg font-black text-gray-900 break-all [overflow-wrap:anywhere]"
+           th:text="${modelName}">--</p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Inter-arrival distribution</p>
+        <p class="text-lg font-black text-gray-900 break-all [overflow-wrap:anywhere]"
+           th:text="${arrivalDistributionDetails}">--</p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Repetitions analyzed</p>
+        <p class="text-lg font-black text-gray-900 break-all [overflow-wrap:anywhere]"
+           th:text="${replications}">--</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3 mb-4">
+      <span class="text-xs font-semibold text-gray-700 uppercase tracking-wide whitespace-nowrap">Time &amp; period</span>
+      <div class="flex-1 h-px bg-gray-200"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Start time (UTC)</p>
+        <p class="text-lg font-black text-gray-900"
+           th:text="${startTime}">--</p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Duration</p>
+        <p class="text-lg font-black text-gray-900">
+          <span th:text="${duration}">--</span>
+          <span class="text-sm font-semibold text-gray-400 ml-1">h</span>
+        </p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Reference period</p>
+        <p class="text-lg font-black text-gray-900"
+           th:text="${referencePeriod}">--</p>
+      </div>
     </div>
   </div>
 

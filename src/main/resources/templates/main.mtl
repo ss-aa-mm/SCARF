@@ -42,6 +42,7 @@ import org.cloudsimplus.utilizationmodels.UtilizationModelFull;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,6 +70,7 @@ public class [name/] {
 		}
 
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new JavaTimeModule());
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		
 		try {
@@ -230,6 +232,7 @@ import org.cloudsimplus.utilizationmodels.UtilizationModel;
 import org.cloudsimplus.vms.Vm;
 import org.cloudsimplus.vms.VmSimple;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -293,19 +296,26 @@ class Metadata {
 	String expName;
 	@JsonProperty("replications")
 	int replications;
-	@JsonProperty("duration")
-	double duration;
 	@JsonProperty("seed")
 	long seed;
 	@JsonProperty("arrivalDistributionDetails")
 	String distrib;
+	@JsonProperty("startTime")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    OffsetTime startTime;
+	@JsonProperty("duration")
+	double durationInHours;
+	@JsonProperty("referencePeriod")
+	String referencePeriod;
 
 	public Metadata(String modelName, int replications, String distrib) {
 		this.expName = modelName;
 		this.replications = replications;
 		this.distrib = distrib;
 		this.seed = Utils.SEED;
-		this.duration = Utils.EXEC_TIME;
+		this.startTime = Utils.SIMULATION_START_TIME_UTC;
+		this.durationInHours = (Utils.EXEC_TIME / 3600) / Utils.UNITS_OF_TIME_PER_SECOND;
+		this.referencePeriod = Utils.REFERENCE_PERIOD;
 	}
 }
 
