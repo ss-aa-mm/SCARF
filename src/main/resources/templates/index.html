@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <link th:href="@{/images/favicon.ico}" rel="icon" type="image/x-icon"/>
-    <link th:href="@{/images/favicon.png}" rel="icon" type="image/png" sizes="32x32"/>
-    <link th:href="@{/css/output.css}" rel="stylesheet"/>
-    <script th:src="@{/js/vendor/d3.min.js}"></script>
-    <script th:src="@{/js/vendor/topojson.min.js}"></script>
-    <script th:src="@{/js/scarf.js}"></script>
-    <script th:src="@{/js/solar-time-picker.js}"></script>
-    <title>SCARF</title>
+  <meta charset="UTF-8">
+  <link th:href="@{/images/favicon.ico}" rel="icon" type="image/x-icon"/>
+  <link th:href="@{/images/favicon.png}" rel="icon" type="image/png" sizes="32x32"/>
+  <link th:href="@{/css/output.css}" rel="stylesheet"/>
+  <script th:src="@{/js/vendor/d3.min.js}"></script>
+  <script th:src="@{/js/vendor/topojson.min.js}"></script>
+  <script th:src="@{/js/scarf.js}"></script>
+  <script th:src="@{/js/solar-time-picker.js}"></script>
+  <script th:src="@{/js/routing-gauge.js}"></script>
+  <title>SCARF</title>
 </head>
+
 <body>
 <header class="bg-white border-b border-gray-100 p-4 flex items-center justify-between sticky top-0 z-50">
   <div class="flex items-center gap-3">
@@ -120,6 +123,70 @@
         </select>
       </div>
     </div>
+
+    <div class="flex items-center gap-3 mb-4 mt-7">
+    <span class="text-xs font-semibold text-gray-700 uppercase tracking-wide whitespace-nowrap">
+      Routing balance
+    </span>
+        <div class="flex-1 h-px bg-gray-200"></div>
+      </div>
+
+      <div class="stp-dial-wrap">
+
+        <div class="stp-dial-side">
+          <svg id="alphaDial" viewBox="-115 -115 230 125" width="200"
+               style="overflow:visible;display:block">
+            <defs>
+              <linearGradient id="alphaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#3b82f6"/>
+                <stop offset="100%" stop-color="#22c55e"/>
+              </linearGradient>
+            </defs>
+            <path id="dialTrack" fill="none"
+                  stroke="#e5e7eb" stroke-width="18" stroke-linecap="butt"
+                  d="M -100 0 A 100 100 0 0 1 100 0"/>
+            <path id="dialFill"  fill="none"
+                  stroke="url(#alphaGrad)" stroke-width="18" stroke-linecap="butt" d=""/>
+            <g id="dialTicks"></g>
+            <line id="dialNeedle" x1="0" y1="0" x2="-82" y2="0"
+                  stroke="#1f2937" stroke-width="2" stroke-linecap="round"/>
+            <circle r="5" fill="#1f2937"/>
+            <circle r="2.5" fill="white"/>
+          </svg>
+          <div class="stp-dial-poles">
+            <span class="stp-dial-pole" style="color:#3b82f6">⚡ Perf</span>
+            <span class="stp-dial-pole" style="color:#22c55e">Green 🌿</span>
+          </div>
+        </div>
+
+        <div class="stp-dial-controls">
+          <div>
+            <div class="stp-dial-readout">
+              <span class="stp-dial-value" id="alphaDisplay">0.50</span>
+              <span class="stp-dial-unit">α</span>
+            </div>
+            <div class="stp-dial-mode" id="alphaMode">Balanced</div>
+          </div>
+
+          <div class="stp-dial-slider-row">
+            <span>0.0</span>
+            <label for="alphaSlider" class="hidden">Alpha value</label>
+            <input type="range" id="alphaSlider" min="0" max="100" step="1" value="50">
+            <span style="text-align:right">1.0</span>
+          </div>
+
+          <div class="stp-dial-presets">
+            <button type="button" class="stp-dial-preset"
+                    onclick="AlphaDial.set(0)">Low latency priority</button>
+            <button type="button" class="stp-dial-preset active"
+                    onclick="AlphaDial.set(50)">Balanced</button>
+            <button type="button" class="stp-dial-preset"
+                    onclick="AlphaDial.set(100)">Carbon reduction priority</button>
+          </div>
+
+          <input type="hidden" id="alphaValue" name="alpha" value="0.50">
+        </div>
+      </div>
   </section>
 
   <section class="bg-gray-900 p-8 rounded-2xl shadow-xl text-white">

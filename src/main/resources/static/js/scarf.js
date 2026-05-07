@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startTime = document.getElementById('startTime');
     const duration = document.getElementById('duration');
     const refPeriod = document.getElementById('refPeriod');
+    const alpha = document.getElementById('alphaValue');
     const errorBanner = document.getElementById('errorBanner');
     const errorList = document.getElementById('errorList');
     const runBtn = document.getElementById('runBtn');
@@ -32,10 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append("repetitions", repetitions.value);
         formData.append("distribution", distSelect.value);
         formData.append("param1", param1Field.value);
-        formData.append("param2", !param2Field.classList.contains('invisible') ? param2Field.value : 0);
+        formData.append("param2", !param2Field.classList.contains('invisible') ? param2Field.value : "");
         formData.append("startTime", startTime.value);
         formData.append("duration", duration.value);
         formData.append("refPeriod", refPeriod.value);
+        formData.append("alphaValue", alpha.value);
 
         setEnabled(buttons, false);
         const response = await fetch("/interpretation", {

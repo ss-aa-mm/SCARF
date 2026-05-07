@@ -39,12 +39,13 @@ public class ScarfController {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode rootNode = mapper.readTree(jsonData);
             JsonNode metadata = rootNode.path("metadata");
-            model.addAttribute("modelName", metadata.path("modelName") != null ? metadata.path("modelName").asText() : missingFieldPlaceholder);
-            model.addAttribute("replications", metadata.path("replications") != null ? metadata.path("replications").asText() : missingFieldPlaceholder);
-            model.addAttribute("arrivalDistributionDetails", metadata.path("arrivalDistributionDetails") != null ? metadata.path("arrivalDistributionDetails").asText() : missingFieldPlaceholder);
-            model.addAttribute("startTime", metadata.path("startTime") != null ? metadata.path("startTime").asText() : missingFieldPlaceholder);
-            model.addAttribute("duration", metadata.path("duration") != null ? metadata.path("duration").asText() : missingFieldPlaceholder);
-            model.addAttribute("referencePeriod", metadata.path("referencePeriod") != null ? metadata.path("referencePeriod").asText() : missingFieldPlaceholder);
+            insertAlphaInfo(model, metadata.path("alpha").asDouble(0.5));
+            model.addAttribute("modelName", metadata.path("modelName").asText(missingFieldPlaceholder));
+            model.addAttribute("replications", metadata.path("replications").asText(missingFieldPlaceholder));
+            model.addAttribute("arrivalDistributionDetails", metadata.path("arrivalDistributionDetails").asText(missingFieldPlaceholder));
+            model.addAttribute("startTime", metadata.path("startTime").asText(missingFieldPlaceholder));
+            model.addAttribute("duration", metadata.path("duration").asText(missingFieldPlaceholder));
+            model.addAttribute("referencePeriod", metadata.path("referencePeriod").asText(missingFieldPlaceholder));
             model.addAttribute("resultId", resultId);
             model.addAttribute("jsonData", jsonData);
             return "results";
@@ -53,5 +54,19 @@ public class ScarfController {
             redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong when reading the simulation result!");
             return "redirect:/error";
         }
+    }
+
+    private void insertAlphaInfo(Model model, double alpha) {
+        double needleRad = Math.toRadians(180 - alpha * 180);
+        model.addAttribute("alpha", alpha);
+        model.addAttribute("dialEndX", Math.cos(needleRad) * 50);
+        model.addAttribute("dialEndY", -Math.sin(needleRad) * 50);
+        model.addAttribute("dialNeedleX", Math.cos(needleRad) * 41);
+        model.addAttribute("dialNeedleY", -Math.sin(needleRad) * 41);
+        model.addAttribute("alphaMode",
+                alpha <= 0.1 ? "Performance-oriented" :
+                        alpha <= 0.3 ? "Performance-focused" :
+                                alpha <= 0.7 ? "Balanced" :
+                                        alpha <= 0.9 ? "Sustainability-focused" : "Sustainability-oriented");
     }
 }

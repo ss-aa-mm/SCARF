@@ -10,7 +10,8 @@
     startTimeHours : Integer,
     startTimeMinutes : Integer,
     durationInHours : Integer,
-    referencePeriod : String
+    referencePeriod : String,
+    alpha : Real
 )]
 [comment @main/]
 [let name : String = UMLModel.name.toLowerCase().safe()]
@@ -63,7 +64,7 @@ public class [name/] {
 
 	public static void main(String['[]'/] args) {
 		basePath = (args.length > 0) ? args['[0]'/] : ".";
-		ScarfGlobalSummary out = new ScarfGlobalSummary(new Metadata("[UMLModel.name.metadataSafe()/]", [repetitions/], "[dist + '(' + p1 + ', ' + p2 + ')'/]"));
+		ScarfGlobalSummary out = new ScarfGlobalSummary(new Metadata("[UMLModel.name.metadataSafe()/]", [repetitions/], "[dist + '(' + p1/][if (not p2.oclIsUndefined() and p2.toString() <> 'NaN')], [p2/][/if])"));
 		for(int i = 0; i < Utils.REPETITIONS; i++) {
 			[name/] r = new [name/](i + 1);
 			out.merge(new ScarfSimulationSummary(r.currentRepUsers, r.hostList));
@@ -307,6 +308,8 @@ class Metadata {
 	double durationInHours;
 	@JsonProperty("referencePeriod")
 	String referencePeriod;
+	@JsonProperty("alpha")
+	double alpha;
 
 	public Metadata(String modelName, int replications, String distrib) {
 		this.expName = modelName;
@@ -316,6 +319,7 @@ class Metadata {
 		this.startTime = Utils.SIMULATION_START_TIME_UTC;
 		this.durationInHours = (Utils.EXEC_TIME / 3600) / Utils.UNITS_OF_TIME_PER_SECOND;
 		this.referencePeriod = Utils.REFERENCE_PERIOD;
+		this.alpha = [alpha/];
 	}
 }
 
@@ -690,7 +694,7 @@ class ScarfDatacenterBroker extends DatacenterBrokerSimple {
     }
 
     private double balancedScore(ScarfVm vm, double maxGci) {
-        double alpha = 0.5;
+        double alpha = [alpha/];
         double normUtilization = vm.getCpuPercentUtilization();
         double normGci = maxGci > 0 ? ((ScarfDatacenter) vm.getHost().getDatacenter()).getGci() / maxGci : 0.0;
         return alpha * normUtilization + (1 - alpha) * normGci;

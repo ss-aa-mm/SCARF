@@ -47,7 +47,8 @@ public class ReasoningFrameworkService {
             Double p2,
             String startTime,
             Integer durationInHours,
-            String referencePeriod
+            String referencePeriod,
+            Double alpha
     ) {
         try {
             streamer.push("STAGE_VALIDATION", 5, "Validating UML Architecture...");
@@ -55,7 +56,8 @@ public class ReasoningFrameworkService {
             if (umlModel == null) throw new RuntimeException("The provided UML model could not be resolved or validated");
 
             streamer.push("STAGE_INTERPRETATION", 25, "Running Interpretation...");
-            Path compilationBaseDir = interpretationComponent.interpret(umlModel, rep, distribution, p1, p2, startTime, durationInHours, referencePeriod);
+            Path compilationBaseDir = interpretationComponent.interpret(
+                    umlModel, rep, distribution, p1, p2, startTime, durationInHours, referencePeriod, alpha);
             if (compilationBaseDir == null) throw new RuntimeException("The provided UML model could not be interpreted");
             validationComponent.clearResourceSet();
 
@@ -80,8 +82,9 @@ public class ReasoningFrameworkService {
             streamer.push("SUCCESS", 100, "Reasoning Framework successfully executed!" + DELIMITER + simId);
 
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            streamer.push("ERROR", 0, e.getMessage());
+            String error = e.getMessage() != null ? e.getMessage() : e.toString();
+            logger.error(error);
+            streamer.push("ERROR", 0, error);
         }
 
     }

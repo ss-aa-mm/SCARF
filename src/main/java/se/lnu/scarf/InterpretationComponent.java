@@ -31,7 +31,8 @@ public class InterpretationComponent {
             Double p2,
             String startTime,
             Integer durationInHours,
-            String referencePeriod
+            String referencePeriod,
+            Double alpha
     ) throws IOException {
         logger.info("Interpreting the UML model...");
         Path baseDir = Files.createTempDirectory("scarf-gen-src");
@@ -48,8 +49,8 @@ public class InterpretationComponent {
 
         LocalTime startTimeParsed = LocalTime.parse(startTime);
         SimulationGenerator acceleoGenerator = new SimulationGenerator(umlModel, packageFolder,
-                new ArrayList<Object>(List.of(rep, distribution, p1, p2,
-                        startTimeParsed.getHour(), startTimeParsed.getMinute(), durationInHours, referencePeriod))
+                new ArrayList<Object>(List.of(rep, distribution, p1, p2 == null ? Double.NaN : p2,
+                        startTimeParsed.getHour(), startTimeParsed.getMinute(), durationInHours, referencePeriod, alpha))
         );
         acceleoGenerator.doGenerate(new BasicMonitor());
         logger.info("Code generation complete.");

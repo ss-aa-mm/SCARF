@@ -57,6 +57,123 @@
     @apply border-red-300 bg-red-50 text-red-700;
 }
 
+/* ROUTING BALANCE GAUGE UTILITIES */
+
+.stp-dial-wrap {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.stp-dial-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stp-dial-poles {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    padding: 0 4px;
+    margin-top: 2px;
+}
+
+.stp-dial-pole {
+    font-size: .7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.stp-dial-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stp-dial-readout {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+/*noinspection CssUnresolvedCustomProperty*/
+.stp-dial-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+
+/*noinspection CssUnresolvedCustomProperty*/
+.stp-dial-unit {
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    letter-spacing: .05em;
+}
+
+/*noinspection CssUnresolvedCustomProperty*/
+.stp-dial-mode {
+    font-size: .8125rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    min-height: 16px;
+}
+
+.stp-dial-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/*noinspection CssUnresolvedCustomProperty*/
+.stp-dial-slider-row span {
+    font-size: .7rem;
+    color: var(--color-text-secondary);
+    min-width: 18px;
+}
+
+.stp-dial-slider-row input[type="range"] {
+    flex: 1;
+    accent-color: #22c55e;
+}
+
+.stp-dial-presets {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+/*noinspection CssUnresolvedCustomProperty*/
+.stp-dial-preset {
+    font-size: .7rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--color-border-secondary, #e5e7eb);
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all .12s;
+}
+
+/*noinspection CssUnresolvedCustomProperty*/
+.stp-dial-preset:hover {
+    border-color: var(--color-border-primary, #9ca3af);
+    color: var(--color-text-primary);
+}
+
+/*noinspection CssUnresolvedCustomProperty*/
+.stp-dial-preset.active {
+    border-color: var(--color-border-primary, #9ca3af);
+    background: var(--color-background-primary, #fff);
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
 /* WHITELIST CLASSES */
 .text-red-400 { @apply text-red-400 }
 .text-green-400 { @apply text-green-400 }
