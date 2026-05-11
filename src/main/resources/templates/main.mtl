@@ -115,7 +115,7 @@ public class [name/] {
 		vm.setBw([ee.getValue(es, 'bandwidth')/]);
 		vm.setSize([ee.getValue(es, 'capacity')/]);
 		[let depPolicy: String = ee.getValue(es, 'deploymentPolicy').oclAsType(uml::EnumerationLiteral).name]
-		vm.setPriority([if (depPolicy = 'SiloIsolation')]true[else]false[/if]);
+		vm.setPriority([if (depPolicy.substring(1, 4) = 'Silo')]true[else]false[/if]);
 		vm.setIsolationThreshold([if (depPolicy = 'SiloBestEffort')]0.85[else]1.0[/if]);
 		vm.setCloudletScheduler(new CloudletScheduler[if (depPolicy.substring(1, 4) = 'Silo')]Space[else]Time[/if]Shared());
 		[/let] [comment depPolicy /]
@@ -670,11 +670,11 @@ class ScarfDatacenterBroker extends DatacenterBrokerSimple {
             List<ScarfVm> eligible = availableVms.stream()
                     .filter(vm -> vm.getAllowedTiers().contains(tier))
                     .filter(vm -> vm.getHost().getDatacenter() instanceof ScarfDatacenter)
-                    .toList();
+                    .collect(Collectors.toCollection(ArrayList::new));
 
             List<ScarfVm> preferred = eligible.stream()
                     .filter(vm -> vm.hasPriority() && vm.getCpuPercentUtilization() <= vm.getIsolationThreshold())
-                    .toList();
+                    .collect(Collectors.toCollection(ArrayList::new));
 
             if (preferred.isEmpty()) { preferred = eligible; }
 
@@ -684,6 +684,7 @@ class ScarfDatacenterBroker extends DatacenterBrokerSimple {
                     .max()
                     .orElse(0.0);
 
+            Collections.shuffle(preferred);
             return preferred.stream()
                     .min(Comparator
                             .comparingDouble(vm -> balancedScore(vm, maxGci))
