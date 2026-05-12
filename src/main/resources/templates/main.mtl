@@ -685,27 +685,48 @@ class ScarfDatacenterBroker extends DatacenterBrokerSimple {
                     .filter(vm -> vm.getAllowedTiers().contains(tier))
                     .filter(vm -> vm.getHost().getDatacenter() instanceof ScarfDatacenter)
                     .collect(Collectors.toCollection(ArrayList::new));
+            if (eligible.isEmpty()) return ScarfVm.NULL;
 
-            List<ScarfVm> preferred = eligible.stream()
-                    .filter(vm -> vm.hasPriority() && vm.getCpuPercentUtilization() <= vm.getIsolationThreshold())
-                    .collect(Collectors.toCollection(ArrayList::new));
+            Optional<ScarfVm> isolatedSilo = eligible.stream()
+                    .filter(vm -> vm.hasPriority() && vm.getIsolationThreshold() == 1.0)
+                    .findFirst();
+            if (isolatedSilo.isPresent()) return isolatedSilo.get();
 
-            if (preferred.isEmpty()) { preferred = eligible; }
+            Map<Boolean, List<ScarfVm>> byPriority = eligible.stream()
+                    .collect(Collectors.partitioningBy(ScarfVm::hasPriority));
+            List<ScarfVm> silos = byPriority.get(true);
+            List<ScarfVm> pools = byPriority.get(false);
 
-            double maxGci = preferred.stream()
-                    .mapToDouble(vm -> ((ScarfDatacenter) vm.getHost().getDatacenter()).getGci())
-                    .filter(Double::isFinite)
-                    .max()
-                    .orElse(0.0);
+            for (List<ScarfVm> group : List.of(
+                    freePes(silos),
+                    freePes(pools),
+                    silos,
+                    pools
+            )) {
+                if (!group.isEmpty()) return getBestByScore(group);
+            }
 
-            Collections.shuffle(preferred);
-            return preferred.stream()
-                    .min(Comparator
-                            .comparingDouble(vm -> balancedScore(vm, maxGci))
-                    )
-                    .orElse(ScarfVm.NULL);
+            return ScarfVm.NULL;
         }
         return super.defaultVmMapper(cloudlet);
+    }
+
+    private List<ScarfVm> freePes(List<ScarfVm> vms) {
+        return vms.stream()
+                .filter(vm -> vm.getExpectedFreePesNumber() > 0)
+                .toList();
+    }
+
+    private ScarfVm getBestByScore(List<ScarfVm> candidates) {
+        if (candidates.isEmpty()) return ScarfVm.NULL;
+
+        double localMaxGci = candidates.stream()
+                .mapToDouble(vm -> ((ScarfDatacenter) vm.getHost().getDatacenter()).getGci())
+                .filter(Double::isFinite)
+                .max().orElse(0.0);
+        return candidates.stream()
+                .min(Comparator.comparingDouble(vm -> balancedScore(vm, localMaxGci)))
+                .orElse(ScarfVm.NULL);
     }
 
     private double balancedScore(ScarfVm vm, double maxGci) {
