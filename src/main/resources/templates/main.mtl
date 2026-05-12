@@ -558,6 +558,7 @@ class ScarfCloudlet extends CloudletSimple {
 	private final User user;
 	private final String component;
 	private final String interaction;
+	private ScarfCloudlet previousCloudlet;
 	private boolean initial;
 	private CarbonResult totalCarbon = new CarbonResult(0.0, 0.0);
 	
@@ -568,6 +569,7 @@ class ScarfCloudlet extends CloudletSimple {
 		this.component = component;
 		this.interaction = interaction;
 		this.initial = false;
+		this.previousCloudlet = null;
 	}
 	
 	public String getName() {
@@ -600,6 +602,17 @@ class ScarfCloudlet extends CloudletSimple {
 
 	public boolean isInitial() {
         return initial;
+	}
+
+	public void setPreviousCloudlet(ScarfCloudlet previous) {
+	    this.previousCloudlet = previous;
+	}
+
+	public Vm mandatoryExecutionLocation() {
+	    if (this.previousCloudlet == null || !this.getComponent().equals(this.previousCloudlet.getComponent()))
+	        return null;
+	    Vm targetVm = this.previousCloudlet.getVm();
+	    return (targetVm == Vm.NULL || targetVm == ScarfVm.NULL) ? null : targetVm;
 	}
 
 	@Override
@@ -666,6 +679,7 @@ class ScarfDatacenterBroker extends DatacenterBrokerSimple {
             String tier = cl.getUser().getTier();
             List<ScarfVm> availableVms = routingTable.getOrDefault(cl.getComponent(), Collections.emptyList());
             if (availableVms.isEmpty()) Utils.log.error("Something went wrong when placing cloudlet {}", cl);
+            if (cl.mandatoryExecutionLocation() != null) return cl.mandatoryExecutionLocation();
 
             List<ScarfVm> eligible = availableVms.stream()
                     .filter(vm -> vm.getAllowedTiers().contains(tier))
@@ -998,12 +1012,15 @@ if(next != null) {
 [let nc : String = 'cl' + nextCloudletStart.name.safe()]
 [cc/].addOnFinishListener(_ -> {
 	user.assignCloudlet([cc/]);
+	[nc/].setPreviousCloudlet([cc/]);
 	broker.submitCloudletAtFront([nc/]);
 });
 [/let] [comment nc /]
 [/if]  [comment ifHasNext /]
 [if cloudletStart.oclIsTypeOf(uml::ExecutionOccurrenceSpecification)]
 [cc/].markAsInitial();
+if (!user.getExecutedCloudlets().isEmpty())
+    [cc/].setPreviousCloudlet(user.getExecutedCloudlets().getLast());
 broker.submitCloudlet([cc/]);
 [/if]  [comment ifInitial /]
 [/let] [comment cc /]
