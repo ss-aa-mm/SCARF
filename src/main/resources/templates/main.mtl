@@ -35,6 +35,7 @@ import org.cloudsimplus.core.CloudSimPlus;
 import org.cloudsimplus.datacenters.Datacenter;
 import org.cloudsimplus.listeners.EventInfo;
 import org.cloudsimplus.resources.PeSimple;
+import org.cloudsimplus.schedulers.cloudlet.CloudletSchedulerCompletelyFair;
 import org.cloudsimplus.schedulers.cloudlet.CloudletSchedulerSpaceShared;
 import org.cloudsimplus.schedulers.cloudlet.CloudletSchedulerTimeShared;
 import org.cloudsimplus.util.Log;
@@ -117,7 +118,7 @@ public class [name/] {
 		[let depPolicy: String = ee.getValue(es, 'deploymentPolicy').oclAsType(uml::EnumerationLiteral).name]
 		vm.setPriority([if (depPolicy.substring(1, 4) = 'Silo')]true[else]false[/if]);
 		vm.setIsolationThreshold([if (depPolicy = 'SiloBestEffort')]0.85[else]1.0[/if]);
-		vm.setCloudletScheduler(new CloudletScheduler[if (depPolicy.substring(1, 4) = 'Silo')]Space[else]Time[/if]Shared());
+		vm.setCloudletScheduler(new CloudletScheduler[if (depPolicy.substring(1, 4) = 'Silo')][if (depPolicy.substring(5, 5) = 'B')]CompletelyFair[else]SpaceShared[/if][else]TimeShared[/if]());
 		[/let] [comment depPolicy /]
 		broker.registerVm("[component/]", vm);
 		newVms.add(vm);
