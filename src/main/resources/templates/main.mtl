@@ -714,12 +714,13 @@ class ScarfDatacenterBroker extends DatacenterBrokerSimple {
     private List<ScarfVm> freePes(List<ScarfVm> vms) {
         return vms.stream()
                 .filter(vm -> vm.getExpectedFreePesNumber() > 0)
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private ScarfVm getBestByScore(List<ScarfVm> candidates) {
         if (candidates.isEmpty()) return ScarfVm.NULL;
 
+        Collections.shuffle(candidates);
         double localMaxGci = candidates.stream()
                 .mapToDouble(vm -> ((ScarfDatacenter) vm.getHost().getDatacenter()).getGci())
                 .filter(Double::isFinite)
@@ -845,7 +846,7 @@ class User {
 		this.startTime = st;
 		this.interactionHistory = "";
 		this.preferredRegion = Utils.REGIONS.get(Utils.rng.nextInt(Utils.REGIONS.size()));
-		this.tier = Utils.TIER_MAP.ceilingEntry(Utils.rng.nextInt(Utils.TIER_MAP.lastKey())).getValue();
+		this.tier = Utils.TIER_MAP.ceilingEntry(Utils.rng.nextInt(Utils.TIER_MAP.lastKey() + 1)).getValue();
 	}
 
 	public String getPreferredRegion() {
@@ -965,8 +966,10 @@ class Utils {
 		[if (tierSpecifications -> size() = 0 or tierSpecifications -> size() > 1)]
 		TIER_MAP.put(100, "Standard");
 		[else]
+		int cumulativePercentage = 0;
 		[for (t : uml::Class | tierSpecifications -> any(true).eContents(uml::Class) -> select(t | not t.getAppliedStereotype('sciuml::Tier').oclIsUndefined()))]
-		TIER_MAP.put([t.getValue(t.getAppliedStereotype('sciuml::Tier'), 'incidence')/], "[t.name/]");
+		cumulativePercentage += [t.getValue(t.getAppliedStereotype('sciuml::Tier'), 'incidence')/];
+		TIER_MAP.put(cumulativePercentage, "[t.name/]");
 		[/for]
 		[/if]
 		[/let] [comment tierSpecifications/]
