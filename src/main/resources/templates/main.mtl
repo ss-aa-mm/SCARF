@@ -243,9 +243,16 @@ import org.slf4j.LoggerFactory;
 
 /* DATA */
 
-record CarbonResult(double teadsEstimate, double powerModelEstimate) {
+record CarbonResult(double teadsEstimate, double powerModelEstimate, double embodiedCarbon) {
+
+    public static final CarbonResult ZERO = new CarbonResult(0.0, 0.0, 0.0);
+
 	public CarbonResult add(CarbonResult other) {
-		return new CarbonResult(this.teadsEstimate + other.teadsEstimate, this.powerModelEstimate + other.powerModelEstimate);
+		return new CarbonResult(
+		    this.teadsEstimate + other.teadsEstimate,
+		    this.powerModelEstimate + other.powerModelEstimate,
+		    this.embodiedCarbon + other.embodiedCarbon
+		);
 	}
 }
 
@@ -263,12 +270,15 @@ class InteractionSeries {
 	public final List<Double> teadsSciValues = new ArrayList<>();
 	@JsonProperty("power_model_sci")
 	public final List<Double> powerModelSciValues = new ArrayList<>();
+	@JsonProperty("embodied_sci")
+	public final List<Double> embodiedSciValues = new ArrayList<>();
 	@JsonProperty("service_time")
 	public final List<Double> serviceTimeValues = new ArrayList<>();
 	
 	public void addValue(CarbonResult carbon, double time) {
 		this.teadsSciValues.add(carbon.teadsEstimate());
 		this.powerModelSciValues.add(carbon.powerModelEstimate());
+		this.embodiedSciValues.add(carbon.embodiedCarbon());
 		this.serviceTimeValues.add(time);
 	}
 }
@@ -282,6 +292,8 @@ class HostSeries {
 	private final List<Double> avgTeadsSci = new ArrayList<>();
 	@JsonProperty("average_power_model_sci")
 	private final List<Double> avgPowerModelSci = new ArrayList<>();
+	@JsonProperty("average_embodied_sci")
+	private final List<Double> avgEmbodiedSci = new ArrayList<>();
 	
 	public void addTrace(List<CarbonSnapshot> trace) {
 		for(CarbonSnapshot snapshot : trace) {
@@ -289,6 +301,7 @@ class HostSeries {
 			this.avgUtilization.add(snapshot.utilization());
 			this.avgTeadsSci.add(snapshot.carbonValues().teadsEstimate());
 			this.avgPowerModelSci.add(snapshot.carbonValues().powerModelEstimate());
+			this.avgEmbodiedSci.add(snapshot.carbonValues().embodiedCarbon());
 		}
 	}
 }
@@ -390,13 +403,8 @@ class ScarfHost extends HostSimple {
 	private final double embodiedEmissions;
 	private final double expectedLifespan;
 	private final double thermalDesignPower;
-	private CarbonResult totalCarbon = new CarbonResult(0.0, 0.0);
-	private final List<CarbonSnapshot> carbonTimeSeries = new ArrayList<>();
-	private double lastUtilClock = 0.0;
-	private double accumulatedUtil = 0.0;
-	private double currentUtil = 0.0;
-	
-	
+	private final CarbonTracker carbonTracker;
+
 	public ScarfHost(String name, long ram, long bw, long storage, List<Pe> peList, double embodiedEmissions, double expectedLifespan, double thermalDesignPower) {
 		super(ram, bw, storage, peList);
 		this.name = name;
@@ -404,14 +412,8 @@ class ScarfHost extends HostSimple {
 		this.expectedLifespan = expectedLifespan;
 		this.thermalDesignPower = thermalDesignPower;
 		this.setPowerModel(new PowerModelHostSimple(thermalDesignPower, 0.2 * thermalDesignPower));
+		this.carbonTracker = new CarbonTracker(this, 1.0);
 		this.enableUtilizationStats();
-	}
-
-	public void updateUtilization(double clk) {
-		double timeDelta = clk - lastUtilClock;
-		this.accumulatedUtil += currentUtil * timeDelta;
-		this.currentUtil = this.getCpuPercentUtilization();
-		this.lastUtilClock = clk;
 	}
 
 	public String getName() {
@@ -435,55 +437,30 @@ class ScarfHost extends HostSimple {
 	}
 	
 	public double getTeadsSci() {
-		return totalCarbon.teadsEstimate();
+		return carbonTracker.getTotalCarbon().teadsEstimate();
 	}
 	
 	public double getPowerModelSci() {
-		return totalCarbon.powerModelEstimate();
+		return carbonTracker.getTotalCarbon().powerModelEstimate();
 	}
 
 	public List<CarbonSnapshot> getCarbonTimeSeries() {
-		return Collections.unmodifiableList(carbonTimeSeries);
-	}
-
-	public CarbonResult computeSci(double interval, double meanUtilization) {
-		double intervalSeconds = interval / Utils.UNITS_OF_TIME_PER_SECOND;
-		double utilization = meanUtilization == -1.0 ? this.getCpuPercentUtilization() : meanUtilization;
-		double usedPowerTeads = this.thermalDesignPower * calculateTeads(utilization);
-		double usedPowerPowerModel = getPowerModel().getPower(utilization);
-		double deviceEnergyTeads = (intervalSeconds * usedPowerTeads) / 3600000.0;
-		double deviceEnergyPowerModel = (intervalSeconds * usedPowerPowerModel) / 3600000.0;
-		double energyTeads = deviceEnergyTeads + NETWORK_ENERGY;
-		double energyPowerModel = deviceEnergyPowerModel + NETWORK_ENERGY;
-		double gci = ((ScarfDatacenter) this.getDatacenter()).getGci();
-		double carbonOperationalTeads = energyTeads * gci;
-		double carbonOperationalPowerModel = energyPowerModel * gci;
-		double carbonEmbodied = this.embodiedEmissions * (intervalSeconds / this.expectedLifespan);
-		return new CarbonResult(carbonOperationalTeads + carbonEmbodied, carbonOperationalPowerModel + carbonEmbodied);
+		return carbonTracker.getCarbonTimeSeries();
 	}
 
 	public void processIntervalCarbon(double clock, double interval) {
 		if (interval <= 0.0) return;
-		
-		updateUtilization(clock);
-		double meanUtilization = accumulatedUtil / interval;
-		CarbonResult intervalCarbon = computeSci(interval, meanUtilization);
-		this.carbonTimeSeries.add(new CarbonSnapshot(clock, meanUtilization, intervalCarbon));
-		this.totalCarbon = this.totalCarbon.add(intervalCarbon);
-		this.accumulatedUtil = 0.0;
-	}
-	
-	protected static double calculateTeads(double utilization) {
-		final double['[]'/] UTIL_POINTS = {0, 0.10, 0.50, 1};
-		final double['[]'/] TEADS_CURVE = {0.12, 0.32, 0.75, 1.02};
-		for (int i = 0; i < UTIL_POINTS.length - 1; i++) {
-            ['if (utilization >= UTIL_POINTS[i] && utilization <= UTIL_POINTS[i + 1]) {'/]
-                ['return TEADS_CURVE[i] + (utilization - UTIL_POINTS[i]) *'/]
-                        ['(TEADS_CURVE[i + 1] - TEADS_CURVE[i]) /'/]
-                        ['(UTIL_POINTS[i + 1] - UTIL_POINTS[i]);'/]
-            }
+		this.carbonTracker.computeSci(clock, interval, this.getCpuPercentUtilization());
+		for (Vm vm : this.getVmList()) {
+            if (vm instanceof ScarfVm svm) svm.computeSci(clock, interval);
         }
-        ['return utilization == 0 ? TEADS_CURVE[0] : TEADS_CURVE[TEADS_CURVE.length - 1];'/]
+	}
+
+	public void nudgeUtilization(double clock) {
+	    this.carbonTracker.updateUtilization(clock, this.getCpuPercentUtilization());
+	    for (Vm vm : this.getVmList()) {
+	        if (vm instanceof ScarfVm svm) svm.nudgeUtilization(clock);
+	    }
 	}
 
 	@Override
@@ -501,6 +478,7 @@ class ScarfVm extends VmSimple {
 	private final String component;
 	private final ScarfHost targetHost;
 	private final List<String> allowedTiers;
+	private final CarbonTracker carbonTracker;
 	private boolean hasPriority;
 	private double isolationThreshold;
 	
@@ -513,6 +491,7 @@ class ScarfVm extends VmSimple {
 		this.enableUtilizationStats();
 		this.hasPriority = false;
 		this.isolationThreshold = 0.0;
+		this.carbonTracker = targetHost != null ? new CarbonTracker(targetHost, (double) pesNumber / targetHost.getPesNumber()) : null;
 	}
 
 	public String getName() {
@@ -546,6 +525,18 @@ class ScarfVm extends VmSimple {
 	public void setPriority(boolean p) {
 	    this.hasPriority = p;
 	}
+
+	public void computeSci(double clock, double interval) {
+        this.carbonTracker.computeSci(clock, interval, this.getCpuPercentUtilization());
+    }
+
+    public List<CarbonSnapshot> getCarbonTimeSeries() {
+        return carbonTracker.getCarbonTimeSeries();
+    }
+
+    public void nudgeUtilization(double clock) {
+        this.carbonTracker.updateUtilization(clock, this.getCpuPercentUtilization());
+    }
 	
 	@Override
 	public String toString() {
@@ -561,7 +552,7 @@ class ScarfCloudlet extends CloudletSimple {
 	private final String interaction;
 	private ScarfCloudlet previousCloudlet;
 	private boolean initial;
-	private CarbonResult totalCarbon = new CarbonResult(0.0, 0.0);
+	private CarbonResult totalCarbon = CarbonResult.ZERO;
 	
 	public ScarfCloudlet(long length, int pesNumber, UtilizationModel utilizationModel, String name, User user, String component, String interaction) {
 		super(length, pesNumber, utilizationModel);
@@ -601,6 +592,10 @@ class ScarfCloudlet extends CloudletSimple {
 		return totalCarbon.powerModelEstimate();
 	}
 
+	public double getEmbodiedSci() {
+	    return totalCarbon.embodiedCarbon();
+	}
+
 	public boolean isInitial() {
         return initial;
 	}
@@ -633,11 +628,7 @@ class ScarfCloudlet extends CloudletSimple {
     }
 
 	public void finalizeCarbonAccount() {
-		ScarfHost host = (ScarfHost) getVm().getHost();
-		double resourceShare = (double) getPesNumber() / host.getPesNumber();
-		double interval = getTotalExecutionTime();
-		CarbonResult hostCarbonResult = host.computeSci(interval, -1.0);
-		this.totalCarbon = new CarbonResult(hostCarbonResult.teadsEstimate() * resourceShare, hostCarbonResult.powerModelEstimate() * resourceShare);
+		this.totalCarbon = CarbonTracker.computeCloudletSci(this);
 	}
 }
 
@@ -791,7 +782,11 @@ class ScarfSimulationSummary {
 			Map<String, List<ScarfCloudlet>> userInteractions = user.getExecutedCloudlets().stream().collect(Collectors.groupingBy(ScarfCloudlet::getInteraction));
 			for(Map.Entry<String, List<ScarfCloudlet>> interactionDetails : userInteractions.entrySet()) {
 				InteractionKey key = new InteractionKey(interactionDetails.getKey(), user.getTier());
-				CarbonResult totalInteractionSci = new CarbonResult(interactionDetails.getValue().stream().mapToDouble(ScarfCloudlet::getTeadsSci).sum(), interactionDetails.getValue().stream().mapToDouble(ScarfCloudlet::getPowerModelSci).sum());
+				CarbonResult totalInteractionSci = new CarbonResult(
+				    interactionDetails.getValue().stream().mapToDouble(ScarfCloudlet::getTeadsSci).sum(),
+				    interactionDetails.getValue().stream().mapToDouble(ScarfCloudlet::getPowerModelSci).sum(),
+				    interactionDetails.getValue().stream().mapToDouble(ScarfCloudlet::getEmbodiedSci).sum()
+				);
 				//double duration = interactionDetails.getValue().stream().mapToDouble(Cloudlet::getFinishTime).max().orElse(0.0) - interactionDetails.getValue().stream().mapToDouble(Cloudlet::getStartTime).min().orElse(0.0);
 				double duration = interactionDetails.getValue().stream().mapToDouble(Cloudlet::getTotalExecutionTime).sum();
 				this.interactions.computeIfAbsent(key, _ -> new InteractionSeries()).addValue(totalInteractionSci, duration);
@@ -945,6 +940,78 @@ class ActivityNode {
 	}
 }
 
+class CarbonTracker {
+    private double lastClock = 0.0;
+    private double accumulatedUtilization = 0.0;
+    private final ScarfHost sourceHost;
+    private final double resourceShare;
+    private final List<CarbonSnapshot> carbonTimeSeries = new ArrayList<>();
+    private CarbonResult totalCarbon = CarbonResult.ZERO;
+
+    public CarbonTracker(ScarfHost source, double resShare) {
+        this.resourceShare = resShare;
+        this.sourceHost = source;
+    }
+
+    void updateUtilization(double clk, double utilization) {
+        double delta = clk - this.lastClock;
+        this.accumulatedUtilization = utilization * delta;
+        this.lastClock = clk;
+    }
+
+    public CarbonResult computeSci(double clock, double interval, double currentUtilization) {
+        updateUtilization(clock, currentUtilization);
+        double meanIntervalUtilization = interval > 0 ? accumulatedUtilization / interval : 0.0;
+        this.accumulatedUtilization = 0.0;
+        CarbonResult intervalCarbon = computeSciInternal(interval, meanIntervalUtilization, this.sourceHost, this.resourceShare);
+        this.carbonTimeSeries.add(new CarbonSnapshot(clock, meanIntervalUtilization, intervalCarbon));
+        this.totalCarbon = this.totalCarbon.add(intervalCarbon);
+        return intervalCarbon;
+    }
+
+    private static CarbonResult computeSciInternal(double interval, double meanIntervalUtilization, ScarfHost host, double resourceShare) {
+        if (interval <= 0.0) return CarbonResult.ZERO;
+        double intervalSeconds = interval / Utils.UNITS_OF_TIME_PER_SECOND;
+        double usedPowerTeads = host.getThermalDesignPower() * calculateTeads(meanIntervalUtilization) * resourceShare;
+        double usedPowerPowerModel = host.getPowerModel().getPower(meanIntervalUtilization) * resourceShare;
+        double deviceEnergyTeads = (intervalSeconds * usedPowerTeads) / 3600000.0;
+        double deviceEnergyPowerModel = (intervalSeconds * usedPowerPowerModel) / 3600000.0;
+        double energyTeads = deviceEnergyTeads + (host.getNetworkEnergy() * resourceShare);
+        double energyPowerModel = deviceEnergyPowerModel + (host.getNetworkEnergy() * resourceShare);
+        double gci = ((ScarfDatacenter) host.getDatacenter()).getGci();
+        double carbonOperationalTeads = energyTeads * gci;
+        double carbonOperationalPowerModel = energyPowerModel * gci;
+        double carbonEmbodied = (host.getEmbodiedEmissions() * resourceShare) * (intervalSeconds / host.getExpectedLifespan());
+        return new CarbonResult(carbonOperationalTeads + carbonEmbodied, carbonOperationalPowerModel + carbonEmbodied, carbonEmbodied);
+    }
+
+    public static CarbonResult computeCloudletSci(ScarfCloudlet cloudlet) {
+        ScarfVm svm = (ScarfVm) cloudlet.getVm();
+        return computeSciInternal(cloudlet.getTotalExecutionTime(), svm.getCpuPercentUtilization(), svm.getTargetHost(), (double) cloudlet.getPesNumber() / svm.getPesNumber());
+    }
+
+    private static double calculateTeads(double utilization) {
+        final double['[]'/] UTIL_POINTS = {0, 0.10, 0.50, 1};
+        final double['[]'/] TEADS_CURVE = {0.12, 0.32, 0.75, 1.02};
+        for (int i = 0; i < UTIL_POINTS.length - 1; i++) {
+            ['if (utilization >= UTIL_POINTS[i] && utilization <= UTIL_POINTS[i + 1]) {'/]
+                ['return TEADS_CURVE[i] + (utilization - UTIL_POINTS[i]) *'/]
+                        ['(TEADS_CURVE[i + 1] - TEADS_CURVE[i]) /'/]
+                        ['(UTIL_POINTS[i + 1] - UTIL_POINTS[i]);'/]
+            }
+        }
+        ['return utilization == 0 ? TEADS_CURVE[0] : TEADS_CURVE[TEADS_CURVE.length - 1];'/]
+    }
+
+    public CarbonResult getTotalCarbon() {
+        return totalCarbon;
+    }
+
+    public List<CarbonSnapshot> getCarbonTimeSeries() {
+        return Collections.unmodifiableList(carbonTimeSeries);
+    }
+}
+
 /* MISCELLANEOUS */
 
 class Utils {
@@ -1028,7 +1095,7 @@ if(next != null) {
 	[cc/].addOnFinishListener(event -> {
 		double clk = [cc/].getSimulation().clock();
 		user.assignFinalCloudlet([cc/], clk);
-		((ScarfHost) [cc/].getVm().getHost()).updateUtilization(clk);
+		((ScarfHost) [cc/].getVm().getHost()).nudgeUtilization(clk);
 		next.accept(event, user);
 	});
 }
