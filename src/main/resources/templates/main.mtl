@@ -943,6 +943,7 @@ class ActivityNode {
 class CarbonTracker {
     private double lastClock = 0.0;
     private double accumulatedUtilization = 0.0;
+    private double lastUtilization = 0.0;
     private final ScarfHost sourceHost;
     private final double resourceShare;
     private final List<CarbonSnapshot> carbonTimeSeries = new ArrayList<>();
@@ -955,7 +956,8 @@ class CarbonTracker {
 
     void updateUtilization(double clk, double utilization) {
         double delta = clk - this.lastClock;
-        this.accumulatedUtilization = utilization * delta;
+        this.accumulatedUtilization += this.lastUtilization * delta;
+        this.lastUtilization = utilization;
         this.lastClock = clk;
     }
 
@@ -1054,6 +1056,12 @@ class Utils {
 		    log.warn("No Grid Carbon Intensity file provided (not even a sample one)! A constant value will be used for all Datacenters.");
 		}
 	}
+
+	static double sig3(double value) {
+        if (value == 0.0) return 0.0;
+        double magnitude = Math.pow(10, Math.floor(Math.log10(Math.abs(value))) - 2);
+        return Math.round(value / magnitude) * magnitude;
+    }
 }
 [/file]
 [/let] [comment referenceMIPS /]
