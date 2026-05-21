@@ -276,34 +276,90 @@ class InteractionSeries {
 	public final List<Double> serviceTimeValues = new ArrayList<>();
 	
 	public void addValue(CarbonResult carbon, double time) {
-		this.teadsSciValues.add(carbon.teadsEstimate());
-		this.powerModelSciValues.add(carbon.powerModelEstimate());
-		this.embodiedSciValues.add(carbon.embodiedCarbon());
-		this.serviceTimeValues.add(time);
+		this.teadsSciValues.add(Utils.sig5(carbon.teadsEstimate()));
+		this.powerModelSciValues.add(Utils.sig5(carbon.powerModelEstimate()));
+		this.embodiedSciValues.add(Utils.sig5(carbon.embodiedCarbon()));
+		this.serviceTimeValues.add(Utils.sig5(time));
 	}
 }
 
 class HostSeries {
+    @JsonProperty("total_cores")
+    public final long totalCores;
+    @JsonProperty("thermal_design_power")
+    public final double thermalDesignPower;
 	@JsonProperty("timestamps")
-	private final List<Double> timestamps = new ArrayList<>();
+	private final List<Double> timestamps;
 	@JsonProperty("average_utilization")
-	private final List<Double> avgUtilization = new ArrayList<>();
+	private final List<Double> avgUtilization;
 	@JsonProperty("average_teads_sci")
-	private final List<Double> avgTeadsSci = new ArrayList<>();
+	private final List<Double> avgTeadsSci;
 	@JsonProperty("average_power_model_sci")
-	private final List<Double> avgPowerModelSci = new ArrayList<>();
-	@JsonProperty("average_embodied_sci")
-	private final List<Double> avgEmbodiedSci = new ArrayList<>();
+	private final List<Double> avgPowerModelSci;
+	@JsonProperty("embodied_sci_per_interval")
+	private final double embodiedSciPerInterval;
+	@JsonProperty("vms")
+    public final Map<String, VmSeries> vms;
 	
-	public void addTrace(List<CarbonSnapshot> trace) {
-		for(CarbonSnapshot snapshot : trace) {
-			this.timestamps.add(snapshot.timestamp());
-			this.avgUtilization.add(snapshot.utilization());
-			this.avgTeadsSci.add(snapshot.carbonValues().teadsEstimate());
-			this.avgPowerModelSci.add(snapshot.carbonValues().powerModelEstimate());
-			this.avgEmbodiedSci.add(snapshot.carbonValues().embodiedCarbon());
-		}
-	}
+	public HostSeries(ScarfHost host) {
+        this.totalCores = host.getPesNumber();
+        this.thermalDesignPower = host.getThermalDesignPower();
+
+        List<CarbonSnapshot> trace = host.getCarbonTimeSeries();
+
+        this.timestamps = trace.stream().map(s -> s.timestamp()).toList();
+        this.avgUtilization = trace.stream().map(s -> Utils.sig5(s.utilization())).toList();
+        this.avgTeadsSci = trace.stream().map(s -> Utils.sig5(s.carbonValues().teadsEstimate())).toList();
+        this.avgPowerModelSci = trace.stream().map(s -> Utils.sig5(s.carbonValues().powerModelEstimate())).toList();
+        this.embodiedSciPerInterval = trace.isEmpty() ? 0.0
+            : Utils.sig5(trace.getFirst().carbonValues().embodiedCarbon());
+
+        this.vms = host.getVmCreatedList().stream()
+            .filter(vm -> vm instanceof ScarfVm)
+            .collect(Collectors.toMap(
+                vm -> ((ScarfVm) vm).getName(),
+                vm -> new VmSeries((ScarfVm) vm),
+                (a, b) -> a,
+                LinkedHashMap::new
+            ));
+    }
+}
+
+class VmSeries {
+    @JsonProperty("allocated_cores")
+    public final long allocatedCores;
+    @JsonProperty("allowed_tiers")
+    public final List<String> allowedTiers;
+    @JsonProperty("component")
+    public final String component;
+    @JsonProperty("embodied_sci_per_interval")
+    public final double embodiedSciPerInterval;
+    @JsonProperty("average_utilization")
+    public final List<Double> avgUtilization;
+    @JsonProperty("average_teads_sci")
+    public final List<Double> avgTeadsSci;
+    @JsonProperty("average_power_model_sci")
+    public final List<Double> avgPowerModelSci;
+
+    public VmSeries(ScarfVm vm) {
+        this.allocatedCores = vm.getPesNumber();
+        this.allowedTiers = vm.getAllowedTiers();
+        this.component = vm.getComponent();
+
+        List<CarbonSnapshot> series = vm.getCarbonTimeSeries();
+
+        this.avgUtilization = series.stream()
+            .map(s -> Utils.sig5(s.utilization()))
+            .toList();
+        this.avgTeadsSci = series.stream()
+            .map(s -> Utils.sig5(s.carbonValues().teadsEstimate()))
+            .toList();
+        this.avgPowerModelSci = series.stream()
+            .map(s -> Utils.sig5(s.carbonValues().powerModelEstimate()))
+            .toList();
+        this.embodiedSciPerInterval = series.isEmpty() ? 0.0
+            : Utils.sig5(series.getFirst().carbonValues().embodiedCarbon());
+    }
 }
 
 class Metadata {
@@ -793,7 +849,7 @@ class ScarfSimulationSummary {
 			}
 		}
 		for(ScarfHost host : hosts) {
-			this.hosts.computeIfAbsent(host.getName(), _ -> new HostSeries()).addTrace(host.getCarbonTimeSeries());
+			this.hosts.put(host.getName(), new HostSeries(host));
 		}
 	}
 
@@ -1057,10 +1113,9 @@ class Utils {
 		}
 	}
 
-	static double sig3(double value) {
+	static double sig5(double value) {
         if (value == 0.0) return 0.0;
-        double magnitude = Math.pow(10, Math.floor(Math.log10(Math.abs(value))) - 2);
-        return Math.round(value / magnitude) * magnitude;
+        return Double.parseDouble(String.format(Locale.ENGLISH, "%.4E", value));
     }
 }
 [/file]
