@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/images/favicon.ico}" rel="icon" type="image/x-icon"/>
+  <link th:href="@{/images/favicon.png}" rel="icon" type="image/png" sizes="32x32"/>
+  <link th:href="@{/css/output.css}" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <script th:src="@{/js/vendor/plotly-3.3.0.min.js}"></script>
+  <script th:inline="javascript">window.SCARF_DATA = /*[(${jsonData})]*/ null</script>
+  <script th:src="@{/js/results_v2.js}" defer></script>
+  <title>SCARF — Simulation Results</title>
+
+  <style>
+    :root {
+      --font-mono: 'DM Mono', 'IBM Plex Mono', monospace;
+      --font-sans: 'DM Sans', system-ui, sans-serif;
+      --bg:        #f8f9fb;
+      --surface:   #ffffff;
+      --border:    #e5e7eb;
+      --text-1:    #0f172a;
+      --text-2:    #475569;
+      --text-3:    #94a3b8;
+      --accent:    #2563eb;
+      --accent-g:  #16a34a;
+      --radius:    10px;
+      --shadow:    0 1px 3px 0 rgb(0 0 0/.07), 0 1px 2px -1px rgb(0 0 0/.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text-1);
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    /* ── header ── */
+    .site-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .site-header__brand { display: flex; align-items: center; gap: 0.75rem; }
+    .site-header__logo  { width:40px; height:40px; border-radius:8px; }
+    .site-header__name  {
+      font-family: var(--font-mono);
+      font-weight: 500; font-size: 1.1rem; letter-spacing: -.02em;
+      color: var(--text-1);
+    }
+    .site-header__sub   {
+      font-family: var(--font-mono);
+      font-size: .65rem; font-weight: 400;
+      color: var(--accent); letter-spacing: .1em; text-transform: uppercase;
+    }
+    .site-header__meta  { display:flex; align-items:center; gap:1rem; }
+    .chip {
+      font-family: var(--font-mono); font-size:.7rem;
+      background:#f1f5f9; color: var(--text-2);
+      padding:.25rem .65rem; border-radius:999px; border:1px solid var(--border);
+    }
+    .chip b { color: var(--text-1); }
+    .icon-btn {
+      display:flex; align-items:center; justify-content:center;
+      width:34px; height:34px; border-radius:8px; border:1px solid var(--border);
+      background:var(--surface); color:var(--text-2); text-decoration:none;
+      transition: background .15s, color .15s;
+    }
+    .icon-btn:hover { background:#f1f5f9; color:var(--text-1); }
+
+    /* ── main layout ── */
+    .main { max-width:1280px; margin:0 auto; padding:1.5rem; display:flex; flex-direction:column; gap:1.5rem; }
+
+    /* ── summary card ── */
+    .card {
+      background: var(--surface);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:1.5rem;
+    }
+    .card__header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding-bottom:1rem; margin-bottom:1.25rem;
+      border-bottom:1px solid #f1f5f9;
+    }
+    .card__title-row { display:flex; align-items:center; gap:.6rem; }
+    .card__stripe    { width:3px; height:20px; border-radius:2px; background:var(--accent-g); }
+    .card__title     { font-size:1rem; font-weight:600; color:var(--text-1); margin:0; }
+    .card__sub       { font-size:.75rem; color:var(--text-3); font-family:var(--font-mono); margin:0; }
+
+    .meta-grid {
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:1.25rem;
+    }
+    .meta-item__label {
+      font-family:var(--font-mono); font-size:.65rem; font-weight:500;
+      text-transform:uppercase; letter-spacing:.08em; color:var(--text-3);
+      margin-bottom:.2rem;
+    }
+    .meta-item__value {
+      font-family:var(--font-mono); font-size:1rem; font-weight:500;
+      color:var(--text-1); word-break:break-all;
+    }
+    .meta-item__unit {
+      font-size:.7rem; color:var(--text-3); margin-left:.2rem;
+    }
+    .divider-label {
+      display:flex; align-items:center; gap:.75rem; margin:1rem 0 .75rem;
+    }
+    .divider-label span {
+      font-family:var(--font-mono); font-size:.65rem; font-weight:500;
+      text-transform:uppercase; letter-spacing:.1em; color:var(--text-2);
+      white-space:nowrap;
+    }
+    .divider-label::after {
+      content:''; flex:1; height:1px; background:var(--border);
+    }
+
+    /* ── alpha dial ── */
+    .dial-wrap { display:flex; align-items:center; gap:.75rem; }
+    .dial-val   {
+      font-family:var(--font-mono); font-size:1.6rem; font-weight:500;
+      line-height:1; color:var(--text-1);
+    }
+    .dial-unit  { font-family:var(--font-mono); font-size:.8rem; color:var(--text-3); }
+    .dial-mode  { font-size:.7rem; font-weight:500; color:var(--accent); }
+    .dial-legend{ display:flex; justify-content:space-between; font-size:.55rem;
+                  font-family:var(--font-mono); font-weight:500;
+                  color:var(--text-3); padding:0 2px; width:110px; }
+
+    /* ── section cards ── */
+    .section-card { background:var(--surface); border:1px solid var(--border);
+                    border-radius:var(--radius); box-shadow:var(--shadow); }
+    .section-header {
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      gap:.75rem; padding:1.25rem 1.5rem 1rem;
+      border-bottom:1px solid #f8f9fb;
+    }
+    .section-header__left { display:flex; align-items:center; gap:.6rem; }
+    .section-stripe       { width:3px; height:20px; border-radius:2px; background:var(--accent); }
+    .section-title        { font-size:.95rem; font-weight:600; margin:0; }
+    .section-sub          { font-size:.72rem; color:var(--text-3); font-family:var(--font-mono); }
+
+    .section-controls { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; }
+
+    /* ── button groups ── */
+    .btn-group {
+      display:inline-flex; background:#f1f5f9;
+      border-radius:8px; padding:3px; gap:2px;
+    }
+    .btn-group button {
+      font-family:var(--font-mono); font-size:.68rem; font-weight:500;
+      text-transform:uppercase; letter-spacing:.05em;
+      padding:.35rem .9rem; border-radius:6px; border:none; cursor:pointer;
+      transition: all .15s; background:transparent; color:var(--text-3);
+    }
+    .btn-group button:hover { color:var(--text-1); }
+    .btn-group button.active-green {
+      background:var(--surface); color:var(--accent-g);
+      box-shadow:0 1px 2px rgb(0 0 0/.1);
+    }
+    .btn-group button.active-blue {
+      background:var(--surface); color:var(--accent);
+      box-shadow:0 1px 2px rgb(0 0 0/.1);
+    }
+
+    /* ── band toggle ── */
+    .toggle-wrap {
+      display:flex; align-items:center; gap:.4rem;
+      font-family:var(--font-mono); font-size:.68rem; color:var(--text-2);
+    }
+    .toggle-wrap input[type=checkbox] {
+      width:14px; height:14px; accent-color:var(--accent); cursor:pointer;
+    }
+
+    /* ── download button ── */
+    .dl-btn {
+      display:flex; align-items:center; gap:.25rem;
+      color:var(--accent); background:none; border:none; cursor:pointer;
+      font-size:.75rem; font-family:var(--font-mono); padding:.2rem .4rem;
+      border-radius:5px; transition:background .15s;
+    }
+    .dl-btn:hover { background:#eff6ff; }
+
+    /* ── plot area ── */
+    .plot-area { padding:1rem 1.5rem 1.5rem; }
+    .plot-area > div { width:100%; height:520px; }
+
+    /* ── util legend ── */
+    .util-legend {
+      display:flex; align-items:center; gap:.5rem; flex-wrap:wrap;
+      padding:.5rem 1.5rem .75rem;
+      font-family:var(--font-mono); font-size:.65rem; color:var(--text-2);
+    }
+    .util-legend__swatch {
+      display:inline-flex; align-items:center; gap:.3rem;
+    }
+    .util-legend__dot {
+      width:10px; height:10px; border-radius:50%;
+    }
+
+    @media (max-width:640px) {
+      .section-header { flex-direction:column; align-items:flex-start; }
+      .meta-grid { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header class="site-header">
+  <div class="site-header__brand">
+    <img th:src="@{/images/favicon.png}" alt="SCARF" class="site-header__logo">
+    <div>
+      <div class="site-header__name">SCARF</div>
+      <div class="site-header__sub">SaaS Carbon-Aware Reasoning Framework</div>
+    </div>
+  </div>
+  <div class="site-header__meta">
+    <span class="chip">
+      Run <b th:text="${resultId ?: '—'}"></b>
+    </span>
+    <a th:href="@{/}" class="icon-btn" title="Home">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none"
+           viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+      </svg>
+    </a>
+  </div>
+</header>
+
+<!-- ═══════════════════ MAIN ═══════════════════ -->
+<main class="main">
+
+  <!-- ── Simulation Summary ── -->
+  <div class="card">
+    <div class="card__header">
+      <div class="card__title-row">
+        <div class="card__stripe" style="background:var(--accent-g)"></div>
+        <div>
+          <p class="card__title">Simulation Summary</p>
+          <p class="card__sub" th:text="${modelName ?: '—'}"></p>
+        </div>
+      </div>
+
+      <!-- Alpha dial -->
+      <div class="dial-wrap">
+        <svg viewBox="-60 -60 120 65" width="110" style="overflow:visible;display:block">
+          <defs>
+            <linearGradient id="dialGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stop-color="#2563eb"/>
+              <stop offset="100%" stop-color="#16a34a"/>
+            </linearGradient>
+          </defs>
+          <path fill="none" stroke="#e5e7eb" stroke-width="8" stroke-linecap="butt"
+                d="M -50 0 A 50 50 0 0 1 50 0"/>
+          <path fill="none" stroke="url(#dialGrad)" stroke-width="8" stroke-linecap="butt"
+                th:attr="d=|M -50 0 A 50 50 0 0 1 ${dialEndX} ${dialEndY}|" d=""/>
+          <line x1="0" y1="0"
+                th:attr="x2=${dialNeedleX},y2=${dialNeedleY}"
+                stroke="#0f172a" stroke-width="1.5" stroke-linecap="round"/>
+          <circle r="3"   fill="#0f172a"/>
+          <circle r="1.5" fill="white"/>
+        </svg>
+        <div>
+          <div>
+            <span class="dial-val" th:text="${alpha ?: '0.50'}">0.50</span>
+            <span class="dial-unit">α</span>
+          </div>
+          <div class="dial-mode" th:text="${alphaMode ?: 'Balanced'}">Balanced</div>
+          <div style="font-size:.6rem;color:var(--text-3);font-family:var(--font-mono);
+                      text-transform:uppercase;letter-spacing:.1em;margin-top:2px;">Routing</div>
+          <div class="dial-legend"><span>⚡</span><span>🌿</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model row -->
+    <div class="divider-label"><span>Model</span></div>
+    <div class="meta-grid" style="margin-bottom:1.25rem">
+      <div>
+        <div class="meta-item__label">Model name</div>
+        <div class="meta-item__value" th:text="${modelName ?: '—'}">—</div>
+      </div>
+      <div>
+        <div class="meta-item__label">Arrival distribution</div>
+        <div class="meta-item__value" th:text="${arrivalDistributionDetails ?: '—'}">—</div>
+      </div>
+      <div>
+        <div class="meta-item__label">Replications</div>
+        <div class="meta-item__value" th:text="${replications ?: '—'}">—</div>
+      </div>
+    </div>
+
+    <!-- Time row -->
+    <div class="divider-label"><span>Time &amp; Period</span></div>
+    <div class="meta-grid">
+      <div>
+        <div class="meta-item__label">Start time (UTC)</div>
+        <div class="meta-item__value" th:text="${startTime ?: '—'}">—</div>
+      </div>
+      <div>
+        <div class="meta-item__label">Duration</div>
+        <div class="meta-item__value">
+          <span th:text="${duration ?: '—'}">—</span>
+          <span class="meta-item__unit">h</span>
+        </div>
+      </div>
+      <div>
+        <div class="meta-item__label">Reference period</div>
+        <div class="meta-item__value" th:text="${referencePeriod ?: '—'}">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Interactions section ── -->
+  <section class="section-card">
+    <div class="section-header">
+      <div class="section-header__left">
+        <div class="section-stripe"></div>
+        <div>
+          <p class="section-title">Carbon Analysis per Interaction</p>
+          <p class="section-sub">SCI distribution across user tiers — bubble size ∝ call volume</p>
+        </div>
+        <button class="dl-btn" onclick="downloadPlot('interactions')" title="Export SVG">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          SVG
+        </button>
+      </div>
+
+      <div class="section-controls">
+        <!-- metric toggle -->
+        <div class="btn-group">
+          <button id="btn-i-to"     onclick="changeMetric('to','i')"     class="active-green">Trade-off</button>
+          <button id="btn-i-impact" onclick="changeMetric('impact','i')" >Carbon Impact</button>
+        </div>
+        <!-- uncertainty band -->
+        <label class="toggle-wrap">
+          <input type="checkbox" id="band-toggle">
+          Show model uncertainty
+        </label>
+      </div>
+    </div>
+
+    <div class="plot-area">
+      <div id="plot-i-area"></div>
+    </div>
+  </section>
+
+  <!-- ── Devices section ── -->
+  <section class="section-card">
+    <div class="section-header">
+      <div class="section-header__left">
+        <div class="section-stripe"></div>
+        <div>
+          <p class="section-title">Carbon Analysis per Device</p>
+          <p class="section-sub">VM allocation &amp; utilisation · cumulative SCI over simulation time</p>
+        </div>
+        <button class="dl-btn" onclick="downloadPlot('devices')" title="Export SVG">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          SVG
+        </button>
+      </div>
+
+      <div class="section-controls">
+        <div class="btn-group">
+          <button id="btn-d-to"     onclick="changeMetric('to','d')"     class="active-blue">Allocation</button>
+          <button id="btn-d-impact" onclick="changeMetric('impact','d')" >Carbon Impact</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- utilization color legend -->
+    <div class="util-legend">
+      <span style="color:var(--text-3)">VM utilisation:</span>
+      <span class="util-legend__swatch">
+        <span class="util-legend__dot" style="background:#e5e7eb;border:1px solid #d1d5db"></span> idle
+      </span>
+      <span class="util-legend__swatch">
+        <span class="util-legend__dot" style="background:#15803d"></span> low
+      </span>
+      <span class="util-legend__swatch">
+        <span class="util-legend__dot" style="background:#b45309"></span> medium
+      </span>
+      <span class="util-legend__swatch">
+        <span class="util-legend__dot" style="background:#991b1b"></span> high
+      </span>
+      <span class="util-legend__swatch" style="margin-left:.5rem">
+        <span class="util-legend__dot"
+              style="background:rgba(107,114,128,.25);border:1px dashed #9ca3af"></span>
+        unallocated
+      </span>
+    </div>
+
+    <div class="plot-area">
+      <div id="plot-d-area"></div>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

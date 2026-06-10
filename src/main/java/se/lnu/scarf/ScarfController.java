@@ -25,8 +25,9 @@ public class ScarfController {
         return "index";
     }
 
-    @GetMapping("/results/{resultId}")
-    public String results(@PathVariable(value = "resultId") String resultId, Model model, RedirectAttributes redirectAttributes) {
+    @GetMapping("/results{version}/{resultId}")
+    public String results(@PathVariable String resultId, @PathVariable String version, Model model, RedirectAttributes redirectAttributes) {
+        if (!"".equals(version) && !"_v2".equals(version)) return "redirect:/error";
         Path resultPath = launchValidator.getDataDirectory().resolve("results").resolve(resultId + ".json");
         if(!Files.exists(resultPath)) {
             redirectAttributes.addFlashAttribute("errorHeader", "Resource not found");
@@ -48,7 +49,7 @@ public class ScarfController {
             model.addAttribute("referencePeriod", metadata.path("referencePeriod").asText(missingFieldPlaceholder));
             model.addAttribute("resultId", resultId);
             model.addAttribute("jsonData", jsonData);
-            return "results";
+            return "results" + version;
         } catch (IOException e) {
             redirectAttributes.addFlashAttribute("errorHeader", "Could not read result file");
             redirectAttributes.addFlashAttribute("errorMessage", "Something went wrong when reading the simulation result!");

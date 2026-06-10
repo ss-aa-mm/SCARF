@@ -36,7 +36,6 @@ import org.cloudsimplus.datacenters.Datacenter;
 import org.cloudsimplus.listeners.EventInfo;
 import org.cloudsimplus.resources.PeSimple;
 import org.cloudsimplus.schedulers.cloudlet.CloudletSchedulerCompletelyFair;
-import org.cloudsimplus.schedulers.cloudlet.CloudletSchedulerSpaceShared;
 import org.cloudsimplus.schedulers.cloudlet.CloudletSchedulerTimeShared;
 import org.cloudsimplus.util.Log;
 import org.cloudsimplus.utilizationmodels.UtilizationModelDynamic;
@@ -58,7 +57,7 @@ public class [name/] {
 	static String basePath;
 
 	static {
-        Log.setLevel(Level.WARN);
+        Log.setLevel(Level.INFO);
         LoggerContext ctx = (LoggerContext) LoggerFactory.getILoggerFactory();
         ctx.getLogger("[packageName/]").setLevel(Level.INFO);
     }
@@ -105,7 +104,7 @@ public class [name/] {
 		newVms = new ArrayList<>([regionalDevices -> collectNested(eContents(uml::ExecutionEnvironment)) -> flatten() -> select(env | not env.getAppliedStereotype('sciuml::CarbonEmittingEE').oclIsUndefined()) -> size()/]);
 		[for (device : uml::Device | regionalDevices)]
 		[let ds : uml::Stereotype = device.getAppliedStereotype('sciuml::CarbonEmittingDevice')]
-		host = new ScarfHost("[device.name.safe()/]", [device.getValue(ds, 'ram')/], [device.getValue(ds, 'bandwidth')/], [device.getValue(ds, 'storage')/], [for (n : Integer | Sequence{1..(device.getValue(ds, 'CoresPerCPU').oclAsType(Integer) * device.getValue(ds, 'CPUs').oclAsType(Integer))}) before('List.of(') separator(', ') after('),')]new PeSimple([device.getValue(ds, 'speedFactor').oclAsType(Real) * referenceMIPS/] / Utils.UNITS_OF_TIME_PER_SECOND)[/for] [device.getValue(ds, 'embodiedEmissions').oclAsType(Real)/], [device.getValue(ds, 'expectedLifespan').oclAsType(Real)/], [device.getValue(ds, 'thermalDesignPowerPerCPU').oclAsType(Real) * device.getValue(ds, 'CPUs').oclAsType(Integer)/]);
+		host = new ScarfHost("[device.name.safe()/]", [device.getValue(ds, 'ram')/], [device.getValue(ds, 'bandwidth')/], [device.getValue(ds, 'storage')/], [for (n : Integer | Sequence{1..(device.getValue(ds, 'CoresPerCPU').oclAsType(Integer) * device.getValue(ds, 'CPUs').oclAsType(Integer))}) before('List.of(') separator(', ') after('),')]new PeSimple([device.getValue(ds, 'speedFactor').oclAsType(Real) * referenceMIPS/] / Utils.UNITS_OF_TIME_PER_SECOND)[/for] [device.getValue(ds, 'embodiedEmissions').oclAsType(Real)/], [device.getValue(ds, 'expectedLifespan').oclAsType(Real)/], [device.getValue(ds, 'thermalDesignPowerPerCPU').oclAsType(Real) * device.getValue(ds, 'CPUs').oclAsType(Integer)/], ['EdgeNode'.getIdlePowerFactor()/]);
 		newHosts.add(host);
 		[for (ee : uml::ExecutionEnvironment | device.eContents(uml::ExecutionEnvironment) -> select(env | not env.getAppliedStereotype('sciuml::CarbonEmittingEE').oclIsUndefined()))]
 		[let es : uml::Stereotype = ee.getAppliedStereotype('sciuml::CarbonEmittingEE')]
@@ -118,7 +117,7 @@ public class [name/] {
 		[let depPolicy: String = ee.getValue(es, 'deploymentPolicy').oclAsType(uml::EnumerationLiteral).name]
 		vm.setPriority([if (depPolicy.substring(1, 4) = 'Silo')]true[else]false[/if]);
 		vm.setIsolationThreshold([if (depPolicy = 'SiloBestEffort')]0.85[else]1.0[/if]);
-		vm.setCloudletScheduler(new CloudletScheduler[if (depPolicy.substring(1, 4) = 'Silo')][if (depPolicy.substring(5, 5) = 'B')]CompletelyFair[else]SpaceShared[/if][else]TimeShared[/if]());
+		vm.setCloudletScheduler(new CloudletScheduler[if (depPolicy.startsWith('Pool'))]TimeShared[else]CompletelyFair[/if]());
 		[/let] [comment depPolicy /]
 		broker.registerVm("[component/]", vm);
 		newVms.add(vm);
@@ -219,6 +218,7 @@ import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 import org.cloudsimplus.allocationpolicies.VmAllocationPolicyAbstract;
+import org.cloudsimplus.brokers.DatacenterBroker;
 import org.cloudsimplus.brokers.DatacenterBrokerSimple;
 import org.cloudsimplus.cloudlets.Cloudlet;
 import org.cloudsimplus.cloudlets.CloudletSimple;
@@ -459,17 +459,19 @@ class ScarfHost extends HostSimple {
 	private final double embodiedEmissions;
 	private final double expectedLifespan;
 	private final double thermalDesignPower;
+	private final double idlePowerFactor;
 	private final CarbonTracker carbonTracker;
 
-	public ScarfHost(String name, long ram, long bw, long storage, List<Pe> peList, double embodiedEmissions, double expectedLifespan, double thermalDesignPower) {
+	public ScarfHost(String name, long ram, long bw, long storage, List<Pe> peList, double embodiedEmissions, double expectedLifespan, double thermalDesignPower, double idlePowerFactor) {
 		super(ram, bw, storage, peList);
 		this.name = name;
 		this.embodiedEmissions = embodiedEmissions;
 		this.expectedLifespan = expectedLifespan;
 		this.thermalDesignPower = thermalDesignPower;
-		this.setPowerModel(new PowerModelHostSimple(thermalDesignPower, 0.2 * thermalDesignPower));
+		this.setPowerModel(new PowerModelHostSimple(thermalDesignPower, Math.max(1.0, idlePowerFactor * thermalDesignPower)));
 		this.carbonTracker = new CarbonTracker(this, 1.0);
-		this.enableUtilizationStats();
+		this.idlePowerFactor = idlePowerFactor;
+		//this.enableUtilizationStats();
 	}
 
 	public String getName() {
@@ -498,6 +500,10 @@ class ScarfHost extends HostSimple {
 	
 	public double getPowerModelSci() {
 		return carbonTracker.getTotalCarbon().powerModelEstimate();
+	}
+
+	public double getIdlePowerFactor() {
+	    return this.idlePowerFactor;
 	}
 
 	public List<CarbonSnapshot> getCarbonTimeSeries() {
@@ -535,6 +541,7 @@ class ScarfVm extends VmSimple {
 	private final ScarfHost targetHost;
 	private final List<String> allowedTiers;
 	private final CarbonTracker carbonTracker;
+	private final Integer maxConcurrentUsers;
 	private boolean hasPriority;
 	private double isolationThreshold;
 	
@@ -544,15 +551,47 @@ class ScarfVm extends VmSimple {
 		this.component = component;
 		this.targetHost = targetHost;
 		this.allowedTiers = allowedTiers;
-		this.enableUtilizationStats();
+		this.maxConcurrentUsers = null;
 		this.hasPriority = false;
 		this.isolationThreshold = 0.0;
 		this.carbonTracker = targetHost != null ? new CarbonTracker(targetHost, (double) pesNumber / targetHost.getPesNumber()) : null;
 	}
 
+	public ScarfVm(String name, double mipsCapacity, long pesNumber, Integer maxConcurrentUsers, String component, ScarfHost targetHost, List<String> allowedTiers) {
+        super(mipsCapacity, pesNumber);
+        this.name = name;
+        this.component = component;
+        this.targetHost = targetHost;
+        this.allowedTiers = allowedTiers;
+        this.maxConcurrentUsers = maxConcurrentUsers;
+        this.hasPriority = false;
+        this.isolationThreshold = 0.0;
+        this.carbonTracker = targetHost != null ? new CarbonTracker(targetHost, (double) pesNumber / targetHost.getPesNumber()) : null;
+    }
+
 	public String getName() {
 		return name;
 	}
+
+	public Integer getMaxUsers() {
+	    return maxConcurrentUsers;
+	}
+
+	public long getCurrentUserCount(DatacenterBroker broker) {
+        return broker.getCloudletCreatedList().stream()
+            .filter(cl -> cl instanceof ScarfCloudlet)
+            .map(cl -> (ScarfCloudlet) cl)
+            .filter(cl -> cl.getVm().equals(this))
+            .filter(cl -> cl.getStatus() == Cloudlet.Status.INEXEC
+                       || cl.getStatus() == Cloudlet.Status.QUEUED)
+            .map(ScarfCloudlet::getUser)
+            .distinct()
+            .count();
+    }
+
+    public boolean hasUserCapacity(DatacenterBroker broker) {
+        return this.maxConcurrentUsers == null || this.getCurrentUserCount(broker) < this.maxConcurrentUsers;
+    }
 
 	public double getIsolationThreshold() {
 	    return isolationThreshold;
@@ -732,6 +771,7 @@ class ScarfDatacenterBroker extends DatacenterBrokerSimple {
             List<ScarfVm> eligible = availableVms.stream()
                     .filter(vm -> vm.getAllowedTiers().contains(tier))
                     .filter(vm -> vm.getHost().getDatacenter() instanceof ScarfDatacenter)
+                    .filter(vm -> vm.hasUserCapacity(this))
                     .collect(Collectors.toCollection(ArrayList::new));
             if (eligible.isEmpty()) return ScarfVm.NULL;
 
@@ -810,10 +850,10 @@ class ScarfDatacenterBroker extends DatacenterBrokerSimple {
 		routingTable.computeIfAbsent(component, _ -> new ArrayList<>()).add(vm);
 	}
 
-	private void scheduleNextArrival(double arrivalTime) {
-        if(arrivalTime >= Utils.EXEC_TIME) return;
+	private void scheduleNextArrival(double interArrivalTime) {
+        if(this.getSimulation().clock() + interArrivalTime >= Utils.EXEC_TIME) return;
 
-        this.schedule(this, arrivalTime, Utils.USER_ARRIVAL_TAG);
+        this.schedule(this, interArrivalTime, Utils.USER_ARRIVAL_TAG);
     }
 
 	public void submitCloudletAtFront(ScarfCloudlet cloudlet) {
@@ -930,7 +970,7 @@ class User {
 	}
 
 	public void assignFinalCloudlet(ScarfCloudlet cl, double endTime) {
-		interactionHistory += "\n\t→" + cl.getInteraction() + " ['['/]" + cl.getVm() + "@" + cl.getVm().getHost() + " at time " + String.format(Locale.ENGLISH, "%.2f", endTime) + " s[']'/]";
+		interactionHistory += "\n\t→" + cl.getInteraction() + " ['['/]" + cl.getVm() + "@" + cl.getVm().getHost() + " at time " + String.format(Locale.ENGLISH, "%.2f", (double) endTime / Utils.UNITS_OF_TIME_PER_SECOND) + " s[']'/]";
 		this.executedCloudlets.add(cl);
 	}
 	
@@ -938,7 +978,7 @@ class User {
 	public String toString() {
 		String teadsSCI = String.format(Locale.ENGLISH, "%.3e", this.executedCloudlets.stream().mapToDouble(ScarfCloudlet::getTeadsSci).sum());
 		String pmSCI = String.format(Locale.ENGLISH, "%.3e", this.executedCloudlets.stream().mapToDouble(ScarfCloudlet::getPowerModelSci).sum());
-		return name + " (" + tier + ") from " + preferredRegion + " at time " + String.format(Locale.ENGLISH, "%.2f", startTime) + " s {TeadsSCI = " + teadsSCI + " gCO2eq, PowerModelSCI = " + pmSCI + " gC02eq}" + interactionHistory;
+		return name + " (" + tier + ") from " + preferredRegion + " at time " + String.format(Locale.ENGLISH, "%.2f", (double) startTime / Utils.UNITS_OF_TIME_PER_SECOND) + " s {TeadsSCI = " + teadsSCI + " gCO2eq, PowerModelSCI = " + pmSCI + " gC02eq}" + interactionHistory;
 	}
 }
 
@@ -1030,7 +1070,7 @@ class CarbonTracker {
     private static CarbonResult computeSciInternal(double interval, double meanIntervalUtilization, ScarfHost host, double resourceShare) {
         if (interval <= 0.0) return CarbonResult.ZERO;
         double intervalSeconds = interval / Utils.UNITS_OF_TIME_PER_SECOND;
-        double usedPowerTeads = host.getThermalDesignPower() * calculateTeads(meanIntervalUtilization) * resourceShare;
+        double usedPowerTeads = host.getThermalDesignPower() * calculateTeads(meanIntervalUtilization, host.getIdlePowerFactor()) * resourceShare;
         double usedPowerPowerModel = host.getPowerModel().getPower(meanIntervalUtilization) * resourceShare;
         double deviceEnergyTeads = (intervalSeconds * usedPowerTeads) / 3600000.0;
         double deviceEnergyPowerModel = (intervalSeconds * usedPowerPowerModel) / 3600000.0;
@@ -1048,9 +1088,19 @@ class CarbonTracker {
         return computeSciInternal(cloudlet.getTotalExecutionTime(), svm.getCpuPercentUtilization(), svm.getTargetHost(), (double) cloudlet.getPesNumber() / svm.getPesNumber());
     }
 
-    private static double calculateTeads(double utilization) {
+    private static double calculateTeads(double utilization, double idlePowerFactor) {
         final double['[]'/] UTIL_POINTS = {0, 0.10, 0.50, 1};
-        final double['[]'/] TEADS_CURVE = {0.12, 0.32, 0.75, 1.02};
+        final double['[]'/] ORIGINAL_TEADS_CURVE = {0.12, 0.32, 0.75, 1.02};
+
+        double originalIdle = ORIGINAL_TEADS_CURVE['[0]'/];
+        double peak = ORIGINAL_TEADS_CURVE['[ORIGINAL_TEADS_CURVE.length - 1]'/];
+
+        double['[]'/] TEADS_CURVE = new double['[ORIGINAL_TEADS_CURVE.length]'/];
+        for (int i = 0; i < ORIGINAL_TEADS_CURVE.length; i++) {
+            double normalizedPoint = (ORIGINAL_TEADS_CURVE['[i]'/] - originalIdle) / (peak - originalIdle);
+            TEADS_CURVE['[i]'/] = idlePowerFactor + normalizedPoint * (peak - idlePowerFactor);
+        }
+
         for (int i = 0; i < UTIL_POINTS.length - 1; i++) {
             ['if (utilization >= UTIL_POINTS[i] && utilization <= UTIL_POINTS[i + 1]) {'/]
                 ['return TEADS_CURVE[i] + (utilization - UTIL_POINTS[i]) *'/]
@@ -1149,7 +1199,7 @@ class Utils {
 [let vs : uml::Stereotype = vm.getAppliedStereotype('sciuml::CarbonEmittingEE')]
 [let cc : String = 'cl' + cloudletStart.name.safe()]
 ScarfCloudlet [cc/] = new ScarfCloudlet([(end.getValue(ends, 'elapsedReferenceDemand').oclAsType(Real) * rMIPS).round()/], [end.getValue(ends, 'concurrencyFactor')/], new UtilizationModelFull(), "[cc.substring(3)/]", user, "[component.name/]", "[cloudletStart.eContainer(uml::Interaction).name.safe()/]");
-[cc/].setSizes(1024);
+[cc/].setSizes(1);
 [cc/].setUtilizationModelRam(new UtilizationModelDynamic(0.0001));
 [cc/].setUtilizationModelBw(new UtilizationModelDynamic(0.0001));
 newCloudlets.add([cc/]);
@@ -1257,4 +1307,16 @@ for(int i = 0; i < [p1.round()/]; i++) {
 	else
 		involvedMessage.receiveEvent.oclAsType(uml::OccurrenceSpecification)
 	endif
+/]
+
+[query public getIdlePowerFactor(nodeClass : String) : Real =
+    if nodeClass.startsWith('HpcServer') then
+        0.2
+    else
+        if nodeClass.startsWith('GeneralPurposeServer') then
+            0.36
+        else
+            0.44
+        endif
+    endif
 /]
