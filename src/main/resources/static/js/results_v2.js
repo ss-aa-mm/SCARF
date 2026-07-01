@@ -100,43 +100,46 @@ function renderInteractionsTradeoff() {
 
     const traces = [];
 
-    // Connector lines between tiers for each interaction
-    names.forEach(name => {
-        const pts = tiers.flatMap(tier => {
-            const reps = imap[`${name}|${tier}`];
-            if (!reps?.length) return [];
-            const sciAll  = poolValues(reps, 'teads_sci');
-            const timeAll = poolValues(reps, 'service_time');
-            const n = reps.reduce((s, r) => s + (r.service_time?.length ?? 0), 0) / reps.length;
-            return [{ x: sciAll.reduce((s,v)=>s+v,0)/sciAll.length,
-                      y: timeAll.reduce((s,v)=>s+v,0)/timeAll.length, n }];
-        });
-        if (pts.length < 2) return;
-        traces.push({
-            x: pts.map(p => p.x), y: pts.map(p => p.y),
-            mode: 'lines', line: { color: '#d1d5db', width: 1, dash: 'dot' },
-            showlegend: false, hoverinfo: 'skip'
-        });
-    });
+    function filterOutliers(arr) {
+        if (!arr || arr.length === 0) return [];
+        if (arr.length < 3) return arr; // Not enough data to determine outliers safely
+
+        const sorted = [...arr].sort((a, b) => a - b);
+        const median = sorted[Math.floor(sorted.length / 2)];
+
+        const absoluteDeviations = sorted.map(v => Math.abs(v - median));
+        const sortedDeviations = [...absoluteDeviations].sort((a, b) => a - b);
+        const mad = sortedDeviations[Math.floor(sortedDeviations.length / 2)];
+
+        // If data is perfectly flat, MAD is 0. Avoid stripping identical values.
+        if (mad === 0) return arr;
+
+        // 3.5 or 5 MAD is standard for stripping extreme, absurd spikes without destroying real variation
+        const threshold = 5;
+        return arr.filter(v => Math.abs(v - median) <= threshold * mad);
+    }
 
     // One bubble trace per tier
     tiers.forEach((tier, ti) => {
         const color = TIER_COLORS[ti % TIER_COLORS.length];
-        const xTeads=[], xPower=[], yVals=[], sizes=[], labels=[];
+        const MARKERS = ['circle','square','diamond','triangle-up','star',
+            'cross','triangle-down','pentagon','hexagram','bowtie'];
+        const xTeads=[], xPower=[], yVals=[], labels=[];
+        let symbolMap = {};
 
-        names.forEach(name => {
+        names.forEach((name, index) => {
             const reps = imap[`${name}|${tier}`];
             if (!reps?.length) return;
 
-            const sciTeads = poolValues(reps, 'teads_sci');
-            const sciPower = poolValues(reps, 'power_model_sci');
-            const times    = poolValues(reps, 'service_time');
+            symbolMap[name] = MARKERS[index % MARKERS.length];
+            const sciTeads = filterOutliers(poolValues(reps, 'teads_sci'));
+            const sciPower = filterOutliers(poolValues(reps, 'power_model_sci'));
+            const times    = filterOutliers(poolValues(reps, 'service_time'));
             const calls    = reps.reduce((s,r) => s + (r.service_time?.length??0), 0) / reps.length;
 
             xTeads.push(sciTeads.reduce((s,v)=>s+v,0) / sciTeads.length);
             xPower.push(sciPower.reduce((s,v)=>s+v,0) / sciPower.length);
             yVals.push( times.reduce((s,v)=>s+v,0)    / times.length);
-            sizes.push( Math.cbrt(calls) * 6);
             labels.push(name);
         });
 
@@ -144,12 +147,12 @@ function renderInteractionsTradeoff() {
         traces.push({
             x: xTeads, y: yVals, name: tier,
             text: labels, mode: 'markers',
-            marker: { size: sizes, color: color, opacity: 0.75,
-                      line: { width: 1.5, color: '#fff' } },
+            marker: { size: 20, color: color, opacity: 0.75,
+                      symbol: labels.map(l => symbolMap[l]), line: { width: 1.5, color: '#fff' } },
             hovertemplate:
                 `<b>%{text}</b> [${tier}]<br>` +
                 `Avg SCI (Teads): %{x:.3e} gCO₂eq<br>` +
-                `Avg Response: %{y:.3f} s<extra></extra>`
+                `Avg Response: %{y:.3f} ms<extra></extra>`
         });
 
         // Power model band — render as error bars on x
