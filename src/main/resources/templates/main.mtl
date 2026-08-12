@@ -125,7 +125,8 @@ public class [name/] {
 		[let depPolicy: String = ee.getValue(es, 'deploymentPolicy').oclAsType(uml::EnumerationLiteral).name]
 		vm.setPriority([if (depPolicy.substring(1, 4) = 'Silo')]true[else]false[/if]);
 		vm.setIsolationThreshold([if (depPolicy = 'SiloBestEffort')]0.85[else]1.0[/if]);
-		vm.setCloudletScheduler(new CloudletScheduler[if (depPolicy.startsWith('Pool'))]TimeShared[else]SpaceShared[/if]());
+		[comment At present, using different cloudlet scheduler types is extremely unstable and thus it is better if avoided /]
+		vm.setCloudletScheduler(new CloudletSchedulerSpaceShared());
 		[/let] [comment depPolicy /]
 		broker.registerVm("[component/]", vm);
 		newVms.add(vm);
@@ -1079,6 +1080,7 @@ class CarbonTracker {
 
     private static CarbonResult computeSciInternal(double interval, double meanIntervalUtilization, ScarfHost host, double resourceShare) {
         if (interval <= 0.0) return CarbonResult.ZERO;
+        meanIntervalUtilization = Math.clamp(meanIntervalUtilization, 0, 1);
         double intervalSeconds = interval / Utils.UNITS_OF_TIME_PER_SECOND;
         double usedPowerTeads = host.getThermalDesignPower() * calculateTeads(meanIntervalUtilization, host.getIdlePowerFactor()) * resourceShare;
         double usedPowerPowerModel = host.getPowerModel().getPower(meanIntervalUtilization) * resourceShare;

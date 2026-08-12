@@ -471,3 +471,133 @@ window.downloadPlot = function(plotType) {
         filename: plotType === 'interactions' ? 'scarf_interactions' : 'scarf_devices'
     });
 };
+
+//Table
+
+const D = window.SCARF_DATA;
+const interactions = D.interactions;
+const devices      = D.devices;
+
+// ── helpers ──────────────────────────────────────────────────────────────────
+const mean       = arr => arr.length ? arr.reduce((s,v)=>s+v,0)/arr.length : 0;
+const fmt        = v => (v>0.009 && v<1000) ? v : v.toExponential(3);
+
+// ── INTERACTIONS ─────────────────────────────────────────────────────────────
+const interactionRows = [];
+Object.entries(interactions).forEach(([key, repList]) => {
+    const sciAll  = poolValues(repList, 'teads_sci');
+    const timeAll = poolValues(repList, 'service_time');
+    interactionRows.push({
+        key,
+        _total_sci_raw:  sciAll.reduce((s,v)=>s+v,0),
+        total_sci:       fmt(sciAll.reduce((s,v)=>s+v,0)),
+        avg_sci_per_req: fmt(mean(sciAll)),
+        avg_response_ms: mean(timeAll).toFixed(2),
+        call_count:      sciAll.length
+    });
+});
+
+const totalSciAllInteractions = interactionRows.reduce((s,r) => s + r._total_sci_raw, 0);
+
+const tierTotals = {}, nameTotals = {};
+interactionRows.forEach(r => {
+    const [name, tier] = r.key.split('|');
+    tierTotals[tier] = (tierTotals[tier] ?? 0) + r._total_sci_raw;
+    nameTotals[name] = (nameTotals[name] ?? 0) + r._total_sci_raw;
+});
+
+interactionRows.forEach(r => {
+    const [name, tier] = r.key.split('|');
+    r.pct_of_all_interactions = r._total_sci_raw / totalSciAllInteractions * 100;
+    r.pct_of_tier             = r._total_sci_raw / tierTotals[tier] * 100;
+    r.pct_of_interaction      = r._total_sci_raw / nameTotals[name] * 100;
+});
+
+// ── DEVICES ───────────────────────────────────────────────────────────────────
+const durationHours = D.metadata.duration ?? 1;
+const deviceRows    = [];
+Object.entries(devices).forEach(([name, repList]) => {
+    const meanSeries  = timeSeriesMean(repList, 'average_teads_sci');
+    const totalSci    = meanSeries.reduce((s,v)=>s+v, 0);
+    const n           = meanSeries.length;
+    const embodied    = repList[0]?.embodied_sci_per_interval ?? null;
+    const totalEmbodied = embodied !== null ? embodied * n : null;
+    const totalOp       = totalEmbodied !== null ? totalSci - totalEmbodied : null;
+
+    deviceRows.push({
+        name,
+        total_sci:          fmt(totalSci),
+        _total_sci_raw:     totalSci,
+        total_sci_per_hour: fmt(totalSci / durationHours),
+        total_operational:  totalOp      !== null ? fmt(totalOp)      : '—',
+        total_embodied:     totalEmbodied !== null ? fmt(totalEmbodied) : '—',
+        avg_sci_per_interval: fmt(mean(meanSeries))
+    });
+});
+
+const globalTotal = deviceRows.reduce((s,r) => s + r._total_sci_raw, 0);
+
+deviceRows.forEach(r => {
+    const embRaw = r.total_embodied !== '—' ? parseFloat(r.total_embodied) : null;
+    const opRaw  = r.total_operational !== '—' ? parseFloat(r.total_operational) : null;
+    r.pct_of_global   = r._total_sci_raw / globalTotal * 100;
+    r.pct_embodied    = embRaw !== null ? embRaw / r._total_sci_raw * 100 : null;
+    r.pct_operational = opRaw  !== null ? opRaw  / r._total_sci_raw * 100 : null;
+});
+
+// ── GLOBAL ────────────────────────────────────────────────────────────────────
+const globalSciPerHour   = globalTotal / durationHours;
+
+function makeTable(title, rows) {
+    if (!rows.length) return '';
+    const headers = Object.keys(rows[0]).filter(h => !h.startsWith('_'));
+    const cell = (h, v) =>
+        v === null      ? '—' :
+            h.startsWith('pct_') ? v.toFixed(1) + '%' :
+                typeof v === 'number' ? v.toExponential(3) : v;
+    return `
+        <h3 style="font-family:monospace;margin-top:2rem">${title}</h3>
+        <table class="results-table">
+            <thead style="background:#f1f5f9">
+                <tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>
+            </thead>
+            <tbody>
+                ${rows.map(row=>`<tr>${headers.map(h => `<td>${cell(h, row[h])}</td>`).join('')}</tr>`).join('')}
+            </tbody>
+        </table>`;
+}
+
+const globalHtml = `
+    <h3 style="font-family:monospace;margin-top:2rem">Global</h3>
+    <table class="results-table">
+        <thead style="background:#f1f5f9">
+            <tr><th>total_sci</th><th>total_sci_per_hour</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>${fmt(globalTotal)}</td><td>${fmt(globalSciPerHour)}</td></tr>
+        </tbody>
+    </table>`;
+
+const interactionTotal = interactionRows.reduce((s,r) => s + r._total_sci_raw, 0);
+const interactionSciPerHour   = interactionTotal / durationHours;
+const interactionSummaryHtml = `
+    <h3 style="font-family:monospace;margin-top:2rem">Interactions Summary</h3>
+    <table class="results-table">
+        <thead style="background:#f1f5f9">
+            <tr><th>total_sci</th><th>total_sci_per_hour</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>${fmt(interactionTotal)}</td><td>${fmt(interactionSciPerHour)}</td></tr>
+        </tbody>
+    </table>`;
+
+const container = document.createElement('div');
+container.style = 'padding:1.5rem;overflow-x:auto';
+container.innerHTML =
+    `<h2 style="font-family:monospace">SCARF — Summary Tables</h2>` +
+    globalHtml +
+    makeTable('Devices', deviceRows) +
+    makeTable('Interactions', interactionRows) +
+    interactionSummaryHtml;
+
+document.body.appendChild(container);
