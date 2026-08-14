@@ -11,10 +11,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @Controller
 public class ScarfController {
     private final LaunchValidator launchValidator;
+    private final List<String> resultsVersionEndpoints = List.of("", "_v2");
 
     public ScarfController(LaunchValidator launchValidator) {
         this.launchValidator = launchValidator;
@@ -27,7 +29,7 @@ public class ScarfController {
 
     @GetMapping("/results{version}/{resultId}")
     public String results(@PathVariable String resultId, @PathVariable String version, Model model, RedirectAttributes redirectAttributes) {
-        if (!"".equals(version) && !"_v2".equals(version)) return "redirect:/error";
+        if (!resultsVersionEndpoints.contains(version)) return "redirect:/error";
         Path resultPath = launchValidator.getDataDirectory().resolve("results").resolve(resultId + ".json");
         if(!Files.exists(resultPath)) {
             redirectAttributes.addFlashAttribute("errorHeader", "Resource not found");

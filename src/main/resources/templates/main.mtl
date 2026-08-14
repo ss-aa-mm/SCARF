@@ -1097,7 +1097,8 @@ class CarbonTracker {
 
     public static CarbonResult computeCloudletSci(ScarfCloudlet cloudlet) {
         ScarfVm svm = (ScarfVm) cloudlet.getVm();
-        return computeSciInternal(cloudlet.getTotalExecutionTime(), svm.getCpuPercentUtilization(), svm.getTargetHost(), (double) cloudlet.getPesNumber() / svm.getPesNumber());
+        ScarfHost sh = svm.getTargetHost();
+        return computeSciInternal(cloudlet.getTotalExecutionTime(), sh.getCpuPercentUtilization(), sh, (double) cloudlet.getPesNumber() / sh.getPesNumber());
     }
 
     private static double calculateTeads(double utilization, double idlePowerFactor) {
