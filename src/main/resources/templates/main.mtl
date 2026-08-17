@@ -199,7 +199,7 @@ public class [name/] {
 			    .flatMap(u -> u.getExecutedCloudlets().stream())
 			    .filter(ScarfCloudlet::isInitial)
 			    .sorted(Comparator.comparingDouble(ScarfCloudlet::getStartTime))
-			    .map(ScarfCloudlet::toString)
+			    .map(ScarfCloudlet::toTraceRow)
 			    .toList());
 			Files.write(Path.of(basePath, "[packageName/]_" + rep + "_tr.csv"), traceReplay);
 		} catch (IOException e) {
@@ -719,6 +719,14 @@ class ScarfCloudlet extends CloudletSimple {
     public String toString() {
         return String.format(Locale.ENGLISH, "["Cloudlet %d [%s, part of %s] (Started: %.3f, Finished: %.3f on %s) {Status: %s} [%d/%d MI]"/]",
             this.getId(), this.getName(), this.interaction, this.getStartTime(), this.getFinishTime(), this.getVm(), this.getStatus(), this.getFinishedLengthSoFar(), this.getTotalLength()
+        );
+    }
+
+    public String toTraceRow() {
+        return String.format(Locale.ENGLISH, "%.3f,%s,%s",
+            this.getStartTime() / Utils.UNITS_OF_TIME_PER_SECOND,
+            ((ScarfHost) this.getVm().getHost()).getName(),
+            this.getInteraction()
         );
     }
 
