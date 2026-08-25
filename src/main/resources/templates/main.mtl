@@ -194,7 +194,7 @@ public class [name/] {
 		try {
 			Files.write(Path.of(basePath, "[packageName/]_" + rep + ".txt"), currentRepUsers.stream().map(Object::toString).toList(), StandardCharsets.UTF_8);
 			List<String> traceReplay = new ArrayList<>();
-			traceReplay.add("time,device,interaction");
+			traceReplay.add("time,device,interaction,tier");
 			traceReplay.addAll(currentRepUsers.stream()
 			    .flatMap(u -> u.getExecutedCloudlets().stream())
 			    .filter(ScarfCloudlet::isInitial)
@@ -723,10 +723,11 @@ class ScarfCloudlet extends CloudletSimple {
     }
 
     public String toTraceRow() {
-        return String.format(Locale.ENGLISH, "%.3f,%s,%s",
+        return String.format(Locale.ENGLISH, "%.3f,%s,%s,%s",
             this.getStartTime() / Utils.UNITS_OF_TIME_PER_SECOND,
             ((ScarfHost) this.getVm().getHost()).getName(),
-            this.getInteraction()
+            this.getInteraction(),
+            this.getUser().getTier()
         );
     }
 
