@@ -492,7 +492,7 @@ Object.entries(interactions).forEach(([key, repList]) => {
         _total_sci_raw:  sciAll.reduce((s,v)=>s+v,0),
         total_sci:       fmt(sciAll.reduce((s,v)=>s+v,0)),
         avg_sci_per_req: fmt(mean(sciAll)),
-        avg_response_ms: mean(timeAll).toFixed(2),
+        avg_response_ms: mean(timeAll).toFixed(6),
         call_count:      sciAll.length
     });
 });

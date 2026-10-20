@@ -88,7 +88,7 @@ public class [name/] {
 	}
 
 	private [name/](int rep) {
-		CloudSimPlus simulation = new CloudSimPlus(0.001);
+		CloudSimPlus simulation = new CloudSimPlus(0.000001);
 		ScarfDatacenterBroker broker = new ScarfDatacenterBroker(simulation, this);
 
 		[let devices : Sequence(uml::Device) = UMLModel.eAllContents(uml::Device) -> select(dev | not dev.getAppliedStereotype('sciuml::CarbonEmittingDevice').oclIsUndefined())]
@@ -1221,7 +1221,8 @@ class Utils {
 [let ds : uml::Stereotype = device.getAppliedStereotype('sciuml::CarbonEmittingDevice')]
 [let vs : uml::Stereotype = vm.getAppliedStereotype('sciuml::CarbonEmittingEE')]
 [let cc : String = 'cl' + cloudletStart.name.safe()]
-ScarfCloudlet [cc/] = new ScarfCloudlet([(end.getValue(ends, 'elapsedReferenceDemand').oclAsType(Real) * rMIPS).round()/], [end.getValue(ends, 'concurrencyFactor')/], new UtilizationModelFull(), "[cc.substring(3)/]", user, "[component.name/]", "[cloudletStart.eContainer(uml::Interaction).name.safe()/]");
+[let mis: Integer = (end.getValue(ends, 'elapsedReferenceDemand').oclAsType(Real) * rMIPS).round()]
+ScarfCloudlet [cc/] = new ScarfCloudlet([if (mis = 0)]1[else][mis/][/if], [end.getValue(ends, 'concurrencyFactor')/], new UtilizationModelFull(), "[cc.substring(3)/]", user, "[component.name/]", "[cloudletStart.eContainer(uml::Interaction).name.safe()/]");
 [cc/].setSizes(1);
 [cc/].setUtilizationModelRam(new UtilizationModelDynamic(0.0001));
 [cc/].setUtilizationModelBw(new UtilizationModelDynamic(0.0001));
@@ -1250,6 +1251,7 @@ if (!user.getExecutedCloudlets().isEmpty())
     [cc/].setPreviousCloudlet(user.getExecutedCloudlets().getLast());
 broker.submitCloudletList(List.of([cc/]), 0.01);
 [/if]  [comment ifInitial /]
+[/let] [comment mis /]
 [/let] [comment cc /]
 [/let] [comment vs /]
 [/let] [comment ds /]
