@@ -1,0 +1,1922 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmlns:style="http://www.eclipse.org/papyrus/infra/gmfdiag/style" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+  <notation:Diagram xmi:id="_kB5EcKKtEfCpgqc-qf1s4A" type="PapyrusUMLDeploymentDiagram" name="PC-M-MRP-TopologicalView" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_GdEnwKLFEfCO1JifgY6N0Q" type="Device_Shape" fontHeight="18">
+      <children xmi:type="notation:DecorationNode" xmi:id="_GdgsoKLFEfCO1JifgY6N0Q" type="Device_NameLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_GdkXAKLFEfCO1JifgY6N0Q" type="Device_NestedNodeCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_FxDs8GifEfGRVLpoh9W61Q" type="ExecutionEnvironment_Shape_CCN" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_FxEUAGifEfGRVLpoh9W61Q" type="ExecutionEnvironment_NameLabel_CCN"/>
+          <element xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_Fwz1UGifEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_FxDs8WifEfGRVLpoh9W61Q" x="15" y="168" width="261" height="121"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_URTDQGifEfGRVLpoh9W61Q" type="Artifact_Shape" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_URTqUGifEfGRVLpoh9W61Q" type="Artifact_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_URTqUWifEfGRVLpoh9W61Q" type="Artifact_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_URTqUmifEfGRVLpoh9W61Q" x="25"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_URTqU2ifEfGRVLpoh9W61Q" type="Artifact_NestedArtifactCompartment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_URTqVGifEfGRVLpoh9W61Q"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_URTqVWifEfGRVLpoh9W61Q"/>
+          </children>
+          <element xmi:type="uml:Artifact" href="PetClinic-Microservices.uml#_UROKwGifEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_URTDQWifEfGRVLpoh9W61Q" x="335" y="188" width="181" height="81"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_Wrk34GigEfGRVLpoh9W61Q" type="ExecutionEnvironment_Shape_CCN" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_Wrk34migEfGRVLpoh9W61Q" type="ExecutionEnvironment_NameLabel_CCN"/>
+          <element xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_WrcVAGigEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Wrk34WigEfGRVLpoh9W61Q" x="15" y="328" width="261"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_loFTcGigEfGRVLpoh9W61Q" type="Artifact_Shape" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_loF6gGigEfGRVLpoh9W61Q" type="Artifact_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_loF6gWigEfGRVLpoh9W61Q" type="Artifact_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_loF6gmigEfGRVLpoh9W61Q" x="25"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_loF6g2igEfGRVLpoh9W61Q" type="Artifact_NestedArtifactCompartment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_loF6hGigEfGRVLpoh9W61Q"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_loF6hWigEfGRVLpoh9W61Q"/>
+          </children>
+          <element xmi:type="uml:Artifact" href="PetClinic-Microservices.uml#_ln9-sGigEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_loFTcWigEfGRVLpoh9W61Q" x="335" y="328" width="161" height="81"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_GZabgGihEfGRVLpoh9W61Q" type="ExecutionEnvironment_Shape_CCN" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_GZabgmihEfGRVLpoh9W61Q" type="ExecutionEnvironment_NameLabel_CCN"/>
+          <element xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_GZRRkGihEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GZabgWihEfGRVLpoh9W61Q" x="15" y="488" width="261"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_OZHdAGihEfGRVLpoh9W61Q" type="Artifact_Shape" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_OZIEEGihEfGRVLpoh9W61Q" type="Artifact_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_OZIEEWihEfGRVLpoh9W61Q" type="Artifact_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_OZIEEmihEfGRVLpoh9W61Q" x="25"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_OZIEE2ihEfGRVLpoh9W61Q" type="Artifact_NestedArtifactCompartment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_OZIEFGihEfGRVLpoh9W61Q"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_OZIEFWihEfGRVLpoh9W61Q"/>
+          </children>
+          <element xmi:type="uml:Artifact" href="PetClinic-Microservices.uml#_OZEZsGihEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_OZHdAWihEfGRVLpoh9W61Q" x="335" y="488"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_4obGJZV9EfGg2uG7X41-4w" type="StereotypeComment">
+          <styles xmi:type="notation:TitleStyle" xmi:id="_4obGJpV9EfGg2uG7X41-4w"/>
+          <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4obGKJV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+            <eObjectValue xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_K12l4KLFEfCO1JifgY6N0Q"/>
+          </styles>
+          <element xsi:nil="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4obGJ5V9EfGg2uG7X41-4w" x="215" y="8"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_4oeJdZV9EfGg2uG7X41-4w" type="StereotypeComment">
+          <styles xmi:type="notation:TitleStyle" xmi:id="_4oeJdpV9EfGg2uG7X41-4w"/>
+          <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4oeJeJV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+            <eObjectValue xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_Fwz1UGifEfGRVLpoh9W61Q"/>
+          </styles>
+          <element xsi:nil="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4oeJd5V9EfGg2uG7X41-4w" x="215" y="168"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_4ohMuZV9EfGg2uG7X41-4w" type="StereotypeComment">
+          <styles xmi:type="notation:TitleStyle" xmi:id="_4ohMupV9EfGg2uG7X41-4w"/>
+          <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4ohMvJV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+            <eObjectValue xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_WrcVAGigEfGRVLpoh9W61Q"/>
+          </styles>
+          <element xsi:nil="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4ohMu5V9EfGg2uG7X41-4w" x="215" y="328"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_4okQC5V9EfGg2uG7X41-4w" type="StereotypeComment">
+          <styles xmi:type="notation:TitleStyle" xmi:id="_4okQDJV9EfGg2uG7X41-4w"/>
+          <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4okQDpV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+            <eObjectValue xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_GZRRkGihEfGRVLpoh9W61Q"/>
+          </styles>
+          <element xsi:nil="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4okQDZV9EfGg2uG7X41-4w" x="215" y="488"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_6LEvAGijEfGRVLpoh9W61Q" type="ExecutionEnvironment_Shape_CCN" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_6LEvAmijEfGRVLpoh9W61Q" type="ExecutionEnvironment_NameLabel_CCN"/>
+          <element xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_6K36sGijEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6LEvAWijEfGRVLpoh9W61Q" x="15" y="608" width="261" height="120"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_DksJwGikEfGRVLpoh9W61Q" type="Artifact_Shape" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_DksJwmikEfGRVLpoh9W61Q" type="Artifact_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_DksJw2ikEfGRVLpoh9W61Q" type="Artifact_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_DksJxGikEfGRVLpoh9W61Q" x="25"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_DksJxWikEfGRVLpoh9W61Q" type="Artifact_NestedArtifactCompartment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_DksJxmikEfGRVLpoh9W61Q"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DksJx2ikEfGRVLpoh9W61Q"/>
+          </children>
+          <element xmi:type="uml:Artifact" href="PetClinic-Microservices.uml#_DkpGcGikEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DksJwWikEfGRVLpoh9W61Q" x="315" y="628" width="161" height="81"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_GdkXAaLFEfCO1JifgY6N0Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GdkXAqLFEfCO1JifgY6N0Q"/>
+      </children>
+      <element xmi:type="uml:Device" href="PetClinic-Microservices.uml#_Ga6roKLFEfCO1JifgY6N0Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GdEnwaLFEfCO1JifgY6N0Q" x="140" y="140" width="541" height="841"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_fGu6IPFeEfCB2dyLoEFXHw" type="Device_Shape" fontHeight="18">
+      <children xmi:type="notation:DecorationNode" xmi:id="_fG218PFeEfCB2dyLoEFXHw" type="Device_NameLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_fG4EEPFeEfCB2dyLoEFXHw" type="Device_NestedNodeCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_9PD54GiiEfGRVLpoh9W61Q" type="ExecutionEnvironment_Shape_CCN" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_9PD54miiEfGRVLpoh9W61Q" type="ExecutionEnvironment_NameLabel_CCN"/>
+          <element xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_9O3soGiiEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9PD54WiiEfGRVLpoh9W61Q" x="15" y="208" width="261" height="121"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_M_5VYGijEfGRVLpoh9W61Q" type="Artifact_Shape" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_M_5VYmijEfGRVLpoh9W61Q" type="Artifact_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_M_5VY2ijEfGRVLpoh9W61Q" type="Artifact_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_M_5VZGijEfGRVLpoh9W61Q" x="25"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_M_5VZWijEfGRVLpoh9W61Q" type="Artifact_NestedArtifactCompartment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_M_5VZmijEfGRVLpoh9W61Q"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_M_5VZ2ijEfGRVLpoh9W61Q"/>
+          </children>
+          <element xmi:type="uml:Artifact" href="PetClinic-Microservices.uml#_M_0c4GijEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_M_5VYWijEfGRVLpoh9W61Q" x="335" y="228"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_4osL5ZV9EfGg2uG7X41-4w" type="StereotypeComment">
+          <styles xmi:type="notation:TitleStyle" xmi:id="_4osL5pV9EfGg2uG7X41-4w"/>
+          <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4osy4JV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+            <eObjectValue xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_9O3soGiiEfGRVLpoh9W61Q"/>
+          </styles>
+          <element xsi:nil="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4osL55V9EfGg2uG7X41-4w" x="215" y="208"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_4oxrYJV9EfGg2uG7X41-4w" type="StereotypeComment">
+          <styles xmi:type="notation:TitleStyle" xmi:id="_4oxrYZV9EfGg2uG7X41-4w"/>
+          <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4oxrY5V9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+            <eObjectValue xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_6K36sGijEfGRVLpoh9W61Q"/>
+          </styles>
+          <element xsi:nil="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4oxrYpV9EfGg2uG7X41-4w" x="215" y="528"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_K2eQ8KLFEfCO1JifgY6N0Q" type="ExecutionEnvironment_Shape_CCN" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_K2jwgKLFEfCO1JifgY6N0Q" type="ExecutionEnvironment_NameLabel_CCN"/>
+          <element xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_K12l4KLFEfCO1JifgY6N0Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_K2e4AKLFEfCO1JifgY6N0Q" x="15" y="528" width="261" height="121"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_amlWYO-2EfCB2dyLoEFXHw" type="Artifact_Shape" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_amnLkO-2EfCB2dyLoEFXHw" type="Artifact_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_amnyoO-2EfCB2dyLoEFXHw" type="Artifact_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_amnyoe-2EfCB2dyLoEFXHw" x="25"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_amnyou-2EfCB2dyLoEFXHw" type="Artifact_NestedArtifactCompartment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_amnyo--2EfCB2dyLoEFXHw"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_amnypO-2EfCB2dyLoEFXHw"/>
+          </children>
+          <element xmi:type="uml:Artifact" href="PetClinic-Microservices.uml#_amcMcO-2EfCB2dyLoEFXHw"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_amlWYe-2EfCB2dyLoEFXHw" x="355" y="548"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_4noJ0GikEfGRVLpoh9W61Q" type="ExecutionEnvironment_Shape_CCN" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_4noJ0mikEfGRVLpoh9W61Q" type="ExecutionEnvironment_NameLabel_CCN"/>
+          <element xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_4nY5QGikEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4noJ0WikEfGRVLpoh9W61Q" x="15" y="48" width="221" height="101"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_9POnEGikEfGRVLpoh9W61Q" type="Artifact_Shape" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_9PPOIGikEfGRVLpoh9W61Q" type="Artifact_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_9PPOIWikEfGRVLpoh9W61Q" type="Artifact_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_9PPOImikEfGRVLpoh9W61Q" x="25"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_9PPOI2ikEfGRVLpoh9W61Q" type="Artifact_NestedArtifactCompartment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_9PPOJGikEfGRVLpoh9W61Q"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9PPOJWikEfGRVLpoh9W61Q"/>
+          </children>
+          <element xmi:type="uml:Artifact" href="PetClinic-Microservices.uml#_9PLjwGikEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9POnEWikEfGRVLpoh9W61Q" x="295" y="68"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_Pl1K8GilEfGRVLpoh9W61Q" type="ExecutionEnvironment_Shape_CCN" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_Pl1K8milEfGRVLpoh9W61Q" type="ExecutionEnvironment_NameLabel_CCN"/>
+          <element xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_PlnvkGilEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Pl1K8WilEfGRVLpoh9W61Q" x="35" y="368" width="201"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_YtLxAGilEfGRVLpoh9W61Q" type="Artifact_Shape" fontHeight="18">
+          <children xmi:type="notation:DecorationNode" xmi:id="_YtLxAmilEfGRVLpoh9W61Q" type="Artifact_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_YtLxA2ilEfGRVLpoh9W61Q" type="Artifact_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_YtLxBGilEfGRVLpoh9W61Q" x="25"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_YtLxBWilEfGRVLpoh9W61Q" type="Artifact_NestedArtifactCompartment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_YtLxBmilEfGRVLpoh9W61Q"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_YtLxB2ilEfGRVLpoh9W61Q"/>
+          </children>
+          <element xmi:type="uml:Artifact" href="PetClinic-Microservices.uml#_YtIGoGilEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_YtLxAWilEfGRVLpoh9W61Q" x="335" y="388"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_fG4EEfFeEfCB2dyLoEFXHw"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fG4EEvFeEfCB2dyLoEFXHw"/>
+      </children>
+      <element xmi:type="uml:Device" href="PetClinic-Microservices.uml#_fF9eEPFeEfCB2dyLoEFXHw"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fGu6IfFeEfCB2dyLoEFXHw" x="720" y="140" width="661" height="761"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_4GV4kE1DEfGnpY0W_9FHcg" type="Node_Shape" fontHeight="18">
+      <children xmi:type="notation:DecorationNode" xmi:id="_4GnlYE1DEfGnpY0W_9FHcg" type="Node_NameLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_4GpakE1DEfGnpY0W_9FHcg" type="Node_NestedNodeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_4GpakU1DEfGnpY0W_9FHcg"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4Gpakk1DEfGnpY0W_9FHcg"/>
+      </children>
+      <element xmi:type="uml:Node" href="PetClinic-Microservices.uml#_4Eh6sE1DEfGnpY0W_9FHcg"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4GV4kU1DEfGnpY0W_9FHcg" x="620" y="-60" width="301"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_qhLfcGiXEfGRVLpoh9W61Q" type="Node_Shape" fontHeight="18">
+      <children xmi:type="notation:DecorationNode" xmi:id="_qhMGgGiXEfGRVLpoh9W61Q" type="Node_NameLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_qhMGgWiXEfGRVLpoh9W61Q" type="Node_NestedNodeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_qhMGgmiXEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qhMGg2iXEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Node" href="PetClinic-Microservices.uml#_qhIcIGiXEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qhLfcWiXEfGRVLpoh9W61Q" x="620" y="-180" width="281" height="81"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_4oYp5ZV9EfGg2uG7X41-4w" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_4oYp5pV9EfGg2uG7X41-4w"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4oYp6JV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Device" href="PetClinic-Microservices.uml#_Ga6roKLFEfCO1JifgY6N0Q"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4oYp55V9EfGg2uG7X41-4w" x="340" y="140"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_4on6Y5V9EfGg2uG7X41-4w" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_4on6ZJV9EfGg2uG7X41-4w"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4on6ZpV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Device" href="PetClinic-Microservices.uml#_fF9eEPFeEfCB2dyLoEFXHw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4on6ZZV9EfGg2uG7X41-4w" x="920" y="140"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_4ozgm5V9EfGg2uG7X41-4w" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_4ozgnJV9EfGg2uG7X41-4w"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4ozgnpV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Node" href="PetClinic-Microservices.uml#_4Eh6sE1DEfGnpY0W_9FHcg"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4ozgnZV9EfGg2uG7X41-4w" x="820" y="-60"/>
+    </children>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_kB5rgKKtEfCpgqc-qf1s4A" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_kB5rgaKtEfCpgqc-qf1s4A"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_kB5rgqKtEfCpgqc-qf1s4A" diagramKindId="org.eclipse.papyrus.uml.diagram.deployment">
+      <owner xmi:type="uml:Model" href="PetClinic-Microservices.uml#_8g7GgKKqEfCuBILNeceiEg"/>
+    </styles>
+    <element xmi:type="uml:Model" href="PetClinic-Microservices.uml#_8g7GgKKqEfCuBILNeceiEg"/>
+    <edges xmi:type="notation:Connector" xmi:id="_fREkAO_AEfCB2dyLoEFXHw" type="Deployment_Edge" source="_amlWYO-2EfCB2dyLoEFXHw" target="_K2eQ8KLFEfCO1JifgY6N0Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_fRNG4O_AEfCB2dyLoEFXHw" type="Deployment_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_oNYVkPFeEfCB2dyLoEFXHw" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_fRO8EO_AEfCB2dyLoEFXHw" x="-1" y="58"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_fRRYUO_AEfCB2dyLoEFXHw" type="Deployment_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_oPsCsPFeEfCB2dyLoEFXHw" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_fRR_YO_AEfCB2dyLoEFXHw" x="2" y="-37"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_fRFLEO_AEfCB2dyLoEFXHw"/>
+      <element xmi:type="uml:Deployment" href="PetClinic-Microservices.uml#_fQeuIO_AEfCB2dyLoEFXHw"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_fRFLEe_AEfCB2dyLoEFXHw" points="[20, 480, -643984, -643984]$[-59, 460, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_fUENoO_AEfCB2dyLoEFXHw" id="(0.0,0.5555555555555556)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_fUENoe_AEfCB2dyLoEFXHw" id="(1.0,0.6408839779005525)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_DC4XQE1HEfGnpY0W_9FHcg" type="CommunicationPath_Edge" source="_4GV4kE1DEfGnpY0W_9FHcg" target="_fGu6IPFeEfCB2dyLoEFXHw">
+      <children xmi:type="notation:DecorationNode" xmi:id="_DC5lYE1HEfGnpY0W_9FHcg" type="CommunicationPath_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_ET8WgE1HEfGnpY0W_9FHcg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_DC5lYU1HEfGnpY0W_9FHcg" x="1" y="37"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_DC6zgE1HEfGnpY0W_9FHcg" type="CommunicationPath_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_EUNcQE1HEfGnpY0W_9FHcg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_DC7akE1HEfGnpY0W_9FHcg" x="1" y="57"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_DC4XQU1HEfGnpY0W_9FHcg"/>
+      <element xmi:type="uml:CommunicationPath" href="PetClinic-Microservices.uml#_DBepEE1HEfGnpY0W_9FHcg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_DC4XQk1HEfGnpY0W_9FHcg" points="[921, 20, -643984, -643984]$[1000, 20, -643984, -643984]$[960, 140, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_DEKwsE1HEfGnpY0W_9FHcg" id="(1.0,0.5333333333333333)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_DEKwsU1HEfGnpY0W_9FHcg" id="(0.4236006051437216,0.0)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_FuWfAE1HEfGnpY0W_9FHcg" type="CommunicationPath_Edge" source="_4GV4kE1DEfGnpY0W_9FHcg" target="_GdEnwKLFEfCO1JifgY6N0Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_FuWfA01HEfGnpY0W_9FHcg" type="CommunicationPath_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_GYVQIE1HEfGnpY0W_9FHcg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_FuWfBE1HEfGnpY0W_9FHcg" y="40"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_FuXGEE1HEfGnpY0W_9FHcg" type="CommunicationPath_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_GaXQcE1HEfGnpY0W_9FHcg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_FuXGEU1HEfGnpY0W_9FHcg" y="60"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_FuWfAU1HEfGnpY0W_9FHcg"/>
+      <element xmi:type="uml:CommunicationPath" href="PetClinic-Microservices.uml#_Ftx3QE1HEfGnpY0W_9FHcg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_FuWfAk1HEfGnpY0W_9FHcg" points="[620, 20, -643984, -643984]$[460, 20, -643984, -643984]$[460, 140, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Fu3cYE1HEfGnpY0W_9FHcg" id="(0.0,0.5333333333333333)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Fu3cYU1HEfGnpY0W_9FHcg" id="(0.5914972273567468,0.0)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_twAL4GiXEfGRVLpoh9W61Q" type="CommunicationPath_Edge" source="_qhLfcGiXEfGRVLpoh9W61Q" target="_fGu6IPFeEfCB2dyLoEFXHw">
+      <children xmi:type="notation:DecorationNode" xmi:id="_twAy8miXEfGRVLpoh9W61Q" type="CommunicationPath_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_uefpkGiXEfGRVLpoh9W61Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_twAy82iXEfGRVLpoh9W61Q" y="40"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_twAy9GiXEfGRVLpoh9W61Q" type="CommunicationPath_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_uem-UGiXEfGRVLpoh9W61Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_twAy9WiXEfGRVLpoh9W61Q" y="60"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_twAy8GiXEfGRVLpoh9W61Q"/>
+      <element xmi:type="uml:CommunicationPath" href="PetClinic-Microservices.uml#_tv5eMGiXEfGRVLpoh9W61Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_twAy8WiXEfGRVLpoh9W61Q" points="[860, -99, -643984, -643984]$[1060, -140, -643984, -643984]$[1060, 140, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_twJ84GiXEfGRVLpoh9W61Q" id="(1.0,0.49382716049382713)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_twJ84WiXEfGRVLpoh9W61Q" id="(0.5143721633888049,0.0)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_vVuMgGiXEfGRVLpoh9W61Q" type="CommunicationPath_Edge" source="_qhLfcGiXEfGRVLpoh9W61Q" target="_4GV4kE1DEfGnpY0W_9FHcg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_vVuMg2iXEfGRVLpoh9W61Q" type="CommunicationPath_NameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_vVuMhGiXEfGRVLpoh9W61Q" y="40"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_vVuMhWiXEfGRVLpoh9W61Q" type="CommunicationPath_StereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_vVuMhmiXEfGRVLpoh9W61Q" y="60"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_vVuMgWiXEfGRVLpoh9W61Q"/>
+      <element xmi:type="uml:CommunicationPath" href="PetClinic-Microservices.uml#_vVhYMGiXEfGRVLpoh9W61Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_vVuMgmiXEfGRVLpoh9W61Q" points="[780, -99, -643984, -643984]$[760, -60, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_vV5ysGiXEfGRVLpoh9W61Q" id="(0.5693950177935944,1.0)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_vV5ysWiXEfGRVLpoh9W61Q" id="(0.46511627906976744,0.0)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_yEYyMGiXEfGRVLpoh9W61Q" type="CommunicationPath_Edge" source="_qhLfcGiXEfGRVLpoh9W61Q" target="_GdEnwKLFEfCO1JifgY6N0Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_yEYyM2iXEfGRVLpoh9W61Q" type="CommunicationPath_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_zu_54GiXEfGRVLpoh9W61Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_yEYyNGiXEfGRVLpoh9W61Q" x="1" y="38"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_yEYyNWiXEfGRVLpoh9W61Q" type="CommunicationPath_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_zvGAgGiXEfGRVLpoh9W61Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_yEYyNmiXEfGRVLpoh9W61Q" x="-1" y="59"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_yEYyMWiXEfGRVLpoh9W61Q"/>
+      <element xmi:type="uml:CommunicationPath" href="PetClinic-Microservices.uml#_yELW0GiXEfGRVLpoh9W61Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_yEYyMmiXEfGRVLpoh9W61Q" points="[640, -99, -643984, -643984]$[540, -40, -643984, -643984]$[500, 140, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yEh8IGiXEfGRVLpoh9W61Q" id="(0.0711743772241993,1.0)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yEh8IWiXEfGRVLpoh9W61Q" id="(0.6654343807763401,0.0)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_btr8UGifEfGRVLpoh9W61Q" type="Deployment_Edge" source="_URTDQGifEfGRVLpoh9W61Q" target="_FxDs8GifEfGRVLpoh9W61Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_btr8U2ifEfGRVLpoh9W61Q" type="Deployment_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_Dm9iAGihEfGRVLpoh9W61Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_btr8VGifEfGRVLpoh9W61Q" y="60"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_btsjYGifEfGRVLpoh9W61Q" type="Deployment_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_DnCagGihEfGRVLpoh9W61Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_btsjYWifEfGRVLpoh9W61Q" y="60"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_btr8UWifEfGRVLpoh9W61Q"/>
+      <element xmi:type="uml:Deployment" href="PetClinic-Microservices.uml#_btdS0GifEfGRVLpoh9W61Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_btr8UmifEfGRVLpoh9W61Q" points="[480, 460, -643984, -643984]$[421, 460, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_bt5-wGifEfGRVLpoh9W61Q" id="(0.0,0.49382716049382713)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_bt5-wWifEfGRVLpoh9W61Q" id="(1.0,0.49586776859504134)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_tXufsGigEfGRVLpoh9W61Q" type="Deployment_Edge" source="_loFTcGigEfGRVLpoh9W61Q" target="_Wrk34GigEfGRVLpoh9W61Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_tXufs2igEfGRVLpoh9W61Q" type="Deployment_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_DnH6EGihEfGRVLpoh9W61Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_tXuftGigEfGRVLpoh9W61Q" x="-1" y="58"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_tXvGwGigEfGRVLpoh9W61Q" type="Deployment_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_DnNZoGihEfGRVLpoh9W61Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_tXvGwWigEfGRVLpoh9W61Q" x="-1" y="58"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_tXufsWigEfGRVLpoh9W61Q"/>
+      <element xmi:type="uml:Deployment" href="PetClinic-Microservices.uml#_tXl80GigEfGRVLpoh9W61Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_tXufsmigEfGRVLpoh9W61Q" points="[560, 560, -643984, -643984]$[360, 560, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_tX9JMGigEfGRVLpoh9W61Q" id="(0.0,0.49382716049382713)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_tX9JMWigEfGRVLpoh9W61Q" id="(1.0,0.6)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_UqvzIGihEfGRVLpoh9W61Q" type="Deployment_Edge" source="_OZHdAGihEfGRVLpoh9W61Q" target="_GZabgGihEfGRVLpoh9W61Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_UqwaMGihEfGRVLpoh9W61Q" type="Deployment_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_8fF1oJV9EfGg2uG7X41-4w" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_UqwaMWihEfGRVLpoh9W61Q" y="60"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_UqwaMmihEfGRVLpoh9W61Q" type="Deployment_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_8fPmoJV9EfGg2uG7X41-4w" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_UqwaM2ihEfGRVLpoh9W61Q" y="60"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_UqvzIWihEfGRVLpoh9W61Q"/>
+      <element xmi:type="uml:Deployment" href="PetClinic-Microservices.uml#_UqlbEGihEfGRVLpoh9W61Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_UqvzImihEfGRVLpoh9W61Q" points="[500, 720, -643984, -643984]$[421, 760, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Uq_qwGihEfGRVLpoh9W61Q" id="(0.0,0.5555555555555556)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Uq_qwWihEfGRVLpoh9W61Q" id="(1.0,0.4)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_UBLm0GijEfGRVLpoh9W61Q" type="Deployment_Edge" source="_M_5VYGijEfGRVLpoh9W61Q" target="_9PD54GiiEfGRVLpoh9W61Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_UBLm02ijEfGRVLpoh9W61Q" type="Deployment_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_vTT7QGijEfGRVLpoh9W61Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_UBLm1GijEfGRVLpoh9W61Q" y="60"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_UBLm1WijEfGRVLpoh9W61Q" type="Deployment_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_vTdFMGijEfGRVLpoh9W61Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_UBLm1mijEfGRVLpoh9W61Q" y="60"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_UBLm0WijEfGRVLpoh9W61Q"/>
+      <element xmi:type="uml:Deployment" href="PetClinic-Microservices.uml#_UBBOwGijEfGRVLpoh9W61Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_UBLm0mijEfGRVLpoh9W61Q" points="[1100, 460, -643984, -643984]$[1001, 500, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UBYbIGijEfGRVLpoh9W61Q" id="(0.0,0.5555555555555556)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UBYbIWijEfGRVLpoh9W61Q" id="(1.0,0.49586776859504134)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_JJYhYGikEfGRVLpoh9W61Q" type="Deployment_Edge" source="_DksJwGikEfGRVLpoh9W61Q" target="_6LEvAGijEfGRVLpoh9W61Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_JJYhY2ikEfGRVLpoh9W61Q" type="Deployment_NameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_JJYhZGikEfGRVLpoh9W61Q" y="60"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_JJYhZWikEfGRVLpoh9W61Q" type="Deployment_StereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_JJYhZmikEfGRVLpoh9W61Q" x="-30" y="56"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_JJYhYWikEfGRVLpoh9W61Q"/>
+      <element xmi:type="uml:Deployment" href="PetClinic-Microservices.uml#_JJLtEGikEfGRVLpoh9W61Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_JJYhYmikEfGRVLpoh9W61Q" points="[1100, 760, -643984, -643984]$[1001, 820, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JJnK4GikEfGRVLpoh9W61Q" id="(0.0,0.5555555555555556)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_JJnK4WikEfGRVLpoh9W61Q" id="(1.0,0.5)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_BtmP0GilEfGRVLpoh9W61Q" type="Deployment_Edge" source="_9POnEGikEfGRVLpoh9W61Q" target="_4noJ0GikEfGRVLpoh9W61Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_BtmP02ilEfGRVLpoh9W61Q" type="Deployment_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_nYVPcGioEfGRVLpoh9W61Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_BtmP1GilEfGRVLpoh9W61Q" x="-1" y="58"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_BtmP1WilEfGRVLpoh9W61Q" type="Deployment_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_nYg1oGioEfGRVLpoh9W61Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_BtmP1milEfGRVLpoh9W61Q" x="-1" y="58"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_BtmP0WilEfGRVLpoh9W61Q"/>
+      <element xmi:type="uml:Deployment" href="PetClinic-Microservices.uml#_Btb3wGilEfGRVLpoh9W61Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_BtmP0milEfGRVLpoh9W61Q" points="[160, -200, -643984, -643984]$[-79, -160, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Bt1gYGilEfGRVLpoh9W61Q" id="(0.0,0.2777777777777778)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Bt1gYWilEfGRVLpoh9W61Q" id="(1.0,0.594059405940594)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_eC-xAGilEfGRVLpoh9W61Q" type="Deployment_Edge" source="_YtLxAGilEfGRVLpoh9W61Q" target="_Pl1K8GilEfGRVLpoh9W61Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_eC-xA2ilEfGRVLpoh9W61Q" type="Deployment_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_i4bvEJV-EfGg2uG7X41-4w" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_eC-xBGilEfGRVLpoh9W61Q" y="59"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_eC-xBWilEfGRVLpoh9W61Q" type="Deployment_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_i4pxgJV-EfGg2uG7X41-4w" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_eC-xBmilEfGRVLpoh9W61Q" y="59"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_eC-xAWilEfGRVLpoh9W61Q"/>
+      <element xmi:type="uml:Deployment" href="PetClinic-Microservices.uml#_eC1AAGilEfGRVLpoh9W61Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_eC-xAmilEfGRVLpoh9W61Q" points="[180, -80, -643984, -643984]$[-99, -40, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_eDLlUGilEfGRVLpoh9W61Q" id="(0.0,0.2777777777777778)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_eDLlUWilEfGRVLpoh9W61Q" id="(1.0,0.6)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_4oYp6ZV9EfGg2uG7X41-4w" type="StereotypeCommentLink" source="_GdEnwKLFEfCO1JifgY6N0Q" target="_4oYp5ZV9EfGg2uG7X41-4w">
+      <styles xmi:type="notation:FontStyle" xmi:id="_4oYp6pV9EfGg2uG7X41-4w"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4oYp7pV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Device" href="PetClinic-Microservices.uml#_Ga6roKLFEfCO1JifgY6N0Q"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_4oYp65V9EfGg2uG7X41-4w" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4oYp7JV9EfGg2uG7X41-4w"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4oYp7ZV9EfGg2uG7X41-4w"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_4obGKZV9EfGg2uG7X41-4w" type="StereotypeCommentLink" source="_K2eQ8KLFEfCO1JifgY6N0Q" target="_4obGJZV9EfGg2uG7X41-4w">
+      <styles xmi:type="notation:FontStyle" xmi:id="_4obGKpV9EfGg2uG7X41-4w"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4obGLpV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_K12l4KLFEfCO1JifgY6N0Q"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_4obGK5V9EfGg2uG7X41-4w" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4obGLJV9EfGg2uG7X41-4w"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4obGLZV9EfGg2uG7X41-4w"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_4oeJeZV9EfGg2uG7X41-4w" type="StereotypeCommentLink" source="_FxDs8GifEfGRVLpoh9W61Q" target="_4oeJdZV9EfGg2uG7X41-4w">
+      <styles xmi:type="notation:FontStyle" xmi:id="_4oeJepV9EfGg2uG7X41-4w"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4oeJfpV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_Fwz1UGifEfGRVLpoh9W61Q"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_4oeJe5V9EfGg2uG7X41-4w" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4oeJfJV9EfGg2uG7X41-4w"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4oeJfZV9EfGg2uG7X41-4w"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_4ohMvZV9EfGg2uG7X41-4w" type="StereotypeCommentLink" source="_Wrk34GigEfGRVLpoh9W61Q" target="_4ohMuZV9EfGg2uG7X41-4w">
+      <styles xmi:type="notation:FontStyle" xmi:id="_4ohMvpV9EfGg2uG7X41-4w"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4ohMwpV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_WrcVAGigEfGRVLpoh9W61Q"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_4ohMv5V9EfGg2uG7X41-4w" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4ohMwJV9EfGg2uG7X41-4w"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4ohMwZV9EfGg2uG7X41-4w"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_4okQD5V9EfGg2uG7X41-4w" type="StereotypeCommentLink" source="_GZabgGihEfGRVLpoh9W61Q" target="_4okQC5V9EfGg2uG7X41-4w">
+      <styles xmi:type="notation:FontStyle" xmi:id="_4okQEJV9EfGg2uG7X41-4w"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4okQFJV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_GZRRkGihEfGRVLpoh9W61Q"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_4okQEZV9EfGg2uG7X41-4w" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4okQEpV9EfGg2uG7X41-4w"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4okQE5V9EfGg2uG7X41-4w"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_4on6Z5V9EfGg2uG7X41-4w" type="StereotypeCommentLink" source="_fGu6IPFeEfCB2dyLoEFXHw" target="_4on6Y5V9EfGg2uG7X41-4w">
+      <styles xmi:type="notation:FontStyle" xmi:id="_4on6aJV9EfGg2uG7X41-4w"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4on6bJV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Device" href="PetClinic-Microservices.uml#_fF9eEPFeEfCB2dyLoEFXHw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_4on6aZV9EfGg2uG7X41-4w" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4on6apV9EfGg2uG7X41-4w"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4on6a5V9EfGg2uG7X41-4w"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_4osy4ZV9EfGg2uG7X41-4w" type="StereotypeCommentLink" source="_9PD54GiiEfGRVLpoh9W61Q" target="_4osL5ZV9EfGg2uG7X41-4w">
+      <styles xmi:type="notation:FontStyle" xmi:id="_4osy4pV9EfGg2uG7X41-4w"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4osy5pV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_9O3soGiiEfGRVLpoh9W61Q"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_4osy45V9EfGg2uG7X41-4w" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4osy5JV9EfGg2uG7X41-4w"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4osy5ZV9EfGg2uG7X41-4w"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_4oxrZJV9EfGg2uG7X41-4w" type="StereotypeCommentLink" source="_6LEvAGijEfGRVLpoh9W61Q" target="_4oxrYJV9EfGg2uG7X41-4w">
+      <styles xmi:type="notation:FontStyle" xmi:id="_4oxrZZV9EfGg2uG7X41-4w"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4oxraZV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:ExecutionEnvironment" href="PetClinic-Microservices.uml#_6K36sGijEfGRVLpoh9W61Q"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_4oxrZpV9EfGg2uG7X41-4w" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4oxrZ5V9EfGg2uG7X41-4w"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4oxraJV9EfGg2uG7X41-4w"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_4ozgn5V9EfGg2uG7X41-4w" type="StereotypeCommentLink" source="_4GV4kE1DEfGnpY0W_9FHcg" target="_4ozgm5V9EfGg2uG7X41-4w">
+      <styles xmi:type="notation:FontStyle" xmi:id="_4ozgoJV9EfGg2uG7X41-4w"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_4ozgpJV9EfGg2uG7X41-4w" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Node" href="PetClinic-Microservices.uml#_4Eh6sE1DEfGnpY0W_9FHcg"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_4ozgoZV9EfGg2uG7X41-4w" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4ozgopV9EfGg2uG7X41-4w"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4ozgo5V9EfGg2uG7X41-4w"/>
+    </edges>
+  </notation:Diagram>
+  <notation:Diagram xmi:id="_6NSvoKKtEfCpgqc-qf1s4A" type="PapyrusUMLSequenceDiagram" name="PC-M-MRP-IW-CheckVets" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_6NSvoaKtEfCpgqc-qf1s4A" type="Interaction_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_6NSvoqKtEfCpgqc-qf1s4A" type="Interaction_NameLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_6NSvo6KtEfCpgqc-qf1s4A" type="Interaction_SubfragmentCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_wiC80KNyEfCO1JifgY6N0Q" type="Lifeline_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_wiEyAKNyEfCO1JifgY6N0Q" type="Lifeline_NameLabel"/>
+          <children xmi:type="notation:Shape" xmi:id="_cy7xEKN2EfCO1JifgY6N0Q" type="BehaviorExecutionSpecification_Shape">
+            <children xmi:type="notation:DecorationNode" xmi:id="_cy_bcKN2EfCO1JifgY6N0Q" type="BehaviorExecutionSpecification_Behavior">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_cy_bcaN2EfCO1JifgY6N0Q" x="18" y="18"/>
+            </children>
+            <element xmi:type="uml:BehaviorExecutionSpecification" href="PetClinic-Microservices.uml#_cyHRsKN2EfCO1JifgY6N0Q"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cy7xEaN2EfCO1JifgY6N0Q" x="40" y="70" width="20" height="281"/>
+          </children>
+          <element xmi:type="uml:Lifeline" href="PetClinic-Microservices.uml#_whwo8KNyEfCO1JifgY6N0Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wiDj4KNyEfCO1JifgY6N0Q" x="154" y="10"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_EyJuEKN1EfCO1JifgY6N0Q" type="Lifeline_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_EyRp4KN1EfCO1JifgY6N0Q" type="Lifeline_NameLabel"/>
+          <children xmi:type="notation:Shape" xmi:id="_dwnhUKN2EfCO1JifgY6N0Q" type="BehaviorExecutionSpecification_Shape">
+            <children xmi:type="notation:DecorationNode" xmi:id="_dwwEMKN2EfCO1JifgY6N0Q" type="BehaviorExecutionSpecification_Behavior">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_dwwrQKN2EfCO1JifgY6N0Q" x="18" y="18"/>
+            </children>
+            <element xmi:type="uml:BehaviorExecutionSpecification" href="PetClinic-Microservices.uml#_duI1EKN2EfCO1JifgY6N0Q"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dwnhUaN2EfCO1JifgY6N0Q" x="40" y="150" width="20" height="100"/>
+          </children>
+          <element xmi:type="uml:Lifeline" href="PetClinic-Microservices.uml#_EwRewKN1EfCO1JifgY6N0Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EyKVIKN1EfCO1JifgY6N0Q" x="334" y="10"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_HM0ZsKN1EfCO1JifgY6N0Q" type="Lifeline_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_HM1n0KN1EfCO1JifgY6N0Q" type="Lifeline_NameLabel"/>
+          <children xmi:type="notation:Shape" xmi:id="_eklU4KN2EfCO1JifgY6N0Q" type="BehaviorExecutionSpecification_Shape">
+            <children xmi:type="notation:DecorationNode" xmi:id="_eknxIKN2EfCO1JifgY6N0Q" type="BehaviorExecutionSpecification_Behavior">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_eknxIaN2EfCO1JifgY6N0Q" x="18" y="18"/>
+            </children>
+            <element xmi:type="uml:BehaviorExecutionSpecification" href="PetClinic-Microservices.uml#_ekIo8KN2EfCO1JifgY6N0Q"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_eklU4aN2EfCO1JifgY6N0Q" x="40" y="170" width="20" height="40"/>
+          </children>
+          <element xmi:type="uml:Lifeline" href="PetClinic-Microservices.uml#_HMdNUKN1EfCO1JifgY6N0Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_HM0ZsaN1EfCO1JifgY6N0Q" x="514" y="10"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_WnScQKN4EfCO1JifgY6N0Q" type="StereotypeComment">
+          <styles xmi:type="notation:TitleStyle" xmi:id="_WnScQaN4EfCO1JifgY6N0Q" showTitle="true"/>
+          <styles xmi:type="notation:EObjectValueStyle" xmi:id="_WnX70KN4EfCO1JifgY6N0Q" name="BASE_ELEMENT">
+            <eObjectValue xmi:type="uml:BehaviorExecutionSpecification" href="PetClinic-Microservices.uml#_cyHRsKN2EfCO1JifgY6N0Q"/>
+          </styles>
+          <element xsi:nil="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WnScQqN4EfCO1JifgY6N0Q" x="240" y="70"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_Y3rxkKN4EfCO1JifgY6N0Q" type="StereotypeComment">
+          <styles xmi:type="notation:TitleStyle" xmi:id="_Y3rxkaN4EfCO1JifgY6N0Q" showTitle="true"/>
+          <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y3s_sKN4EfCO1JifgY6N0Q" name="BASE_ELEMENT">
+            <eObjectValue xmi:type="uml:BehaviorExecutionSpecification" href="PetClinic-Microservices.uml#_duI1EKN2EfCO1JifgY6N0Q"/>
+          </styles>
+          <element xsi:nil="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Y3rxkqN4EfCO1JifgY6N0Q" x="240" y="150"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_aiE20KN4EfCO1JifgY6N0Q" type="StereotypeComment">
+          <styles xmi:type="notation:TitleStyle" xmi:id="_aiE20aN4EfCO1JifgY6N0Q" showTitle="true"/>
+          <styles xmi:type="notation:EObjectValueStyle" xmi:id="_aiFd4KN4EfCO1JifgY6N0Q" name="BASE_ELEMENT">
+            <eObjectValue xmi:type="uml:BehaviorExecutionSpecification" href="PetClinic-Microservices.uml#_ekIo8KN2EfCO1JifgY6N0Q"/>
+          </styles>
+          <element xsi:nil="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aiE20qN4EfCO1JifgY6N0Q" x="240" y="170"/>
+        </children>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6NSvpKKtEfCpgqc-qf1s4A"/>
+      </children>
+      <element xmi:type="uml:Interaction" href="PetClinic-Microservices.uml#_330tEKKtEfCpgqc-qf1s4A"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6NSvpaKtEfCpgqc-qf1s4A"/>
+    </children>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_6NSvpqKtEfCpgqc-qf1s4A" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_6NSvp6KtEfCpgqc-qf1s4A"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_6NSvqKKtEfCpgqc-qf1s4A" diagramKindId="org.eclipse.papyrus.uml.diagram.sequence">
+      <owner xmi:type="uml:Model" href="PetClinic-Microservices.uml#_8g7GgKKqEfCuBILNeceiEg"/>
+    </styles>
+    <element xmi:type="uml:Interaction" href="PetClinic-Microservices.uml#_330tEKKtEfCpgqc-qf1s4A"/>
+    <edges xmi:type="notation:Connector" xmi:id="_iQg0EKN2EfCO1JifgY6N0Q" type="Message_SynchEdge" source="_wiC80KNyEfCO1JifgY6N0Q" target="_EyJuEKN1EfCO1JifgY6N0Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_iQm6sKN2EfCO1JifgY6N0Q" type="Message_SynchNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_iQm6saN2EfCO1JifgY6N0Q" x="1" y="-13"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_iQnhwKN2EfCO1JifgY6N0Q" type="Message_SynchStereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_iQnhwaN2EfCO1JifgY6N0Q" x="1" y="-33"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_iQg0EaN2EfCO1JifgY6N0Q"/>
+      <element xmi:type="uml:Message" href="PetClinic-Microservices.uml#_iGTIIKN2EfCO1JifgY6N0Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_iQg0EqN2EfCO1JifgY6N0Q" points="[-10, 0, -190, -20]$[170, 20, -10, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_iSM2IKN2EfCO1JifgY6N0Q" id="(0.5,0.21428571428571427)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_iSNdMKN2EfCO1JifgY6N0Q" id="(0.5,0.21428571428571427)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_nD7fwKN2EfCO1JifgY6N0Q" type="Message_SynchEdge" source="_EyJuEKN1EfCO1JifgY6N0Q" target="_HM0ZsKN1EfCO1JifgY6N0Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_nD98AKN2EfCO1JifgY6N0Q" type="Message_SynchNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_nD98AaN2EfCO1JifgY6N0Q" x="1" y="-13"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_nD98AqN2EfCO1JifgY6N0Q" type="Message_SynchStereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_nD98A6N2EfCO1JifgY6N0Q" x="1" y="-33"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_nD7fwaN2EfCO1JifgY6N0Q"/>
+      <element xmi:type="uml:Message" href="PetClinic-Microservices.uml#_nDW4AKN2EfCO1JifgY6N0Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_nD7fwqN2EfCO1JifgY6N0Q" points="[-10, -4, -190, 0]$[180, -4, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_nFyg8KN2EfCO1JifgY6N0Q" id="(0.5,0.24285714285714285)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_nFzIAKN2EfCO1JifgY6N0Q" id="(0.5,0.24285714285714285)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_tR8hMKN2EfCO1JifgY6N0Q" type="Message_ReplyEdge" source="_HM0ZsKN1EfCO1JifgY6N0Q" target="_EyJuEKN1EfCO1JifgY6N0Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_tR_kgKN2EfCO1JifgY6N0Q" type="Message_ReplyNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_tR_kgaN2EfCO1JifgY6N0Q" x="1" y="-13"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_tSALkKN2EfCO1JifgY6N0Q" type="Message_ReplyStereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_tSALkaN2EfCO1JifgY6N0Q" x="1" y="-33"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_tR8hMaN2EfCO1JifgY6N0Q"/>
+      <element xmi:type="uml:Message" href="PetClinic-Microservices.uml#_tN3ScKN2EfCO1JifgY6N0Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_tR8hMqN2EfCO1JifgY6N0Q" points="[-10, 8, 170, -20]$[-190, 28, -10, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_tUVG0KN2EfCO1JifgY6N0Q" id="(0.5,0.3)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_tUVt4KN2EfCO1JifgY6N0Q" id="(0.5,0.3)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_w-XIkKN2EfCO1JifgY6N0Q" type="Message_ReplyEdge" source="_EyJuEKN1EfCO1JifgY6N0Q" target="_wiC80KNyEfCO1JifgY6N0Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_w-Zk0KN2EfCO1JifgY6N0Q" type="Message_ReplyNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_w-aL4KN2EfCO1JifgY6N0Q" x="1" y="-13"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_w-aL4aN2EfCO1JifgY6N0Q" type="Message_ReplyStereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_w-aL4qN2EfCO1JifgY6N0Q" x="1" y="-33"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_w-XvoKN2EfCO1JifgY6N0Q"/>
+      <element xmi:type="uml:Message" href="PetClinic-Microservices.uml#_w6euIKN2EfCO1JifgY6N0Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_w-XvoaN2EfCO1JifgY6N0Q" points="[-10, 0, 170, 0]$[-190, 0, -10, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_xAjg8KN2EfCO1JifgY6N0Q" id="(0.5,0.35714285714285715)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_xAjg8aN2EfCO1JifgY6N0Q" id="(0.5,0.35714285714285715)"/>
+    </edges>
+  </notation:Diagram>
+  <notation:Diagram xmi:id="_BQwyYKKuEfCpgqc-qf1s4A" type="PapyrusUMLActivityDiagram" name="PC-M-MRP-UW-UserType1" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_BQxZcKKuEfCpgqc-qf1s4A" type="Activity_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_BQxZcaKuEfCpgqc-qf1s4A" type="Activity_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_BQxZcqKuEfCpgqc-qf1s4A" type="Activity_KeywordLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_BQxZc6KuEfCpgqc-qf1s4A" type="Activity_ParameterCompartment">
+        <styles xmi:type="notation:SortingStyle" xmi:id="_BQxZdKKuEfCpgqc-qf1s4A"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_BQxZdaKuEfCpgqc-qf1s4A"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BQxZdqKuEfCpgqc-qf1s4A"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_BQxZd6KuEfCpgqc-qf1s4A" type="Activity_PreconditionCompartment">
+        <styles xmi:type="notation:SortingStyle" xmi:id="_BQxZeKKuEfCpgqc-qf1s4A"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_BQxZeaKuEfCpgqc-qf1s4A"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BQxZeqKuEfCpgqc-qf1s4A"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_BQxZe6KuEfCpgqc-qf1s4A" type="Activity_PostconditionCompartment">
+        <styles xmi:type="notation:SortingStyle" xmi:id="_BQxZfKKuEfCpgqc-qf1s4A"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_BQxZfaKuEfCpgqc-qf1s4A"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BQxZfqKuEfCpgqc-qf1s4A"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_BQxZf6KuEfCpgqc-qf1s4A" type="Activity_ActivityNodeCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_C8ZbcKN3EfCO1JifgY6N0Q" type="InitialNode_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_C8ds4KN3EfCO1JifgY6N0Q" type="InitialNode_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_C8eT8KN3EfCO1JifgY6N0Q" y="15"/>
+          </children>
+          <children xmi:type="notation:DecorationNode" xmi:id="_C8fiEKN3EfCO1JifgY6N0Q" type="InitialNode_StereotypeLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_C8fiEaN3EfCO1JifgY6N0Q" y="15"/>
+          </children>
+          <element xmi:type="uml:InitialNode" href="PetClinic-Microservices.uml#_C8I8wKN3EfCO1JifgY6N0Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_C8ZbcaN3EfCO1JifgY6N0Q" x="31" y="168"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_MgnjsKN3EfCO1JifgY6N0Q" type="CallBehaviorAction_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_MgrOEKN3EfCO1JifgY6N0Q" type="CallBehaviorAction_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_MgrOEaN3EfCO1JifgY6N0Q" type="CallBehaviorAction_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_MgrOEqN3EfCO1JifgY6N0Q" y="15"/>
+          </children>
+          <element xmi:type="uml:CallBehaviorAction" href="PetClinic-Microservices.uml#_JOvjQKN3EfCO1JifgY6N0Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Mgu4cKN3EfCO1JifgY6N0Q" x="315" y="88"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_P4DZkKN3EfCO1JifgY6N0Q" type="ActivityFinalNode_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_P4HrAKN3EfCO1JifgY6N0Q" type="ActivityFinalNode_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_P4ISEKN3EfCO1JifgY6N0Q" x="-20" y="40"/>
+          </children>
+          <children xmi:type="notation:DecorationNode" xmi:id="_P4ISEaN3EfCO1JifgY6N0Q" type="ActivityFinalNode_StereotypeLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_P4I5IKN3EfCO1JifgY6N0Q" y="15"/>
+          </children>
+          <element xmi:type="uml:ActivityFinalNode" href="PetClinic-Microservices.uml#_P3c8oKN3EfCO1JifgY6N0Q"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_P4EAoKN3EfCO1JifgY6N0Q" x="775" y="168"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_bq_24LQEEfCOjOoqn6dBww" type="CallBehaviorAction_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_brFWcLQEEfCOjOoqn6dBww" type="CallBehaviorAction_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_brF9gLQEEfCOjOoqn6dBww" type="CallBehaviorAction_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_brF9gbQEEfCOjOoqn6dBww" y="15"/>
+          </children>
+          <element xmi:type="uml:CallBehaviorAction" href="PetClinic-Microservices.uml#_aXY58LQEEfCOjOoqn6dBww"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_brK2ALQEEfCOjOoqn6dBww" x="95" y="148"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_7ESjALTKEfCOjOoqn6dBww" type="DecisionNode_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_7EZQsLTKEfCOjOoqn6dBww" type="DecisionNode_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_7EZQsbTKEfCOjOoqn6dBww" x="20" y="20"/>
+          </children>
+          <children xmi:type="notation:DecorationNode" xmi:id="_7Eae0LTKEfCOjOoqn6dBww" type="DecisionNode_DecisionInputLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_7EbF4LTKEfCOjOoqn6dBww" y="15"/>
+          </children>
+          <children xmi:type="notation:DecorationNode" xmi:id="_7EbF4bTKEfCOjOoqn6dBww" type="DecisionNode_StereotypeLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_7EbF4rTKEfCOjOoqn6dBww" y="15"/>
+          </children>
+          <element xmi:type="uml:DecisionNode" href="PetClinic-Microservices.uml#_7DnNkLTKEfCOjOoqn6dBww"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ESjAbTKEfCOjOoqn6dBww" x="215" y="148"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_G2LcsLTLEfCOjOoqn6dBww" type="CallBehaviorAction_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_G2OgALTLEfCOjOoqn6dBww" type="CallBehaviorAction_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_G2PHELTLEfCOjOoqn6dBww" type="CallBehaviorAction_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_G2PHEbTLEfCOjOoqn6dBww" y="15"/>
+          </children>
+          <element xmi:type="uml:CallBehaviorAction" href="PetClinic-Microservices.uml#_Fm7bULTLEfCOjOoqn6dBww"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_G2PuILTLEfCOjOoqn6dBww" x="231" y="228"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_O5jdQLTLEfCOjOoqn6dBww" type="MergeNode_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_O5mgkLTLEfCOjOoqn6dBww" type="MergeNode_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_O5mgkbTLEfCOjOoqn6dBww" x="-20" y="-20"/>
+          </children>
+          <children xmi:type="notation:DecorationNode" xmi:id="_O5mgkrTLEfCOjOoqn6dBww" type="MergeNode_StereotypeLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_O5nHoLTLEfCOjOoqn6dBww" y="15"/>
+          </children>
+          <element xmi:type="uml:MergeNode" href="PetClinic-Microservices.uml#_O4P1sLTLEfCOjOoqn6dBww"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_O5jdQbTLEfCOjOoqn6dBww" x="651" y="168"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_iLozILTlEfCLP4WQQVryPg" type="CallBehaviorAction_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_iLvg0LTlEfCLP4WQQVryPg" type="CallBehaviorAction_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_iLvg0bTlEfCLP4WQQVryPg" type="CallBehaviorAction_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_iLwH4LTlEfCLP4WQQVryPg" y="15"/>
+          </children>
+          <element xmi:type="uml:CallBehaviorAction" href="PetClinic-Microservices.uml#_gevMcLTlEfCLP4WQQVryPg"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_iLzLMLTlEfCLP4WQQVryPg" x="375" y="228"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_GX4IULWVEfCLP4WQQVryPg" type="CallBehaviorAction_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_GX9A0LWVEfCLP4WQQVryPg" type="CallBehaviorAction_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_GX9A0bWVEfCLP4WQQVryPg" type="CallBehaviorAction_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_GX9n4LWVEfCLP4WQQVryPg" y="15"/>
+          </children>
+          <element xmi:type="uml:CallBehaviorAction" href="PetClinic-Microservices.uml#_FJBIgLWVEfCLP4WQQVryPg"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GX-O8LWVEfCLP4WQQVryPg" x="515" y="228"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_0p6RQLu0EfCLP4WQQVryPg" type="CallBehaviorAction_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_0qQ2kLu0EfCLP4WQQVryPg" type="CallBehaviorAction_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_0qSrwLu0EfCLP4WQQVryPg" type="CallBehaviorAction_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_0qSrwbu0EfCLP4WQQVryPg" y="15"/>
+          </children>
+          <element xmi:type="uml:CallBehaviorAction" href="PetClinic-Microservices.uml#_zMDMILu0EfCLP4WQQVryPg"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0qVvELu0EfCLP4WQQVryPg" x="415" y="368"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_5HhsELu0EfCLP4WQQVryPg" type="DecisionNode_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_5Hi6MLu0EfCLP4WQQVryPg" type="DecisionNode_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_5Hi6Mbu0EfCLP4WQQVryPg" y="15"/>
+          </children>
+          <children xmi:type="notation:DecorationNode" xmi:id="_5HjhQLu0EfCLP4WQQVryPg" type="DecisionNode_DecisionInputLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_5HjhQbu0EfCLP4WQQVryPg" y="15"/>
+          </children>
+          <children xmi:type="notation:DecorationNode" xmi:id="_5HjhQru0EfCLP4WQQVryPg" type="DecisionNode_StereotypeLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_5HjhQ7u0EfCLP4WQQVryPg" y="15"/>
+          </children>
+          <element xmi:type="uml:DecisionNode" href="PetClinic-Microservices.uml#_5HHcYLu0EfCLP4WQQVryPg"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5HhsEbu0EfCLP4WQQVryPg" x="335" y="308"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="__mbM4LvaEfCLP4WQQVryPg" type="DecisionNode_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="__mhTgLvaEfCLP4WQQVryPg" type="DecisionNode_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="__mhTgbvaEfCLP4WQQVryPg" y="15"/>
+          </children>
+          <children xmi:type="notation:DecorationNode" xmi:id="__mihoLvaEfCLP4WQQVryPg" type="DecisionNode_DecisionInputLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="__mihobvaEfCLP4WQQVryPg" y="15"/>
+          </children>
+          <children xmi:type="notation:DecorationNode" xmi:id="__mihorvaEfCLP4WQQVryPg" type="DecisionNode_StereotypeLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="__miho7vaEfCLP4WQQVryPg" y="15"/>
+          </children>
+          <element xmi:type="uml:DecisionNode" href="PetClinic-Microservices.uml#__k7_ILvaEfCLP4WQQVryPg"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="__mbM4bvaEfCLP4WQQVryPg" x="475" y="268"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_JizWcLvbEfCLP4WQQVryPg" type="CallBehaviorAction_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_Ji1LoLvbEfCLP4WQQVryPg" type="CallBehaviorAction_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_Ji1ysLvbEfCLP4WQQVryPg" type="CallBehaviorAction_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_Ji1ysbvbEfCLP4WQQVryPg" y="15"/>
+          </children>
+          <element xmi:type="uml:CallBehaviorAction" href="PetClinic-Microservices.uml#_IRNLsLvbEfCLP4WQQVryPg"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ji1ysrvbEfCLP4WQQVryPg" x="515" y="168"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_NwwkoLvbEfCLP4WQQVryPg" type="CallBehaviorAction_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_NwxywLvbEfCLP4WQQVryPg" type="CallBehaviorAction_NameLabel"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_NwyZ0LvbEfCLP4WQQVryPg" type="CallBehaviorAction_FloatingNameLabel">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_NwyZ0bvbEfCLP4WQQVryPg" y="15"/>
+          </children>
+          <element xmi:type="uml:CallBehaviorAction" href="PetClinic-Microservices.uml#_MefEcLvbEfCLP4WQQVryPg"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NwyZ0rvbEfCLP4WQQVryPg" x="515" y="308"/>
+        </children>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BQxZgKKuEfCpgqc-qf1s4A"/>
+      </children>
+      <element xmi:type="uml:Activity" href="PetClinic-Microservices.uml#__dDZEKKtEfCpgqc-qf1s4A"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_BQxZgaKuEfCpgqc-qf1s4A"/>
+    </children>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_BQxZgqKuEfCpgqc-qf1s4A" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_BQxZg6KuEfCpgqc-qf1s4A"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_BQxZhKKuEfCpgqc-qf1s4A" diagramKindId="org.eclipse.papyrus.uml.diagram.activity">
+      <owner xmi:type="uml:Model" href="PetClinic-Microservices.uml#_8g7GgKKqEfCuBILNeceiEg"/>
+    </styles>
+    <element xmi:type="uml:Activity" href="PetClinic-Microservices.uml#__dDZEKKtEfCpgqc-qf1s4A"/>
+    <edges xmi:type="notation:Connector" xmi:id="_TrrcMKN3EfCO1JifgY6N0Q" type="ControlFlow_Edge" source="_C8ZbcKN3EfCO1JifgY6N0Q" target="_bq_24LQEEfCOjOoqn6dBww">
+      <children xmi:type="notation:DecorationNode" xmi:id="_Tr1NMKN3EfCO1JifgY6N0Q" type="ControlFlow_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_3hDs0LTKEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Tr10QKN3EfCO1JifgY6N0Q" x="-32" y="19"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_Tr3CYKN3EfCO1JifgY6N0Q" type="ControlFlow_WeightLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_3hiN8LTKEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Tr3CYaN3EfCO1JifgY6N0Q" y="19"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_Tr3pcKN3EfCO1JifgY6N0Q" type="ControlFlow_GuardLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_3hqw0LTKEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Tr3pcaN3EfCO1JifgY6N0Q" x="31" y="18"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_Tr3pcqN3EfCO1JifgY6N0Q" type="ControlFlow_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_3h6ocLTKEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Tr3pc6N3EfCO1JifgY6N0Q" x="1" y="-18"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_TrtRYKN3EfCO1JifgY6N0Q"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_ToPGoKN3EfCO1JifgY6N0Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_TrtRYaN3EfCO1JifgY6N0Q" points="[218, 212, -643984, -643984]$[340, 200, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Tu020KN3EfCO1JifgY6N0Q" id="(0.9,0.6274193548387104)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Tu1d4KN3EfCO1JifgY6N0Q" id="(0.0,0.475)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_VRyeYKN3EfCO1JifgY6N0Q" type="ControlFlow_Edge" source="_MgnjsKN3EfCO1JifgY6N0Q" target="_O5jdQLTLEfCOjOoqn6dBww">
+      <children xmi:type="notation:DecorationNode" xmi:id="_VR5zIKN3EfCO1JifgY6N0Q" type="ControlFlow_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_C6DlYLTLEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_VR6aMKN3EfCO1JifgY6N0Q" x="-20" y="19"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_VR7BQKN3EfCO1JifgY6N0Q" type="ControlFlow_WeightLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_C61BcLTLEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_VR7BQaN3EfCO1JifgY6N0Q" y="19"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_VR7BQqN3EfCO1JifgY6N0Q" type="ControlFlow_GuardLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_C689QLTLEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_VR7BQ6N3EfCO1JifgY6N0Q" x="19" y="19"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_VR7BRKN3EfCO1JifgY6N0Q" type="ControlFlow_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_C7ESALTLEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_VR7BRaN3EfCO1JifgY6N0Q" x="1" y="-18"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_VRzFcKN3EfCO1JifgY6N0Q"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_VOKioKN3EfCO1JifgY6N0Q"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_VRzFcaN3EfCO1JifgY6N0Q" points="[344, 240, -643984, -643984]$[521, 228, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_VURKoKN3EfCO1JifgY6N0Q" id="(1.0,0.5)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_VURxsKN3EfCO1JifgY6N0Q" id="(0.5,0.0)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_evjNALQEEfCOjOoqn6dBww" type="ControlFlow_Edge" source="_bq_24LQEEfCOjOoqn6dBww" target="_7ESjALTKEfCOjOoqn6dBww">
+      <children xmi:type="notation:DecorationNode" xmi:id="_evrI0LQEEfCOjOoqn6dBww" type="ControlFlow_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_4duJYLTKEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_evrv4LQEEfCOjOoqn6dBww" x="-20" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_evsW8LQEEfCOjOoqn6dBww" type="ControlFlow_WeightLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_4gRuILTKEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_evs-ALQEEfCOjOoqn6dBww" x="-1" y="18"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_evs-AbQEEfCOjOoqn6dBww" type="ControlFlow_GuardLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_4ghlwLTKEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_evs-ArQEEfCOjOoqn6dBww" x="19" y="18"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_evs-A7QEEfCOjOoqn6dBww" type="ControlFlow_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_4goTcLTKEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_evs-BLQEEfCOjOoqn6dBww" y="-19"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_evj0ELQEEfCOjOoqn6dBww"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_esZyYLQEEfCOjOoqn6dBww"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_evj0EbQEEfCOjOoqn6dBww" points="[471, 300, -643984, -643984]$[359, 240, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_eyJ1ELQEEfCOjOoqn6dBww" id="(1.0,0.5)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_eyKcILQEEfCOjOoqn6dBww" id="(0.0,0.5)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="__LoL0LTKEfCOjOoqn6dBww" type="ControlFlow_Edge" source="_7ESjALTKEfCOjOoqn6dBww" target="_MgnjsKN3EfCO1JifgY6N0Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="__L1AILTKEfCOjOoqn6dBww" type="ControlFlow_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_Bj9VILTLEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="__L1nMLTKEfCOjOoqn6dBww" x="-25" y="18"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="__L2OQLTKEfCOjOoqn6dBww" type="ControlFlow_WeightLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_BkHtMLTLEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="__L21ULTKEfCOjOoqn6dBww" x="-1" y="19"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="__L21UbTKEfCOjOoqn6dBww" type="ControlFlow_GuardLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_BkReMLTLEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="__L21UrTKEfCOjOoqn6dBww" x="22" y="18"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="__L21U7TKEfCOjOoqn6dBww" type="ControlFlow_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_BkaoILTLEfCOjOoqn6dBww" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="__L21VLTKEfCOjOoqn6dBww" x="1" y="-18"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="__Loy4LTKEfCOjOoqn6dBww"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#__GvEwLTKEfCOjOoqn6dBww"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="__Loy4bTKEfCOjOoqn6dBww" points="[230, 180, -643984, -643984]$[300, 140, -643984, -643984]$[332, 120, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="__PmF0LTKEfCOjOoqn6dBww" id="(0.5,0.0)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="__Pms4LTKEfCOjOoqn6dBww" id="(0.0,0.5)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_L4Q2gLTLEfCOjOoqn6dBww" type="ControlFlow_Edge" source="_7ESjALTKEfCOjOoqn6dBww" target="_G2LcsLTLEfCOjOoqn6dBww">
+      <children xmi:type="notation:DecorationNode" xmi:id="_L4YyULTLEfCOjOoqn6dBww" type="ControlFlow_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_lzWgsLTlEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_L4ZZYLTLEfCOjOoqn6dBww" x="-15" y="18"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_L4aAcLTLEfCOjOoqn6dBww" type="ControlFlow_WeightLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_lztGALTlEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_L4angLTLEfCOjOoqn6dBww" x="1" y="18"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_L4angbTLEfCOjOoqn6dBww" type="ControlFlow_GuardLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_l0JK4LTlEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_L4angrTLEfCOjOoqn6dBww" x="15" y="19"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_L4ang7TLEfCOjOoqn6dBww" type="ControlFlow_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_l0fwMLTlEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_L4anhLTLEfCOjOoqn6dBww" x="2" y="-17"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_L4RdkLTLEfCOjOoqn6dBww"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_L2_rMLTLEfCOjOoqn6dBww"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_L4RdkbTLEfCOjOoqn6dBww" points="[223, 200, -643984, -643984]$[320, 259, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_L7kCILTLEfCOjOoqn6dBww" id="(0.85,0.6666666666666666)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_L7kpMLTLEfCOjOoqn6dBww" id="(0.0,0.475)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_TrDdYLTLEfCOjOoqn6dBww" type="ControlFlow_Edge" source="_G2LcsLTLEfCOjOoqn6dBww" target="_5HhsELu0EfCLP4WQQVryPg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_TrHu0LTLEfCOjOoqn6dBww" type="ControlFlow_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_lxVugLTlEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_TrHu0bTLEfCOjOoqn6dBww" x="-11" y="19"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_TrI88LTLEfCOjOoqn6dBww" type="ControlFlow_WeightLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_lx-AoLTlEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_TrI88bTLEfCOjOoqn6dBww" x="-1" y="19"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_TrJkALTLEfCOjOoqn6dBww" type="ControlFlow_GuardLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_lyj2gLTlEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_TrJkAbTLEfCOjOoqn6dBww" x="8" y="18"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_TrJkArTLEfCOjOoqn6dBww" type="ControlFlow_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_lzAicLTlEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_TrJkA7TLEfCOjOoqn6dBww" x="2" y="-17"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_TrDdYbTLEfCOjOoqn6dBww"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_TqL6sLTLEfCOjOoqn6dBww"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_TrDdYrTLEfCOjOoqn6dBww" points="[332, 280, -643984, -643984]$[320, 300, -643984, -643984]$[340, 355, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TtiwsLTLEfCOjOoqn6dBww" id="(0.8645833333333334,1.0)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TtjXwLTLEfCOjOoqn6dBww" id="(0.0,0.5)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_WfqTALTLEfCOjOoqn6dBww" type="ControlFlow_Edge" source="_O5jdQLTLEfCOjOoqn6dBww" target="_P4DZkKN3EfCO1JifgY6N0Q">
+      <children xmi:type="notation:DecorationNode" xmi:id="_WfyO0LTLEfCOjOoqn6dBww" type="ControlFlow_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_JZ-nYLWVEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Wfy14LTLEfCOjOoqn6dBww" x="-7" y="18"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_Wfzc8LTLEfCOjOoqn6dBww" type="ControlFlow_WeightLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_JcOqILWVEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Wfzc8bTLEfCOjOoqn6dBww" x="1" y="18"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_Wfzc8rTLEfCOjOoqn6dBww" type="ControlFlow_GuardLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_JcnEoLWVEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Wfzc87TLEfCOjOoqn6dBww" x="6" y="18"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_Wfzc9LTLEfCOjOoqn6dBww" type="ControlFlow_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_Jc1uILWVEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Wfzc9bTLEfCOjOoqn6dBww" x="1" y="-18"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_Wfq6ELTLEfCOjOoqn6dBww"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_Webj8LTLEfCOjOoqn6dBww"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Wfq6EbTLEfCOjOoqn6dBww" points="[480, 215, -643984, -643984]$[521, 228, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Wi6bULTLEfCOjOoqn6dBww" id="(1.0,0.5)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Wi7CYLTLEfCOjOoqn6dBww" id="(0.05,0.4478723404255319)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_qfgt0LTlEfCLP4WQQVryPg" type="ControlFlow_Edge" source="_iLozILTlEfCLP4WQQVryPg" target="__mbM4LvaEfCLP4WQQVryPg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_qfqe0LTlEfCLP4WQQVryPg" type="ControlFlow_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_JdGM0LWVEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_qfrF4LTlEfCLP4WQQVryPg" x="-9" y="19"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_qftiILTlEfCLP4WQQVryPg" type="ControlFlow_WeightLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_JdYgsLWVEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_qftiIbTlEfCLP4WQQVryPg" x="1" y="18"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_qftiIrTlEfCLP4WQQVryPg" type="ControlFlow_GuardLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_Jdo_YLWVEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_qftiI7TlEfCLP4WQQVryPg" x="9" y="19"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_qftiJLTlEfCLP4WQQVryPg" type="ControlFlow_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_Jd43ALWVEfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_qftiJbTlEfCLP4WQQVryPg" x="-2" y="-17"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_qfhU4LTlEfCLP4WQQVryPg"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_qaC_ALTlEfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_qfhU4bTlEfCLP4WQQVryPg" points="[456, 280, -643984, -643984]$[480, 315, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_qmpQkLTlEfCLP4WQQVryPg" id="(1.0,0.5)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_qmqesLTlEfCLP4WQQVryPg" id="(0.0,0.5)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_TUCcwLWVEfCLP4WQQVryPg" type="ControlFlow_Edge" source="_GX4IULWVEfCLP4WQQVryPg" target="_O5jdQLTLEfCOjOoqn6dBww">
+      <children xmi:type="notation:DecorationNode" xmi:id="_TUPRELWVEfCLP4WQQVryPg" type="ControlFlow_NameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_TUQfMLWVEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_TURtULWVEfCLP4WQQVryPg" type="ControlFlow_WeightLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_TURtUbWVEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_TURtUrWVEfCLP4WQQVryPg" type="ControlFlow_GuardLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_TURtU7WVEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_TURtVLWVEfCLP4WQQVryPg" type="ControlFlow_StereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_TURtVbWVEfCLP4WQQVryPg" y="-20"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_TUDD0LWVEfCLP4WQQVryPg"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_TOsCsLWVEfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_TUDD0bWVEfCLP4WQQVryPg" points="[609, 280, -643984, -643984]$[660, 221, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TYTRsLWVEfCLP4WQQVryPg" id="(1.0,0.5)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TYUf0LWVEfCLP4WQQVryPg" id="(0.2,0.7)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_-Br48Lu0EfCLP4WQQVryPg" type="ControlFlow_Edge" source="_5HhsELu0EfCLP4WQQVryPg" target="_iLozILTlEfCLP4WQQVryPg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_-B5UULu0EfCLP4WQQVryPg" type="ControlFlow_NameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_-B57YLu0EfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_-B7JgLu0EfCLP4WQQVryPg" type="ControlFlow_WeightLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_-B7wkLu0EfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_-B7wkbu0EfCLP4WQQVryPg" type="ControlFlow_GuardLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_-B7wkru0EfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_-B7wk7u0EfCLP4WQQVryPg" type="ControlFlow_StereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_-B7wlLu0EfCLP4WQQVryPg" y="-20"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_-BtHELu0EfCLP4WQQVryPg"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_98ZwULu0EfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_-BtHEbu0EfCLP4WQQVryPg" points="[350, 340, -643984, -643984]$[389, 300, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_-GKwULu0EfCLP4WQQVryPg" id="(1.0,0.5)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_-GLXYLu0EfCLP4WQQVryPg" id="(0.11842105263157894,1.0)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_AUfCALu1EfCLP4WQQVryPg" type="ControlFlow_Edge" source="_5HhsELu0EfCLP4WQQVryPg" target="_0p6RQLu0EfCLP4WQQVryPg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_AUmWwLu1EfCLP4WQQVryPg" type="ControlFlow_NameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_AUm90Lu1EfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_AUoL8Lu1EfCLP4WQQVryPg" type="ControlFlow_WeightLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_AUozALu1EfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_AUpaELu1EfCLP4WQQVryPg" type="ControlFlow_GuardLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_AUpaEbu1EfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_AUpaEru1EfCLP4WQQVryPg" type="ControlFlow_StereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_AUpaE7u1EfCLP4WQQVryPg" y="-20"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_AUfCAbu1EfCLP4WQQVryPg"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_ATQS8Lu1EfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_AUfpELu1EfCLP4WQQVryPg" points="[343, 360, -643984, -643984]$[420, 419, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AXrf8Lu1EfCLP4WQQVryPg" id="(0.85,0.6666666666666666)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AXsHALu1EfCLP4WQQVryPg" id="(0.0,0.475)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_DkQwsLu1EfCLP4WQQVryPg" type="ControlFlow_Edge" source="_0p6RQLu0EfCLP4WQQVryPg" target="_O5jdQLTLEfCOjOoqn6dBww">
+      <children xmi:type="notation:DecorationNode" xmi:id="_Dkc98Lu1EfCLP4WQQVryPg" type="ControlFlow_NameLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_EJb6ULu1EfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_DkdlALu1EfCLP4WQQVryPg" x="-51" y="18"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_DkfaMLu1EfCLP4WQQVryPg" type="ControlFlow_WeightLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_EJztwLu1EfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_DkfaMbu1EfCLP4WQQVryPg" y="19"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_DkgBQLu1EfCLP4WQQVryPg" type="ControlFlow_GuardLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_EKCXQLu1EfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_DkgBQbu1EfCLP4WQQVryPg" x="51" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_DkgBQru1EfCLP4WQQVryPg" type="ControlFlow_StereotypeLabel">
+        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_EKRAwLu1EfCLP4WQQVryPg" name="IS_UPDATED_POSITION" booleanValue="true"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_DkgBQ7u1EfCLP4WQQVryPg" x="-1" y="-18"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_DkRXwLu1EfCLP4WQQVryPg"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_DfGj4Lu1EfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_DkRXwbu1EfCLP4WQQVryPg" points="[498, 420, -643984, -643984]$[660, 400, -643984, -643984]$[673, 220, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_DoaQ4Lu1EfCLP4WQQVryPg" id="(1.0,0.5)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Doa38Lu1EfCLP4WQQVryPg" id="(0.2,0.7)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_F-9cQLvbEfCLP4WQQVryPg" type="ControlFlow_Edge" source="__mbM4LvaEfCLP4WQQVryPg" target="_GX4IULWVEfCLP4WQQVryPg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_F_K3oLvbEfCLP4WQQVryPg" type="ControlFlow_NameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_F_MFwLvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_F_NT4LvbEfCLP4WQQVryPg" type="ControlFlow_WeightLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_F_N68LvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_F_N68bvbEfCLP4WQQVryPg" type="ControlFlow_GuardLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_F_N68rvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_F_N687vbEfCLP4WQQVryPg" type="ControlFlow_StereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_F_OiALvbEfCLP4WQQVryPg" y="-20"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_F--qYLvbEfCLP4WQQVryPg"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_F47swLvbEfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_F--qYbvbEfCLP4WQQVryPg" points="[490, 300, -643984, -643984]$[520, 280, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_GDZQULvbEfCLP4WQQVryPg" id="(0.85,0.6666666666666666)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_GDZ3YLvbEfCLP4WQQVryPg" id="(0.0,0.5)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_QPGPULvbEfCLP4WQQVryPg" type="ControlFlow_Edge" source="__mbM4LvaEfCLP4WQQVryPg" target="_JizWcLvbEfCLP4WQQVryPg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_QPOLILvbEfCLP4WQQVryPg" type="ControlFlow_NameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_QPOyMLvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_QPQAULvbEfCLP4WQQVryPg" type="ControlFlow_WeightLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_QPQnYLvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_QPQnYbvbEfCLP4WQQVryPg" type="ControlFlow_GuardLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_QPQnYrvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_QPQnY7vbEfCLP4WQQVryPg" type="ControlFlow_StereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_QPQnZLvbEfCLP4WQQVryPg" y="-20"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_QPGPUbvbEfCLP4WQQVryPg"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_QOYdoLvbEfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QPGPUrvbEfCLP4WQQVryPg" points="[490, 300, -643984, -643984]$[520, 228, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QR1aQLvbEfCLP4WQQVryPg" id="(0.5,0.0)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QR2BULvbEfCLP4WQQVryPg" id="(0.0,0.7)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_RGSWALvbEfCLP4WQQVryPg" type="ControlFlow_Edge" source="__mbM4LvaEfCLP4WQQVryPg" target="_NwwkoLvbEfCLP4WQQVryPg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_RGS9ELvbEfCLP4WQQVryPg" type="ControlFlow_NameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_RGS9EbvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_RGS9ErvbEfCLP4WQQVryPg" type="ControlFlow_WeightLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_RGS9E7vbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_RGS9FLvbEfCLP4WQQVryPg" type="ControlFlow_GuardLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_RGS9FbvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_RGS9FrvbEfCLP4WQQVryPg" type="ControlFlow_StereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_RGS9F7vbEfCLP4WQQVryPg" y="-20"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_RGSWAbvbEfCLP4WQQVryPg"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_RF6ikLvbEfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_RGSWArvbEfCLP4WQQVryPg" points="[483, 320, -643984, -643984]$[520, 356, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_RG4L4LvbEfCLP4WQQVryPg" id="(0.1666666666666657,0.6666666666666666)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_RG4L4bvbEfCLP4WQQVryPg" id="(0.0,0.4)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SD-tULvbEfCLP4WQQVryPg" type="ControlFlow_Edge" source="_JizWcLvbEfCLP4WQQVryPg" target="_O5jdQLTLEfCOjOoqn6dBww">
+      <children xmi:type="notation:DecorationNode" xmi:id="_SEKTgLvbEfCLP4WQQVryPg" type="ControlFlow_NameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_SEK6kLvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_SEMvwLvbEfCLP4WQQVryPg" type="ControlFlow_WeightLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_SEMvwbvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_SENW0LvbEfCLP4WQQVryPg" type="ControlFlow_GuardLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_SENW0bvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_SENW0rvbEfCLP4WQQVryPg" type="ControlFlow_StereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_SENW07vbEfCLP4WQQVryPg" y="-20"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_SD_UYLvbEfCLP4WQQVryPg"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_R-a34LvbEfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SD_UYbvbEfCLP4WQQVryPg" points="[554, 240, -643984, -643984]$[660, 209, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SIVo4LvbEfCLP4WQQVryPg" id="(1.0,0.5)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SIWP8LvbEfCLP4WQQVryPg" id="(0.2,0.3)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_VYaSgLvbEfCLP4WQQVryPg" type="ControlFlow_Edge" source="_NwwkoLvbEfCLP4WQQVryPg" target="_O5jdQLTLEfCOjOoqn6dBww">
+      <children xmi:type="notation:DecorationNode" xmi:id="_VYl4sLvbEfCLP4WQQVryPg" type="ControlFlow_NameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_VYmfwLvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_VYoU8LvbEfCLP4WQQVryPg" type="ControlFlow_WeightLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_VYoU8bvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_VYo8ALvbEfCLP4WQQVryPg" type="ControlFlow_GuardLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_VYo8AbvbEfCLP4WQQVryPg" y="20"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_VYo8ArvbEfCLP4WQQVryPg" type="ControlFlow_StereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_VYo8A7vbEfCLP4WQQVryPg" y="-20"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_VYa5kLvbEfCLP4WQQVryPg"/>
+      <element xmi:type="uml:ControlFlow" href="PetClinic-Microservices.uml#_VTAOELvbEfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_VYa5kbvbEfCLP4WQQVryPg" points="[584, 360, -643984, -643984]$[660, 221, -643984, -643984]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_VcndELvbEfCLP4WQQVryPg" id="(1.0,0.5)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_VcorMLvbEfCLP4WQQVryPg" id="(0.2,0.7)"/>
+    </edges>
+  </notation:Diagram>
+  <notation:Diagram xmi:id="_HnsS4LP_EfCOjOoqn6dBww" type="PapyrusUMLSequenceDiagram" name="PC-M-MRP-IW-Homepage" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_HnsS4bP_EfCOjOoqn6dBww" type="Interaction_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_HnsS4rP_EfCOjOoqn6dBww" type="Interaction_NameLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_HnsS47P_EfCOjOoqn6dBww" type="Interaction_SubfragmentCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_zyURoLQDEfCOjOoqn6dBww" type="Lifeline_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_zyZxMLQDEfCOjOoqn6dBww" type="Lifeline_NameLabel"/>
+          <children xmi:type="notation:Shape" xmi:id="_5aT04LQDEfCOjOoqn6dBww" type="BehaviorExecutionSpecification_Shape">
+            <children xmi:type="notation:DecorationNode" xmi:id="_5aXfQLQDEfCOjOoqn6dBww" type="BehaviorExecutionSpecification_Behavior">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_5aXfQbQDEfCOjOoqn6dBww" x="18" y="18"/>
+            </children>
+            <element xmi:type="uml:BehaviorExecutionSpecification" href="PetClinic-Microservices.uml#_5Z8BcLQDEfCOjOoqn6dBww"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5aT04bQDEfCOjOoqn6dBww" x="40" y="150" width="20" height="100"/>
+          </children>
+          <element xmi:type="uml:Lifeline" href="PetClinic-Microservices.uml#_zw58YLQDEfCOjOoqn6dBww"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zyURobQDEfCOjOoqn6dBww" x="234" y="10"/>
+        </children>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_HnsS5LP_EfCOjOoqn6dBww"/>
+      </children>
+      <element xmi:type="uml:Interaction" href="PetClinic-Microservices.uml#_EUYIALP_EfCOjOoqn6dBww"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_HnsS5bP_EfCOjOoqn6dBww"/>
+    </children>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_HnsS5rP_EfCOjOoqn6dBww" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_HnsS57P_EfCOjOoqn6dBww"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_HnsS6LP_EfCOjOoqn6dBww" diagramKindId="org.eclipse.papyrus.uml.diagram.sequence">
+      <owner xmi:type="uml:Model" href="PetClinic-Microservices.uml#_8g7GgKKqEfCuBILNeceiEg"/>
+    </styles>
+    <element xmi:type="uml:Interaction" href="PetClinic-Microservices.uml#_EUYIALP_EfCOjOoqn6dBww"/>
+  </notation:Diagram>
+  <notation:Diagram xmi:id="_mt9KwLTEEfCOjOoqn6dBww" type="PapyrusUMLSequenceDiagram" name="PC-M-MRP-IW-OwnersSearchPage" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_mt9KwbTEEfCOjOoqn6dBww" type="Interaction_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_mt9KwrTEEfCOjOoqn6dBww" type="Interaction_NameLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_mt9Kw7TEEfCOjOoqn6dBww" type="Interaction_SubfragmentCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_rJpS8LTEEfCOjOoqn6dBww" type="Lifeline_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_rJxOwLTEEfCOjOoqn6dBww" type="Lifeline_NameLabel"/>
+          <children xmi:type="notation:Shape" xmi:id="_yEI_4LTEEfCOjOoqn6dBww" type="BehaviorExecutionSpecification_Shape">
+            <children xmi:type="notation:DecorationNode" xmi:id="_yEPtkLTEEfCOjOoqn6dBww" type="BehaviorExecutionSpecification_Behavior">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_yEQUoLTEEfCOjOoqn6dBww" x="18" y="18"/>
+            </children>
+            <element xmi:type="uml:BehaviorExecutionSpecification" href="PetClinic-Microservices.uml#_yDii8LTEEfCOjOoqn6dBww"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_yEI_4bTEEfCOjOoqn6dBww" x="40" y="130" width="20" height="180"/>
+          </children>
+          <element xmi:type="uml:Lifeline" href="PetClinic-Microservices.uml#_rJVJ4LTEEfCOjOoqn6dBww"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_rJp6ALTEEfCOjOoqn6dBww" x="274" y="10"/>
+        </children>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mt9KxLTEEfCOjOoqn6dBww"/>
+      </children>
+      <element xmi:type="uml:Interaction" href="PetClinic-Microservices.uml#_hTTf8LTEEfCOjOoqn6dBww"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mt9KxbTEEfCOjOoqn6dBww"/>
+    </children>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_mt9KxrTEEfCOjOoqn6dBww" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_mt9Kx7TEEfCOjOoqn6dBww"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_mt9KyLTEEfCOjOoqn6dBww" diagramKindId="org.eclipse.papyrus.uml.diagram.sequence">
+      <owner xmi:type="uml:Model" href="PetClinic-Microservices.uml#_8g7GgKKqEfCuBILNeceiEg"/>
+    </styles>
+    <element xmi:type="uml:Interaction" href="PetClinic-Microservices.uml#_hTTf8LTEEfCOjOoqn6dBww"/>
+  </notation:Diagram>
+  <notation:Diagram xmi:id="_RrT4QLsjEfCLP4WQQVryPg" type="PapyrusUMLSequenceDiagram" name="PC-M-MRP-IW-AddOwner" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_RrT4QbsjEfCLP4WQQVryPg" type="Interaction_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_RrT4QrsjEfCLP4WQQVryPg" type="Interaction_NameLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_RrT4Q7sjEfCLP4WQQVryPg" type="Interaction_SubfragmentCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_V6P94LsjEfCLP4WQQVryPg" type="Lifeline_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_V6ToQLsjEfCLP4WQQVryPg" type="Lifeline_NameLabel"/>
+          <children xmi:type="notation:Shape" xmi:id="_4SYPMLskEfCLP4WQQVryPg" type="BehaviorExecutionSpecification_Shape">
+            <children xmi:type="notation:DecorationNode" xmi:id="_4SiAMLskEfCLP4WQQVryPg" type="BehaviorExecutionSpecification_Behavior">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_4SinQLskEfCLP4WQQVryPg" x="18" y="18"/>
+            </children>
+            <element xmi:type="uml:BehaviorExecutionSpecification" href="PetClinic-Microservices.uml#_4Pky0LskEfCLP4WQQVryPg"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4SYPMbskEfCLP4WQQVryPg" x="40" y="70" width="20" height="381"/>
+          </children>
+          <element xmi:type="uml:Lifeline" href="PetClinic-Microservices.uml#_V55YkLsjEfCLP4WQQVryPg"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_V6Qk8LsjEfCLP4WQQVryPg" x="154" y="10"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_WRvQ0LsjEfCLP4WQQVryPg" type="Lifeline_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_WRxGALsjEfCLP4WQQVryPg" type="Lifeline_NameLabel"/>
+          <children xmi:type="notation:Shape" xmi:id="_5x46ILskEfCLP4WQQVryPg" type="BehaviorExecutionSpecification_Shape">
+            <children xmi:type="notation:DecorationNode" xmi:id="_5x5hMLskEfCLP4WQQVryPg" type="BehaviorExecutionSpecification_Behavior">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_5x5hMbskEfCLP4WQQVryPg" x="18" y="18"/>
+            </children>
+            <element xmi:type="uml:BehaviorExecutionSpecification" href="PetClinic-Microservices.uml#_5xwXQLskEfCLP4WQQVryPg"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5x46IbskEfCLP4WQQVryPg" x="40" y="90" width="20" height="61"/>
+          </children>
+          <children xmi:type="notation:Shape" xmi:id="_6xlckLskEfCLP4WQQVryPg" type="BehaviorExecutionSpecification_Shape">
+            <children xmi:type="notation:DecorationNode" xmi:id="_6xmDoLskEfCLP4WQQVryPg" type="BehaviorExecutionSpecification_Behavior">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_6xmDobskEfCLP4WQQVryPg" x="18" y="18"/>
+            </children>
+            <element xmi:type="uml:BehaviorExecutionSpecification" href="PetClinic-Microservices.uml#_6xfV8LskEfCLP4WQQVryPg"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6xlckbskEfCLP4WQQVryPg" x="40" y="270" width="20" height="141"/>
+          </children>
+          <element xmi:type="uml:Lifeline" href="PetClinic-Microservices.uml#_WRhOYLsjEfCLP4WQQVryPg"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WRvQ0bsjEfCLP4WQQVryPg" x="334" y="10"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_WnF1wLsjEfCLP4WQQVryPg" type="Lifeline_Shape">
+          <children xmi:type="notation:DecorationNode" xmi:id="_WnGc0LsjEfCLP4WQQVryPg" type="Lifeline_NameLabel"/>
+          <children xmi:type="notation:Shape" xmi:id="_8a0rQLskEfCLP4WQQVryPg" type="BehaviorExecutionSpecification_Shape">
+            <children xmi:type="notation:DecorationNode" xmi:id="_8a7Y8LskEfCLP4WQQVryPg" type="BehaviorExecutionSpecification_Behavior">
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_8a8AALskEfCLP4WQQVryPg" x="18" y="18"/>
+            </children>
+            <element xmi:type="uml:BehaviorExecutionSpecification" href="PetClinic-Microservices.uml#_8aSfwLskEfCLP4WQQVryPg"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_8a0rQbskEfCLP4WQQVryPg" x="40" y="310" width="20" height="61"/>
+          </children>
+          <element xmi:type="uml:Lifeline" href="PetClinic-Microservices.uml#_Wm9S4LsjEfCLP4WQQVryPg"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WnF1wbsjEfCLP4WQQVryPg" x="514" y="10"/>
+        </children>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_RrT4RLsjEfCLP4WQQVryPg"/>
+      </children>
+      <element xmi:type="uml:Interaction" href="PetClinic-Microservices.uml#_PdfV0LsjEfCLP4WQQVryPg"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_RrT4RbsjEfCLP4WQQVryPg"/>
+    </children>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_RrT4RrsjEfCLP4WQQVryPg" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_RrT4R7sjEfCLP4WQQVryPg"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_RrT4SLsjEfCLP4WQQVryPg" diagramKindId="org.eclipse.papyrus.uml.diagram.sequence">
+      <owner xmi:type="uml:Model" href="PetClinic-Microservices.uml#_8g7GgKKqEfCuBILNeceiEg"/>
+    </styles>
+    <element xmi:type="uml:Interaction" href="PetClinic-Microservices.uml#_PdfV0LsjEfCLP4WQQVryPg"/>
+    <edges xmi:type="notation:Connector" xmi:id="_o9prcLslEfCLP4WQQVryPg" type="Message_SynchEdge" source="_V6P94LsjEfCLP4WQQVryPg" target="_WRvQ0LsjEfCLP4WQQVryPg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_o9vLALslEfCLP4WQQVryPg" type="Message_SynchNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_o9vyELslEfCLP4WQQVryPg" x="1" y="-13"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_o9xnQLslEfCLP4WQQVryPg" type="Message_SynchStereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_o9xnQbslEfCLP4WQQVryPg" x="1" y="-33"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_o9prcbslEfCLP4WQQVryPg"/>
+      <element xmi:type="uml:Message" href="PetClinic-Microservices.uml#_ozLg0LslEfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_o9prcrslEfCLP4WQQVryPg" points="[-10, -8, -190, 20]$[170, -28, -10, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_o_wkQLslEfCLP4WQQVryPg" id="(0.5,0.12857142857142856)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_o_xyYLslEfCLP4WQQVryPg" id="(0.5,0.12857142857142856)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_x3_JMLslEfCLP4WQQVryPg" type="Message_ReplyEdge" source="_WRvQ0LsjEfCLP4WQQVryPg" target="_V6P94LsjEfCLP4WQQVryPg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_x4CzkLslEfCLP4WQQVryPg" type="Message_ReplyNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_x4DaoLslEfCLP4WQQVryPg" x="1" y="-13"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_x4EowLslEfCLP4WQQVryPg" type="Message_ReplyStereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_x4FP0LslEfCLP4WQQVryPg" x="1" y="-33"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_x3_JMbslEfCLP4WQQVryPg"/>
+      <element xmi:type="uml:Message" href="PetClinic-Microservices.uml#_xyTX8LslEfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_x3_wQLslEfCLP4WQQVryPg" points="[-10, 7, 170, -40]$[-190, 47, -10, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_x7dT8LslEfCLP4WQQVryPg" id="(0.5,0.21428571428571427)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_x7eiELslEfCLP4WQQVryPg" id="(0.5,0.21428571428571427)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_kL-UoLuzEfCLP4WQQVryPg" type="Message_SynchEdge" source="_V6P94LsjEfCLP4WQQVryPg" target="_WRvQ0LsjEfCLP4WQQVryPg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_kMAJ0LuzEfCLP4WQQVryPg" type="Message_SynchNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_kMAw4LuzEfCLP4WQQVryPg" x="1" y="-13"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_kMB_ALuzEfCLP4WQQVryPg" type="Message_SynchStereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_kMB_AbuzEfCLP4WQQVryPg" x="1" y="-33"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_kL-UobuzEfCLP4WQQVryPg"/>
+      <element xmi:type="uml:Message" href="PetClinic-Microservices.uml#_kKqGALuzEfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_kL-UoruzEfCLP4WQQVryPg" points="[-10, -6, -190, -60]$[170, 54, -10, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kNOR0LuzEfCLP4WQQVryPg" id="(0.5,0.38571428571428573)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kNO44LuzEfCLP4WQQVryPg" id="(0.5,0.38571428571428573)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_rq5kULuzEfCLP4WQQVryPg" type="Message_SynchEdge" source="_WRvQ0LsjEfCLP4WQQVryPg" target="_WnF1wLsjEfCLP4WQQVryPg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_rq9OsLuzEfCLP4WQQVryPg" type="Message_SynchNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_rq91wLuzEfCLP4WQQVryPg" x="1" y="-13"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_rq_D4LuzEfCLP4WQQVryPg" type="Message_SynchStereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_rq_D4buzEfCLP4WQQVryPg" x="1" y="-33"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_rq6LYLuzEfCLP4WQQVryPg"/>
+      <element xmi:type="uml:Message" href="PetClinic-Microservices.uml#_rkqZcLuzEfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_rq6LYbuzEfCLP4WQQVryPg" points="[-10, -2, -190, 20]$[170, -22, -10, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_rubZcLuzEfCLP4WQQVryPg" id="(0.5,0.44285714285714284)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_rucnkLuzEfCLP4WQQVryPg" id="(0.5,0.44285714285714284)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_1ggXgLuzEfCLP4WQQVryPg" type="Message_ReplyEdge" source="_WnF1wLsjEfCLP4WQQVryPg" target="_WRvQ0LsjEfCLP4WQQVryPg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_1gizwLuzEfCLP4WQQVryPg" type="Message_ReplyNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_1gja0LuzEfCLP4WQQVryPg" x="1" y="-13"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_1gko8LuzEfCLP4WQQVryPg" type="Message_ReplyStereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_1gko8buzEfCLP4WQQVryPg" x="1" y="-33"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_1ggXgbuzEfCLP4WQQVryPg"/>
+      <element xmi:type="uml:Message" href="PetClinic-Microservices.uml#_1cqZULuzEfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1ggXgruzEfCLP4WQQVryPg" points="[-10, 8, 170, -20]$[-190, 28, -10, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_1i7ZYLuzEfCLP4WQQVryPg" id="(0.5,0.5285714285714286)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_1i8AcLuzEfCLP4WQQVryPg" id="(0.5,0.5285714285714286)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_6bkjULuzEfCLP4WQQVryPg" type="Message_ReplyEdge" source="_WRvQ0LsjEfCLP4WQQVryPg" target="_V6P94LsjEfCLP4WQQVryPg">
+      <children xmi:type="notation:DecorationNode" xmi:id="_6bqC4LuzEfCLP4WQQVryPg" type="Message_ReplyNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_6bqp8LuzEfCLP4WQQVryPg" x="1" y="-13"/>
+      </children>
+      <children xmi:type="notation:DecorationNode" xmi:id="_6br4ELuzEfCLP4WQQVryPg" type="Message_ReplyStereotypeLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_6br4EbuzEfCLP4WQQVryPg" x="1" y="-33"/>
+      </children>
+      <styles xmi:type="notation:FontStyle" xmi:id="_6blKYLuzEfCLP4WQQVryPg"/>
+      <element xmi:type="uml:Message" href="PetClinic-Microservices.uml#_6Ww70LuzEfCLP4WQQVryPg"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6blKYbuzEfCLP4WQQVryPg" points="[-10, -2, 170, -60]$[-190, 58, -10, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_6emCILuzEfCLP4WQQVryPg" id="(0.5,0.5857142857142857)"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_6empMLuzEfCLP4WQQVryPg" id="(0.5,0.5857142857142857)"/>
+    </edges>
+  </notation:Diagram>
+  <notation:Diagram xmi:id="_1evjQO_EEfCB2dyLoEFXHw" type="PapyrusUMLClassDiagram" name="PC-M-MRP-OrganizationalView" measurementUnit="Pixel">
+    <children xmi:type="notation:Shape" xmi:id="_Dw3LgPVLEfCB2dyLoEFXHw" type="Package_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_Dw5AsPVLEfCB2dyLoEFXHw" type="Package_NameLabel"/>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_Dw5AsfVLEfCB2dyLoEFXHw" type="Package_PackagedElementCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_Lds7YPVLEfCB2dyLoEFXHw" type="Class_Shape_CN">
+          <children xmi:type="notation:DecorationNode" xmi:id="_Ldya8PVLEfCB2dyLoEFXHw" type="Class_NameLabel_CN"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_Ldya8fVLEfCB2dyLoEFXHw" type="Class_FloatingNameLabel_CN">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_LdzCAPVLEfCB2dyLoEFXHw" y="15"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_Ld0QIPVLEfCB2dyLoEFXHw" type="Class_AttributeCompartment_CN">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_Ld0QIfVLEfCB2dyLoEFXHw"/>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_Ld0QIvVLEfCB2dyLoEFXHw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_Ld0QI_VLEfCB2dyLoEFXHw"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ld0QJPVLEfCB2dyLoEFXHw"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_Ld03MPVLEfCB2dyLoEFXHw" type="Class_OperationCompartment_CN">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_Ld03MfVLEfCB2dyLoEFXHw"/>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_Ld03MvVLEfCB2dyLoEFXHw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_Ld03M_VLEfCB2dyLoEFXHw"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ld03NPVLEfCB2dyLoEFXHw"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_Ld03NfVLEfCB2dyLoEFXHw" type="Class_NestedClassifierCompartment_CN">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_Ld03NvVLEfCB2dyLoEFXHw"/>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_Ld03N_VLEfCB2dyLoEFXHw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_Ld03OPVLEfCB2dyLoEFXHw"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ld03OfVLEfCB2dyLoEFXHw"/>
+          </children>
+          <element xmi:type="uml:Class" href="PetClinic-Microservices.uml#_Lb3IUPVLEfCB2dyLoEFXHw"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Lds7YfVLEfCB2dyLoEFXHw" x="34" y="40"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_NRxhEPVLEfCB2dyLoEFXHw" type="Class_Shape_CN">
+          <children xmi:type="notation:DecorationNode" xmi:id="_NRyIIPVLEfCB2dyLoEFXHw" type="Class_NameLabel_CN"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_NRyIIfVLEfCB2dyLoEFXHw" type="Class_FloatingNameLabel_CN">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_NRyIIvVLEfCB2dyLoEFXHw" y="15"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_NRyII_VLEfCB2dyLoEFXHw" type="Class_AttributeCompartment_CN">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_NRyIJPVLEfCB2dyLoEFXHw"/>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_NRyIJfVLEfCB2dyLoEFXHw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_NRyIJvVLEfCB2dyLoEFXHw"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NRyIJ_VLEfCB2dyLoEFXHw"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_NRyIKPVLEfCB2dyLoEFXHw" type="Class_OperationCompartment_CN">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_NRyIKfVLEfCB2dyLoEFXHw"/>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_NRyIKvVLEfCB2dyLoEFXHw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_NRyIK_VLEfCB2dyLoEFXHw"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NRyILPVLEfCB2dyLoEFXHw"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_NRyILfVLEfCB2dyLoEFXHw" type="Class_NestedClassifierCompartment_CN">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_NRyILvVLEfCB2dyLoEFXHw"/>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_NRyIL_VLEfCB2dyLoEFXHw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_NRyIMPVLEfCB2dyLoEFXHw"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NRyIMfVLEfCB2dyLoEFXHw"/>
+          </children>
+          <element xmi:type="uml:Class" href="PetClinic-Microservices.uml#_NRnJAPVLEfCB2dyLoEFXHw"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NRxhEfVLEfCB2dyLoEFXHw" x="194" y="40"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_GSElME1JEfGnpY0W_9FHcg" type="Class_Shape_CN">
+          <children xmi:type="notation:DecorationNode" xmi:id="_GSHBcE1JEfGnpY0W_9FHcg" type="Class_NameLabel_CN"/>
+          <children xmi:type="notation:DecorationNode" xmi:id="_GSHBcU1JEfGnpY0W_9FHcg" type="Class_FloatingNameLabel_CN">
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_GSHBck1JEfGnpY0W_9FHcg" y="15"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_GSHogE1JEfGnpY0W_9FHcg" type="Class_AttributeCompartment_CN">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_GSHogU1JEfGnpY0W_9FHcg"/>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_GSHogk1JEfGnpY0W_9FHcg"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_GSHog01JEfGnpY0W_9FHcg"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GSHohE1JEfGnpY0W_9FHcg"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_GSKEwE1JEfGnpY0W_9FHcg" type="Class_OperationCompartment_CN">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_GSKEwU1JEfGnpY0W_9FHcg"/>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_GSKEwk1JEfGnpY0W_9FHcg"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_GSKEw01JEfGnpY0W_9FHcg"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GSKExE1JEfGnpY0W_9FHcg"/>
+          </children>
+          <children xmi:type="notation:BasicCompartment" xmi:id="_GSKExU1JEfGnpY0W_9FHcg" type="Class_NestedClassifierCompartment_CN">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_GSKExk1JEfGnpY0W_9FHcg"/>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_GSKEx01JEfGnpY0W_9FHcg"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_GSKEyE1JEfGnpY0W_9FHcg"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GSKEyU1JEfGnpY0W_9FHcg"/>
+          </children>
+          <element xmi:type="uml:Class" href="PetClinic-Microservices.uml#_GReIQE1JEfGnpY0W_9FHcg"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GSElMU1JEfGnpY0W_9FHcg" x="114" y="180"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_xqvaYIWnEfGCoYT4ZzfC7Q" type="StereotypeComment">
+          <styles xmi:type="notation:TitleStyle" xmi:id="_xqvaYYWnEfGCoYT4ZzfC7Q"/>
+          <styles xmi:type="notation:EObjectValueStyle" xmi:id="_xqvaY4WnEfGCoYT4ZzfC7Q" name="BASE_ELEMENT">
+            <eObjectValue xmi:type="uml:Class" href="PetClinic-Microservices.uml#_Lb3IUPVLEfCB2dyLoEFXHw"/>
+          </styles>
+          <element xsi:nil="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_xqvaYoWnEfGCoYT4ZzfC7Q" x="234" y="40"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_xq2IFYWnEfGCoYT4ZzfC7Q" type="StereotypeComment">
+          <styles xmi:type="notation:TitleStyle" xmi:id="_xq2IFoWnEfGCoYT4ZzfC7Q"/>
+          <styles xmi:type="notation:EObjectValueStyle" xmi:id="_xq2IGIWnEfGCoYT4ZzfC7Q" name="BASE_ELEMENT">
+            <eObjectValue xmi:type="uml:Class" href="PetClinic-Microservices.uml#_NRnJAPVLEfCB2dyLoEFXHw"/>
+          </styles>
+          <element xsi:nil="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_xq2IF4WnEfGCoYT4ZzfC7Q" x="394" y="40"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_xq9c0oWnEfGCoYT4ZzfC7Q" type="StereotypeComment">
+          <styles xmi:type="notation:TitleStyle" xmi:id="_xq9c04WnEfGCoYT4ZzfC7Q"/>
+          <styles xmi:type="notation:EObjectValueStyle" xmi:id="_xq9c1YWnEfGCoYT4ZzfC7Q" name="BASE_ELEMENT">
+            <eObjectValue xmi:type="uml:Class" href="PetClinic-Microservices.uml#_GReIQE1JEfGnpY0W_9FHcg"/>
+          </styles>
+          <element xsi:nil="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_xq9c1IWnEfGCoYT4ZzfC7Q" x="314" y="180"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_Dw5AsvVLEfCB2dyLoEFXHw"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Dw5As_VLEfCB2dyLoEFXHw"/>
+      </children>
+      <element xmi:type="uml:Package" href="PetClinic-Microservices.uml#_DwqXMPVLEfCB2dyLoEFXHw"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Dw3ykPVLEfCB2dyLoEFXHw" x="60" y="200" width="361" height="341"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_gTCJEGiaEfGRVLpoh9W61Q" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_gTDXMGiaEfGRVLpoh9W61Q" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_gTDXMWiaEfGRVLpoh9W61Q" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_gTDXMmiaEfGRVLpoh9W61Q" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_gTDXM2iaEfGRVLpoh9W61Q" type="Class_AttributeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_gTD-QGiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_gTD-QWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_gTD-QmiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_gTD-Q2iaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_gTD-RGiaEfGRVLpoh9W61Q" type="Class_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_gTD-RWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_gTD-RmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_gTD-R2iaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_gTD-SGiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_gTD-SWiaEfGRVLpoh9W61Q" type="Class_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_gTD-SmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_gTD-S2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_gTD-TGiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_gTD-TWiaEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Class" href="PetClinic-Microservices.uml#_gSZ28GiaEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_gTCJEWiaEfGRVLpoh9W61Q" x="220" y="40"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_nVCMMGiaEfGRVLpoh9W61Q" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_nVCzQGiaEfGRVLpoh9W61Q" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_nVCzQWiaEfGRVLpoh9W61Q" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_nVCzQmiaEfGRVLpoh9W61Q" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_nVCzQ2iaEfGRVLpoh9W61Q" type="Class_AttributeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_nVCzRGiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_nVCzRWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_nVCzRmiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nVCzR2iaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_nVCzSGiaEfGRVLpoh9W61Q" type="Class_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_nVCzSWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_nVCzSmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_nVCzS2iaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nVCzTGiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_nVCzTWiaEfGRVLpoh9W61Q" type="Class_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_nVCzTmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_nVCzT2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_nVCzUGiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nVCzUWiaEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Class" href="PetClinic-Microservices.uml#_nU-h0GiaEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nVCMMWiaEfGRVLpoh9W61Q" x="340" y="40"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_qXVfkGiaEfGRVLpoh9W61Q" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_qXVfkmiaEfGRVLpoh9W61Q" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_qXVfk2iaEfGRVLpoh9W61Q" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_qXVflGiaEfGRVLpoh9W61Q" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_qXVflWiaEfGRVLpoh9W61Q" type="Class_AttributeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_qXVflmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_qXVfl2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_qXVfmGiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qXVfmWiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_qXVfmmiaEfGRVLpoh9W61Q" type="Class_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_qXVfm2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_qXVfnGiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_qXVfnWiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qXVfnmiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_qXVfn2iaEfGRVLpoh9W61Q" type="Class_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_qXVfoGiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_qXVfoWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_qXVfomiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qXVfo2iaEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Class" href="PetClinic-Microservices.uml#_qXM8sGiaEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qXVfkWiaEfGRVLpoh9W61Q" x="460" y="40"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_r_1HYGiaEfGRVLpoh9W61Q" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_r_1ucGiaEfGRVLpoh9W61Q" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_r_1ucWiaEfGRVLpoh9W61Q" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_r_1ucmiaEfGRVLpoh9W61Q" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_r_1uc2iaEfGRVLpoh9W61Q" type="Class_AttributeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_r_1udGiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_r_1udWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_r_1udmiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_r_1ud2iaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_r_1ueGiaEfGRVLpoh9W61Q" type="Class_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_r_1ueWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_r_1uemiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_r_1ue2iaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_r_1ufGiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_r_1ufWiaEfGRVLpoh9W61Q" type="Class_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_r_1ufmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_r_1uf2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_r_1ugGiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_r_1ugWiaEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Class" href="PetClinic-Microservices.uml#_r_yrIGiaEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_r_1HYWiaEfGRVLpoh9W61Q" x="580" y="40"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_uF_ioGiaEfGRVLpoh9W61Q" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_uF_iomiaEfGRVLpoh9W61Q" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_uF_io2iaEfGRVLpoh9W61Q" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_uF_ipGiaEfGRVLpoh9W61Q" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_uF_ipWiaEfGRVLpoh9W61Q" type="Class_AttributeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_uF_ipmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_uF_ip2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_uF_iqGiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uF_iqWiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_uF_iqmiaEfGRVLpoh9W61Q" type="Class_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_uF_iq2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_uF_irGiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_uF_irWiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uF_irmiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_uF_ir2iaEfGRVLpoh9W61Q" type="Class_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_uF_isGiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_uF_isWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_uF_ismiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uF_is2iaEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Class" href="PetClinic-Microservices.uml#_uF74QGiaEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_uF_ioWiaEfGRVLpoh9W61Q" x="700" y="40"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_v2XUEGiaEfGRVLpoh9W61Q" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_v2XUEmiaEfGRVLpoh9W61Q" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_v2XUE2iaEfGRVLpoh9W61Q" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_v2XUFGiaEfGRVLpoh9W61Q" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_v2XUFWiaEfGRVLpoh9W61Q" type="Class_AttributeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_v2XUFmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_v2XUF2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_v2XUGGiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_v2XUGWiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_v2X7IGiaEfGRVLpoh9W61Q" type="Class_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_v2X7IWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_v2X7ImiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_v2X7I2iaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_v2X7JGiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_v2X7JWiaEfGRVLpoh9W61Q" type="Class_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_v2X7JmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_v2X7J2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_v2X7KGiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_v2X7KWiaEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Class" href="PetClinic-Microservices.uml#_v2UQwGiaEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_v2XUEWiaEfGRVLpoh9W61Q" x="820" y="40"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_x1f6QGiaEfGRVLpoh9W61Q" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_x1ghUGiaEfGRVLpoh9W61Q" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_x1ghUWiaEfGRVLpoh9W61Q" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_x1ghUmiaEfGRVLpoh9W61Q" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_x1ghU2iaEfGRVLpoh9W61Q" type="Class_AttributeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_x1ghVGiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_x1ghVWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_x1ghVmiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_x1ghV2iaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_x1ghWGiaEfGRVLpoh9W61Q" type="Class_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_x1ghWWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_x1ghWmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_x1ghW2iaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_x1ghXGiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_x1ghXWiaEfGRVLpoh9W61Q" type="Class_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_x1ghXmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_x1ghX2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_x1ghYGiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_x1ghYWiaEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Class" href="PetClinic-Microservices.uml#_x1c28GiaEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_x1f6QWiaEfGRVLpoh9W61Q" x="940" y="40"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_0SuKoGiaEfGRVLpoh9W61Q" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_0SuKomiaEfGRVLpoh9W61Q" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_0SuxsGiaEfGRVLpoh9W61Q" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_0SuxsWiaEfGRVLpoh9W61Q" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_0SuxsmiaEfGRVLpoh9W61Q" type="Class_AttributeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_0Suxs2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_0SuxtGiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_0SuxtWiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0SuxtmiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_0Suxt2iaEfGRVLpoh9W61Q" type="Class_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_0SuxuGiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_0SuxuWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_0SuxumiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0Suxu2iaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_0SuxvGiaEfGRVLpoh9W61Q" type="Class_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_0SuxvWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_0SuxvmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_0Suxv2iaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0SuxwGiaEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Class" href="PetClinic-Microservices.uml#_0SruYGiaEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_0SuKoWiaEfGRVLpoh9W61Q" x="700" y="160"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_1tm0QGiaEfGRVLpoh9W61Q" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_1tnbUGiaEfGRVLpoh9W61Q" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_1tnbUWiaEfGRVLpoh9W61Q" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_1tnbUmiaEfGRVLpoh9W61Q" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_1tnbU2iaEfGRVLpoh9W61Q" type="Class_AttributeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_1tnbVGiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_1tnbVWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_1tnbVmiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1tnbV2iaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_1tnbWGiaEfGRVLpoh9W61Q" type="Class_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_1tnbWWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_1tnbWmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_1tnbW2iaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1tnbXGiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_1tnbXWiaEfGRVLpoh9W61Q" type="Class_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_1tnbXmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_1tnbX2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_1tnbYGiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1tnbYWiaEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Class" href="PetClinic-Microservices.uml#_1tk_EGiaEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1tm0QWiaEfGRVLpoh9W61Q" x="820" y="160"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_5_FQgGiaEfGRVLpoh9W61Q" type="Component_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_5_FQgmiaEfGRVLpoh9W61Q" type="Component_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_5_FQg2iaEfGRVLpoh9W61Q" type="Component_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_5_FQhGiaEfGRVLpoh9W61Q" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_5_FQhWiaEfGRVLpoh9W61Q" type="Component_AttributeCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_8cz3MGiaEfGRVLpoh9W61Q" type="Property_ComponentAttributeLabel">
+          <element xmi:type="uml:Property" href="PetClinic-Microservices.uml#_8coRAGiaEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_8cz3MWiaEfGRVLpoh9W61Q"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_5_FQhmiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_5_FQh2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_5_FQiGiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5_FQiWiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_5_FQimiaEfGRVLpoh9W61Q" type="Component_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_5_FQi2iaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_5_FQjGiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_5_FQjWiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5_FQjmiaEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_5_FQj2iaEfGRVLpoh9W61Q" type="Component_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_5_FQkGiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_5_FQkWiaEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_5_FQkmiaEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5_FQk2iaEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Component" href="PetClinic-Microservices.uml#_5--i0GiaEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5_FQgWiaEfGRVLpoh9W61Q" x="500" y="300" width="161" height="81"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_A0wu4GibEfGRVLpoh9W61Q" type="Component_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_A0wu4mibEfGRVLpoh9W61Q" type="Component_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_A0wu42ibEfGRVLpoh9W61Q" type="Component_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_A0wu5GibEfGRVLpoh9W61Q" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_A0wu5WibEfGRVLpoh9W61Q" type="Component_AttributeCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_Ch6NMGibEfGRVLpoh9W61Q" type="Property_ComponentAttributeLabel">
+          <element xmi:type="uml:Property" href="PetClinic-Microservices.uml#_Cht_8GibEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_Ch6NMWibEfGRVLpoh9W61Q"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_F_nDIGibEfGRVLpoh9W61Q" type="Property_ComponentAttributeLabel">
+          <element xmi:type="uml:Property" href="PetClinic-Microservices.uml#_F_d5MGibEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_F_nDIWibEfGRVLpoh9W61Q"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_A0wu5mibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_A0wu52ibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_A0wu6GibEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_A0wu6WibEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_A0wu6mibEfGRVLpoh9W61Q" type="Component_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_A0wu62ibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_A0wu7GibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_A0wu7WibEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_A0wu7mibEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_A0wu72ibEfGRVLpoh9W61Q" type="Component_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_A0wu8GibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_A0wu8WibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_A0wu8mibEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_A0wu82ibEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Component" href="PetClinic-Microservices.uml#_A0sdcGibEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_A0wu4WibEfGRVLpoh9W61Q" x="700" y="300"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_I7tA0GibEfGRVLpoh9W61Q" type="Component_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_I7tn4GibEfGRVLpoh9W61Q" type="Component_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_I7tn4WibEfGRVLpoh9W61Q" type="Component_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_I7tn4mibEfGRVLpoh9W61Q" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_I7tn42ibEfGRVLpoh9W61Q" type="Component_AttributeCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_MKOyUGibEfGRVLpoh9W61Q" type="Property_ComponentAttributeLabel">
+          <element xmi:type="uml:Property" href="PetClinic-Microservices.uml#_MKG2gGibEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_MKOyUWibEfGRVLpoh9W61Q"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_Ox_ewGibEfGRVLpoh9W61Q" type="Property_ComponentAttributeLabel">
+          <element xmi:type="uml:Property" href="PetClinic-Microservices.uml#_OxzRgGibEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_Ox_ewWibEfGRVLpoh9W61Q"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_RPs3UGibEfGRVLpoh9W61Q" type="Property_ComponentAttributeLabel">
+          <element xmi:type="uml:Property" href="PetClinic-Microservices.uml#_RPe04GibEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_RPs3UWibEfGRVLpoh9W61Q"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_Uqs-kGibEfGRVLpoh9W61Q" type="Property_ComponentAttributeLabel">
+          <element xmi:type="uml:Property" href="PetClinic-Microservices.uml#_UqgxUGibEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_Uqs-kWibEfGRVLpoh9W61Q"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_I7tn5GibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_I7tn5WibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_I7tn5mibEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_I7tn52ibEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_I7tn6GibEfGRVLpoh9W61Q" type="Component_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_I7tn6WibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_I7tn6mibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_I7tn62ibEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_I7tn7GibEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_I7tn7WibEfGRVLpoh9W61Q" type="Component_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_I7tn7mibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_I7tn72ibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_I7tn8GibEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_I7tn8WibEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Component" href="PetClinic-Microservices.uml#_I7qkkGibEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_I7tA0WibEfGRVLpoh9W61Q" x="920" y="300" height="141"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_Zl5tQGibEfGRVLpoh9W61Q" type="Component_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_Zl6UUGibEfGRVLpoh9W61Q" type="Component_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_Zl6UUWibEfGRVLpoh9W61Q" type="Component_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Zl6UUmibEfGRVLpoh9W61Q" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_Zl6UU2ibEfGRVLpoh9W61Q" type="Component_AttributeCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_bfV7IGibEfGRVLpoh9W61Q" type="Property_ComponentAttributeLabel">
+          <element xmi:type="uml:Property" href="PetClinic-Microservices.uml#_bfJG0GibEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_bfV7IWibEfGRVLpoh9W61Q"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_eUQSwGibEfGRVLpoh9W61Q" type="Property_ComponentAttributeLabel">
+          <element xmi:type="uml:Property" href="PetClinic-Microservices.uml#_eT_0EGibEfGRVLpoh9W61Q"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_eUQSwWibEfGRVLpoh9W61Q"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_Zl6UVGibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_Zl6UVWibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_Zl6UVmibEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Zl6UV2ibEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_Zl6UWGibEfGRVLpoh9W61Q" type="Component_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_Zl6UWWibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_Zl6UWmibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_Zl6UW2ibEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Zl6UXGibEfGRVLpoh9W61Q"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_Zl6UXWibEfGRVLpoh9W61Q" type="Component_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_Zl6UXmibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_Zl6UX2ibEfGRVLpoh9W61Q"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_Zl6UYGibEfGRVLpoh9W61Q"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Zl6UYWibEfGRVLpoh9W61Q"/>
+      </children>
+      <element xmi:type="uml:Component" href="PetClinic-Microservices.uml#_Zl2p8GibEfGRVLpoh9W61Q"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Zl5tQWibEfGRVLpoh9W61Q" x="480" y="400" width="201" height="121"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_xqlCUIWnEfGCoYT4ZzfC7Q" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_xqlCUYWnEfGCoYT4ZzfC7Q"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_xqlpYIWnEfGCoYT4ZzfC7Q" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Package" href="PetClinic-Microservices.uml#_DwqXMPVLEfCB2dyLoEFXHw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_xqlCUoWnEfGCoYT4ZzfC7Q" x="260" y="200"/>
+    </children>
+    <styles xmi:type="notation:StringValueStyle" xmi:id="_1ewKUO_EEfCB2dyLoEFXHw" name="diagram_compatibility_version" stringValue="1.4.0"/>
+    <styles xmi:type="notation:DiagramStyle" xmi:id="_1ewKUe_EEfCB2dyLoEFXHw"/>
+    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_1ewKUu_EEfCB2dyLoEFXHw" diagramKindId="org.eclipse.papyrus.uml.diagram.class">
+      <owner xmi:type="uml:Model" href="PetClinic-Microservices.uml#_8g7GgKKqEfCuBILNeceiEg"/>
+    </styles>
+    <element xmi:type="uml:Model" href="PetClinic-Microservices.uml#_8g7GgKKqEfCuBILNeceiEg"/>
+    <edges xmi:type="notation:Connector" xmi:id="_xqmQcIWnEfGCoYT4ZzfC7Q" type="StereotypeCommentLink" source="_Dw3LgPVLEfCB2dyLoEFXHw" target="_xqlCUIWnEfGCoYT4ZzfC7Q">
+      <styles xmi:type="notation:FontStyle" xmi:id="_xqmQcYWnEfGCoYT4ZzfC7Q"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_xqmQdYWnEfGCoYT4ZzfC7Q" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Package" href="PetClinic-Microservices.uml#_DwqXMPVLEfCB2dyLoEFXHw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_xqmQcoWnEfGCoYT4ZzfC7Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_xqmQc4WnEfGCoYT4ZzfC7Q"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_xqmQdIWnEfGCoYT4ZzfC7Q"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_xqvaZIWnEfGCoYT4ZzfC7Q" type="StereotypeCommentLink" source="_Lds7YPVLEfCB2dyLoEFXHw" target="_xqvaYIWnEfGCoYT4ZzfC7Q">
+      <styles xmi:type="notation:FontStyle" xmi:id="_xqvaZYWnEfGCoYT4ZzfC7Q"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_xqwBcoWnEfGCoYT4ZzfC7Q" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="PetClinic-Microservices.uml#_Lb3IUPVLEfCB2dyLoEFXHw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_xqvaZoWnEfGCoYT4ZzfC7Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_xqwBcIWnEfGCoYT4ZzfC7Q"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_xqwBcYWnEfGCoYT4ZzfC7Q"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_xq2vIIWnEfGCoYT4ZzfC7Q" type="StereotypeCommentLink" source="_NRxhEPVLEfCB2dyLoEFXHw" target="_xq2IFYWnEfGCoYT4ZzfC7Q">
+      <styles xmi:type="notation:FontStyle" xmi:id="_xq2vIYWnEfGCoYT4ZzfC7Q"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_xq2vJYWnEfGCoYT4ZzfC7Q" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="PetClinic-Microservices.uml#_NRnJAPVLEfCB2dyLoEFXHw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_xq2vIoWnEfGCoYT4ZzfC7Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_xq2vI4WnEfGCoYT4ZzfC7Q"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_xq2vJIWnEfGCoYT4ZzfC7Q"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_xq9c1oWnEfGCoYT4ZzfC7Q" type="StereotypeCommentLink" source="_GSElME1JEfGnpY0W_9FHcg" target="_xq9c0oWnEfGCoYT4ZzfC7Q">
+      <styles xmi:type="notation:FontStyle" xmi:id="_xq9c14WnEfGCoYT4ZzfC7Q"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_xq-D4oWnEfGCoYT4ZzfC7Q" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="PetClinic-Microservices.uml#_GReIQE1JEfGnpY0W_9FHcg"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_xq9c2IWnEfGCoYT4ZzfC7Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_xq-D4IWnEfGCoYT4ZzfC7Q"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_xq-D4YWnEfGCoYT4ZzfC7Q"/>
+    </edges>
+  </notation:Diagram>
+</xmi:XMI>
