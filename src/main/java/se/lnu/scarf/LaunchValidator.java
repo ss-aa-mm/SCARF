@@ -16,7 +16,7 @@ public class LaunchValidator {
     private static final String generatedGci = "static/gci.json";
     private static final Path containerDataDirectory = Path.of("/data");
     private static boolean useSampleGci = false;
-    private static boolean isRunningInContainer = false;
+    private static ExecutionMode executionMode = null;
 
     @PostConstruct
     public void checkInit() {
@@ -52,19 +52,24 @@ public class LaunchValidator {
                 log.error("The {} volume is not writable! Check permissions and retry!", containerDataDirectory);
                 throw new IllegalStateException(containerDataDirectory + " is not writable!");
             }
-            isRunningInContainer = true;
+            executionMode = Files.exists(Path.of("/workspace"))
+                    ? ExecutionMode.SPRING_BOOT_CONTAINER
+                    :  ExecutionMode.TEMURIN_CONTAINER;
+        } else {
+            executionMode = ExecutionMode.SPRING_BOOT_RUN;
         }
+        log.info(executionMode.toString());
     }
 
     public boolean usingSampleGci() {
         return useSampleGci;
     }
 
-    public boolean isRunningInContainer() {
-        return isRunningInContainer;
+    ExecutionMode getExecutionMode() {
+        return executionMode;
     }
 
     public Path getDataDirectory() {
-        return isRunningInContainer ? containerDataDirectory : Path.of("");
+        return getExecutionMode().isContainer() ? containerDataDirectory : Path.of("");
     }
 }

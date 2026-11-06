@@ -1,0 +1,12 @@
+services:
+  scarf:
+    pull_policy: never
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: scarf:0.1.0
+    ports:
+      - "9095:9090"
+    volumes:
+      - ./:/data
+    restart: unless-stopped

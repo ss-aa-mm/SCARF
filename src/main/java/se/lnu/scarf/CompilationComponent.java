@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Objects;
+import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,11 +22,11 @@ public class CompilationComponent {
 
     private static final Logger logger = LoggerFactory.getLogger(CompilationComponent.class);
 
-    public int compile(Path baseFolder, boolean usingSampleGci, boolean inContainer) throws Exception {
+    public int compile(Path baseFolder, boolean usingSampleGci, ExecutionMode executionMode) throws Exception {
         logger.info("Launching the compiler and preparing the required dependencies...");
         Path sourceFolder = baseFolder.resolve("src/main/java");
         Path targetFolder = baseFolder.resolve("target/classes");
-        String isolatedClasspath = buildTempClasspath(baseFolder, inContainer);
+        String isolatedClasspath = buildTempClasspath(baseFolder, executionMode);
         Files.createDirectories(targetFolder);
         copyGciResource(targetFolder, usingSampleGci);
 
@@ -52,26 +53,48 @@ public class CompilationComponent {
         return result;
     }
 
-    private static String buildTempClasspath(Path baseFolder, boolean inContainer) throws Exception {
+    private static String buildTempClasspath(Path baseFolder, ExecutionMode executionMode) throws Exception {
         Path libFolder = baseFolder.resolve("lib");
         Files.createDirectories(libFolder);
 
-        if (inContainer) {
-            logger.info("Running in container mode");
-            Path containerLib = Path.of("/workspace/BOOT-INF/lib");
-            try (Stream<Path> walk = Files.list(containerLib)) {
-                walk.filter(p -> p.toString().endsWith(".jar"))
-                        .filter(p -> ARTIFACT_IDS.stream().anyMatch(p.getFileName().toString()::contains))
-                        .forEach(p -> {
-                            try {
-                                Files.copy(p, libFolder.resolve(p.getFileName()), StandardCopyOption.REPLACE_EXISTING);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
+        logger.info(executionMode.toString());
+        if (executionMode.isContainer()) {
+            if (executionMode == ExecutionMode.SPRING_BOOT_CONTAINER) {
+                Path containerLib = Path.of("/workspace/BOOT-INF/lib");
+                try (Stream<Path> walk = Files.list(containerLib)) {
+                    walk.filter(p -> p.toString().endsWith(".jar"))
+                            .filter(p -> ARTIFACT_IDS.stream().anyMatch(p.getFileName().toString()::contains))
+                            .forEach(p -> {
+                                try {
+                                    Files.copy(p, libFolder.resolve(p.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                }
+            } else /* TEMURIN */ {
+                Path containerJar = Path.of("/app/app.jar");
+
+                try (JarFile jar = new JarFile(containerJar.toFile())) {
+                    jar.stream()
+                            .filter(entry -> entry.getName().startsWith("BOOT-INF/lib/"))
+                            .filter(entry -> entry.getName().endsWith(".jar"))
+                            .filter(entry -> ARTIFACT_IDS.stream()
+                                    .anyMatch(id -> Path.of(entry.getName()).getFileName().toString().contains(id)))
+                            .forEach(entry -> {
+                                try (var input = jar.getInputStream(entry)) {
+                                    Files.copy(
+                                            input,
+                                            libFolder.resolve(Path.of(entry.getName()).getFileName()),
+                                            StandardCopyOption.REPLACE_EXISTING
+                                    );
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                }
             }
         } else {
-            logger.info("Running in standard mode");
             String classpath = System.getProperty("java.class.path");
             for (String entry : classpath.split(File.pathSeparator)) {
                 if (ARTIFACT_IDS.stream().anyMatch(entry::contains)) {

@@ -1,0 +1,13 @@
+.git
+.idea
+target
+.DS_Store
+
+data
+
+__pycache__
+*.pyc
+.venv
+venv
+
+results

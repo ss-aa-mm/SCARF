@@ -65,7 +65,7 @@ public class ReasoningFrameworkService {
             int result = compilationComponent.compile(
                     compilationBaseDir,
                     launchValidator.usingSampleGci(),
-                    launchValidator.isRunningInContainer()
+                    launchValidator.getExecutionMode()
             );
             if (result != 0) throw new RuntimeException("The generated code compilation failed");
 

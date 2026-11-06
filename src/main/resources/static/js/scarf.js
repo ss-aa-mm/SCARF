@@ -158,8 +158,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     percent.innerText = `${p}%`;
                     evtSource.close();
                     if (simId) {
+                        const redTarget = runBtn.dataset.redirectTarget;
                         setTimeout(() => {
-                            window.location.href = `/results/${simId}`;
+                            window.location.href = `/api/${redTarget}/${simId}`;
                         }, 1000);
                     } else {
                         setEnabled(buttons, true);
