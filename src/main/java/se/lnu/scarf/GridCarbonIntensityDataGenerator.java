@@ -34,7 +34,12 @@ public class GridCarbonIntensityDataGenerator {
                 new String[]{"IE", "eu_west_1"}
         );
         for (String[] z : zones) {
-            data.put(z[1], processRegion(z[0]));
+            try {
+                data.put(z[1], processRegion(z[0]));
+            } catch (IllegalStateException e) {
+                log.warn("One or more required GCI CSV datasets is missing. Reverting to sample GCI.");
+                return;
+            }
         }
         try {
             MAPPER.writeValue(new File(OUTPUT_FILE), data);
@@ -44,7 +49,7 @@ public class GridCarbonIntensityDataGenerator {
         }
     }
 
-    static Map<String, double[]> processRegion(String zone) {
+    static Map<String, double[]> processRegion(String zone) throws IllegalStateException {
         String filename = "snapshots_2026-02-10_" + zone + "-2025-hourly.csv";
         Table df = Table.read().csv(GCI_FOLDER + filename);
         log.info("Processing {}", filename);
