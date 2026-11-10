@@ -1,7 +1,6 @@
 """
-SCARF — interaction-level figure: carbon x performance tradeoff, faceted by
-tier, bubble size = total accumulated SCI (folds the "impact" bar chart's
-story into the tradeoff scatter instead of keeping them as two figures).
+SCARF — interaction-level figure: carbon x performance, faceted by
+tier, bubble size = total accumulated SCI.
 
 Expects the raw multi-replication export shaped like:
 
@@ -17,7 +16,6 @@ Expects the raw multi-replication export shaped like:
 }
 
 Run with: python interaction_figure.py <data.json> <output_basename>
-Falls back to bundled 8-interaction x 3-tier example data if no args given.
 """
 
 import json
@@ -27,14 +25,13 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
-# ─── Colorblind-safe categorical palette, one hue per interaction (8) ───────
-# Okabe-Ito + two extensions, ordered for max adjacent contrast.
 NAME_COLORS = [
     "#0072B2", "#E69F00", "#009E73", "#D55E00",
     "#CC79A7", "#56B4E9", "#8B4513", "#7F7F7F",
 ]
-MARKERS = ["o", "s", "^", "D", "v", "P", "X", "*"]  # redundant shape channel for grayscale
+MARKERS = ["o", "s", "^", "D", "v", "P", "X", "*"]
 
+SIZE_MIN, SIZE_MAX = 40, 420
 EDGE = "#1a1a1a"
 MARKER_EDGE = "#1a1a1a"
 
@@ -42,6 +39,7 @@ MARKER_EDGE = "#1a1a1a"
 def load_data(path):
     with open(path) as f:
         return json.load(f)
+    return None
 
 
 def pool(rep_list, key):
@@ -52,12 +50,6 @@ def pool(rep_list, key):
 
 
 def summarize_interactions(raw):
-    """
-    Collapse raw["interactions"]["Name|Tier"] = [rep0, rep1, ...] into per-key
-    scalars: avg SCI/execution, avg response time, and total accumulated SCI
-    (call_volume x avg SCI), pooling executions across replications exactly
-    as poolValues() does in results_v2.js.
-    """
     out = {}
     for key, rep_list in raw["interactions"].items():
         name, tier = key.split("|")
@@ -74,33 +66,6 @@ def summarize_interactions(raw):
         }
     return out
 
-
-EXAMPLE_NAMES = ["AddOwner", "LoadOwnerProfile", "FindOwners", "AddPet",
-                  "CheckVets", "UpdatePet", "AddVisit", "LoadVetProfile"]
-EXAMPLE_TIERS = ["Standard", "Premium", "Corporate"]
-
-
-def _synthetic_example():
-    import random
-    random.seed(7)
-    raw = {"interactions": {}}
-    for name in EXAMPLE_NAMES:
-        base_sci = random.uniform(5e-6, 3e-5)
-        base_t = random.uniform(60, 400)
-        for tier in EXAMPLE_TIERS:
-            tier_factor = {"Standard": 1.0, "Premium": 0.8, "Corporate": 0.65}[tier]
-            n_calls = random.randint(150, 900)
-            reps = []
-            for _ in range(2):
-                sci_arr = [base_sci * tier_factor * random.uniform(0.85, 1.15)
-                           for _ in range(n_calls // 2)]
-                t_arr = [base_t * tier_factor * random.uniform(0.8, 1.3)
-                         for _ in range(n_calls // 2)]
-                reps.append({"teads_sci": sci_arr, "service_time": t_arr})
-            raw["interactions"][f"{name}|{tier}"] = reps
-    return raw
-
-
 def build_figure(summary, out_base):
     tiers = sorted({v["tier"] for v in summary.values()})
     names = sorted({v["name"] for v in summary.values()})
@@ -109,9 +74,6 @@ def build_figure(summary, out_base):
 
     all_totals = [v["total_sci"] for v in summary.values()]
     lo, hi = min(all_totals), max(all_totals)
-
-    # Bubble area scale: matplotlib 's' is in points^2, so scale by sqrt for area-true sizing.
-    SIZE_MIN, SIZE_MAX = 40, 420
 
     def size_of(total):
         if hi == lo:
@@ -148,7 +110,6 @@ def build_figure(summary, out_base):
     axes[0].set_ylabel("Avg response time (ms)", fontsize=11.5)
     fig.supxlabel("Avg SCI per execution (gCO$_2$eq)", fontsize=11.5, y=0.225)
 
-    # ── Shared legend: one entry per interaction (color + marker together) ──
     name_handles = [
         Line2D([0], [0], marker=name_marker[n], color="none",
                markerfacecolor=name_color[n], markeredgecolor=EDGE,
@@ -156,7 +117,6 @@ def build_figure(summary, out_base):
         for n in names
     ]
 
-    # ── Bubble-size legend: 3 reference sizes spanning the observed range ──
     ref_fracs = [0.15, 0.5, 0.9]
     ref_vals = [lo + f * (hi - lo) for f in ref_fracs]
     size_handles = [
@@ -186,10 +146,7 @@ def build_figure(summary, out_base):
 
 if __name__ == "__main__":
     if len(sys.argv) >= 3:
-        raw = load_data(sys.argv[1])
-        out_base = sys.argv[2]
-    else:
-        raw = _synthetic_example()
-        out_base = "example"
-    summary = summarize_interactions(raw)
-    build_figure(summary, out_base)
+        raw_ = load_data(sys.argv[1])
+        out_base_ = sys.argv[2]
+        summary_ = summarize_interactions(raw_)
+        build_figure(summary_, out_base_)

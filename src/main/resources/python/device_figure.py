@@ -1,8 +1,8 @@
 """
 SCARF — device-level figure: SCI composition (operational/embodied) +
-utilization composition (per-service, core-proportional) for 2-3 devices.
+utilization composition (per-service, core-proportional).
 
-Expects a JSON structure shaped like:
+Expects the raw multi-replication export shaped like:
 
 {
   "devices": {
@@ -19,15 +19,7 @@ Expects a JSON structure shaped like:
   }
 }
 
-This mirrors what's derivable from SCARF_DATA.devices in results_v2.js:
-  total_cores          <- rep0.total_cores
-  vms[name].allocated_cores      <- rep0.vms[name].allocated_cores
-  vms[name].mean_utilization     <- mean(rep.vms[name].average_utilization)
-  total_operational_sci / total_embodied_sci <- same split already computed
-      in renderDeviceImpact() / the deviceRows table logic (totalOp / totalEmbodied)
-
 Run with: python device_figure.py <data.json> <output_basename>
-Falls back to bundled example data (3-device Pi cluster) if no args given.
 """
 
 import json
@@ -38,12 +30,11 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from matplotlib.lines import Line2D
 
-# ─── Colorblind-safe, grayscale-degrading palette (Okabe-Ito derived) ───────
 COL_OPERATIONAL = "#0D9488"   # teal
 COL_EMBODIED    = "#4A5568"   # anthracite
 COL_USED        = "#2563EB"   # royal blue
-COL_IDLE        = "#D9D9D9"   # light grey, dotted hatch (within-VM idle)
-COL_UNALLOC     = "#F2F2F2"   # near-white grey, cross-hatch + dashed edge
+COL_IDLE        = "#D9D9D9"   # light gray, dotted hatch (within-VM idle)
+COL_UNALLOC     = "#F2F2F2"   # near-white gray, cross-hatch + dashed edge
 
 HATCH_EMBODIED  = "//"
 HATCH_IDLE      = "...."
@@ -57,21 +48,16 @@ DIVIDER_LW = 0.9
 def load_data(path):
     with open(path) as f:
         return json.load(f)
+    return None
 
 
 def summarize_devices(raw):
-    """
-    Collapse a raw multi-replication export (raw["devices"][name] = [rep0, rep1, ...])
-    into the flat per-device summary build_figure() expects. Mirrors the aggregation
-    already done in results_v2.js (timeSeriesMean / totalOp / per-VM utilSeries).
-    """
     out = {}
     for dev_name, rep_list in raw["devices"].items():
         rep0 = rep_list[0]
         total_cores = rep0["total_cores"]
         n_intervals = len(rep0["timestamps"])
 
-        # elementwise mean of average_teads_sci across replications, then summed
         mean_series = [
             sum(rep["average_teads_sci"][i] for rep in rep_list) / len(rep_list)
             for i in range(n_intervals)
@@ -100,39 +86,6 @@ def summarize_devices(raw):
     return {"devices": out}
 
 
-EXAMPLE_DATA = {
-    "devices": {
-        "RPi4-A (4-core)": {
-            "total_cores": 4,
-            "total_operational_sci": 1.83e-2,
-            "total_embodied_sci": 6.70e-3,
-            "vms": {
-                "CustomersService": {"allocated_cores": 2, "mean_utilization": 0.62},
-                "VetsService":      {"allocated_cores": 1, "mean_utilization": 0.41},
-                "VisitsService":    {"allocated_cores": 1, "mean_utilization": 0.35},
-            },
-        },
-        "RPi4-B (3-core)": {
-            "total_cores": 3,
-            "total_operational_sci": 1.21e-2,
-            "total_embodied_sci": 5.02e-3,
-            "vms": {
-                "ApiGateway": {"allocated_cores": 3, "mean_utilization": 0.50},
-            },
-        },
-        "RPi4-C (2-core)": {
-            "total_cores": 2,
-            "total_operational_sci": 6.4e-3,
-            "total_embodied_sci": 3.35e-3,
-            "vms": {
-                "ConfigServer":    {"allocated_cores": 1, "mean_utilization": 0.28},
-                "DiscoveryServer": {"allocated_cores": 1, "mean_utilization": 0.33},
-            },
-        },
-    }
-}
-
-
 def build_figure(data, out_base):
     devices = data["devices"]
     dev_names = list(devices.keys())
@@ -147,7 +100,6 @@ def build_figure(data, out_base):
     y = list(range(n))
     bar_h = 0.62
 
-    # ── Panel A: SCI composition (operational + embodied), stacked ──────────
     op_vals  = [devices[d]["total_operational_sci"] for d in dev_names]
     emb_vals = [devices[d]["total_embodied_sci"] for d in dev_names]
 
@@ -158,7 +110,7 @@ def build_figure(data, out_base):
                 label="Embodied SCI", zorder=3)
 
     ax_sci.set_xlabel("SCI (gCO$_2$eq)", fontsize=11.5)
-    ax_sci.invert_xaxis()  # grows leftward, mirrors the utilization panel outward from the device labels
+    ax_sci.invert_xaxis()
     ax_sci.set_yticks(y)
     ax_sci.set_yticklabels(dev_names)
     ax_sci.grid(axis="x", color="#eeeeee", linewidth=0.8, zorder=0)
@@ -167,7 +119,6 @@ def build_figure(data, out_base):
     for spine in ("top", "right", "left"):
         ax_sci.spines[spine].set_visible(False)
 
-    # ── Panel B: utilization composition, core-proportional, per-service ────
     max_cores = max(devices[d]["total_cores"] for d in dev_names)
 
     legend_used_drawn = legend_idle_drawn = legend_unalloc_drawn = False
@@ -202,14 +153,7 @@ def build_figure(data, out_base):
             legend_idle_drawn = True
 
             cursor += cores
-            # bold divider between distinct services (not after the very last one)
-            '''if vm_name != vm_names[-1]:
-                ax_util.plot([cursor, cursor], [yi - bar_h / 2, yi + bar_h / 2],
-                             color=DIVIDER_EDGE, linewidth=DIVIDER_LW, zorder=4,
-                             solid_capstyle="butt", linestyle="--")'''
 
-            # Draw tiny external notches extending just outside the bar limits 
-            # to delineate service divisions without cutting through your core color blocks
             if vm_name != vm_names[-1]:
                 ax_util.plot([cursor, cursor], [yi - bar_h / 2, yi - bar_h / 2 - 0.05],
                              color="#1a1a1a", linewidth=0.6, zorder=4, clip_on=False)
@@ -236,9 +180,6 @@ def build_figure(data, out_base):
     for spine in ("top", "right", "left"):
         ax_util.spines[spine].set_visible(False)
 
-    # divider markers in the legend to explain the service-boundary convention
-    '''divider_handle = Line2D([0], [0], color=DIVIDER_EDGE, linewidth=DIVIDER_LW,
-                             label="Service boundary", linestyle="--")'''
     divider_handle = Line2D([0], [0], color=EDGE, marker="|", linestyle="None",
                         markersize=8, label="Service boundary")
 
@@ -264,11 +205,8 @@ def build_figure(data, out_base):
 
 if __name__ == "__main__":
     if len(sys.argv) >= 3:
-        raw = load_data(sys.argv[1])
-        data = summarize_devices(raw)
-        out_base = sys.argv[2]
-    else:
-        data = EXAMPLE_DATA
-        out_base = "example"
-    build_figure(data, out_base)
+        raw_ = load_data(sys.argv[1])
+        data_ = summarize_devices(raw_)
+        out_base_ = sys.argv[2]
+        build_figure(data_, out_base_)
 
